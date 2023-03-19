@@ -1,11 +1,10 @@
-import random
-
 import pygame
 from enemy import Enemy
 from player import Player
 from sprites import enemies, bullets, players, bonuses
 
 pygame.init()
+
 
 # Screen
 SCREEN_WIDTH = 800
@@ -14,10 +13,13 @@ pygame.display.set_caption('SPACE X CALIBUR')
 screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
 pygame.mouse.set_visible(False)
 
+
 # Menu Audio
 background_audio = pygame.mixer.Sound("Audio/Background_menu_v2.mp3")
-background_audio.play(loops = -1)
+background_audio.play(loops=-1)
+background_audio.set_volume(0.2)
 background_audio.play()
+
 
 # Game messages
 font = pygame.font.Font('Font/Pixel_font.ttf', 50)
@@ -31,12 +33,13 @@ welcome_mR = welcome_m.get_rect(center = (400, 200))
 to_play_m = font.render('Press SPACE to play!', False, (0, 0, 0))
 to_play_mR = to_play_m.get_rect(center = (400, 600))
 
+
 # Game setup
 player = Player()
 players.add(player)
 
 for i in range(4):
-    enemy = Enemy(random.randrange(2, 4))
+    enemy = Enemy()
     enemies.add(enemy)
 
 clock = pygame.time.Clock()
@@ -51,7 +54,6 @@ def display_score(score):
     screen.blit(score_surf, score_rect)
 
 while not game_over:
-    # Handle events
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             game_over = True
@@ -62,9 +64,11 @@ while not game_over:
             print(".")
         else:
             if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+                bullets.empty()
                 enemies.empty()
+                bonuses.empty()
                 for i in range(4):
-                    enemy = Enemy(random.randrange(2, 4))
+                    enemy = Enemy()
                     enemies.add(enemy)
                     player.kill()
                     player = Player()
@@ -92,9 +96,7 @@ while not game_over:
         if collided_player:
             first_run = False
             gameplay_state = False
-
     else:
-
         if first_run:
             screen.fill('#3C00AD')
             screen.blit(welcome_m, welcome_mR)
@@ -103,12 +105,7 @@ while not game_over:
         else:
             screen.fill('#3C00AD')
             screen.blit(play_again_m, play_again_mR)
-
-
     # Update the screen
     pygame.display.flip()
-    # Delay to get 60 FPS
     clock.tick(60)
-
-# Quit Pygame
 pygame.quit()

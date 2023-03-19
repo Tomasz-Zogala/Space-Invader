@@ -3,29 +3,33 @@ import pygame
 from bonus import Bonus
 from bullet import Bullet
 from sprites import bullets, bonuses
-
-
 # Define the Player class
 class Player(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
-        self.image = pygame.Surface([50, 50])
-        self.image.fill("BLACK")
-        self.rect = self.image.get_rect()
 
-        # Starting point
-        self.rect.centerx = 400
-        self.rect.centery = 750
-
+        # Stats
+        self.speed = 10
+        self.hp = 3
         # Weapon
         self.bullet_timer = 0
         self.bullet_delay = 1500
         self.bullet_dmg = 1
         self.weapon_upgrade_timer = 0
 
-        # Stats
-        self.speed = 10
-        self.hp = 3
+        # Image data
+        self.width = 50
+        self.height = 50
+        self.color = '#384426'
+
+        # Image
+        self.image = pygame.Surface([self.width, self.height])
+        self.image.fill(self.color)
+        self.rect = self.image.get_rect()
+
+        # Position
+        self.rect.centerx = 400
+        self.rect.centery = 700
 
         # Audio
         self.player_appear_audio = pygame.mixer.Sound("Audio/Boss_appear.mp3")
@@ -34,15 +38,7 @@ class Player(pygame.sprite.Sprite):
 
         # Info
         self.score = 0
-
-    def update(self):
-        # Bonus getting
-        collided_bonus = pygame.sprite.spritecollide(self, bonuses, True)
-        if collided_bonus:
-            self.score += 10
-            self.bullet_dmg += 1
-
-        # Move the player based on arrow key input
+    def movement(self):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_LEFT]:
             self.rect.x -= self.speed
@@ -60,11 +56,19 @@ class Player(pygame.sprite.Sprite):
             self.rect.y += self.speed
             if self.rect.bottom >= 800:
                 self.rect.bottom = 800
+    def shooting(self):
+        keys = pygame.key.get_pressed()
         if keys[pygame.K_SPACE] and self.bullet_timer >= self.bullet_delay:
             # Create a new bullet sprite and add it to the bullets group
-            bullet = Bullet(self.rect.centerx-5, self.rect.centery, self.bullet_dmg)
+            bullet = Bullet(self.rect.center)
             bullets.add(bullet)
             self.bullet_timer = 0
-
-        # Increment the timer variable by the time elapsed since the last frame
         self.bullet_timer += 100
+    def bonus_service(self):
+        collided_bonus = pygame.sprite.spritecollide(self, bonuses, True)
+        if collided_bonus:
+            self.score += 10
+    def update(self):
+        self.movement()
+        self.shooting()
+        self.bonus_service()
