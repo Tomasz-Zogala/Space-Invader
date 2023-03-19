@@ -17,6 +17,10 @@ class Bullet(pygame.sprite.Sprite):
         self.rect.x = pos_x
         self.rect.y = pos_y
 
+        self.laser_audio = pygame.mixer.Sound('Audio/Laser_sound.mp3')
+        self.laser_audio.set_volume(0.2)
+        self.laser_audio.play()
+
     def update(self):
         # Move the bullet up the screen
         self.rect.y += -10

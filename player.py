@@ -23,8 +23,14 @@ class Player(pygame.sprite.Sprite):
         self.bullet_dmg = 1
         self.weapon_upgrade_timer = 0
 
-        # Movement
+        # Stats
         self.speed = 10
+        self.hp = 3
+
+        # Audio
+        self.player_appear_audio = pygame.mixer.Sound("Audio/Boss_appear.mp3")
+        self.player_appear_audio.set_volume(0.5)
+        self.player_appear_audio.play()
 
     def update(self):
         # Bonus getting
