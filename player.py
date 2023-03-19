@@ -1,8 +1,9 @@
 import pygame
 
-from bonus import Bonus
 from bullet import Bullet
 from sprites import bullets, bonuses
+
+
 # Define the Player class
 class Player(pygame.sprite.Sprite):
     def __init__(self):
@@ -38,6 +39,7 @@ class Player(pygame.sprite.Sprite):
 
         # Info
         self.score = 0
+
     def movement(self):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_LEFT]:
@@ -56,18 +58,20 @@ class Player(pygame.sprite.Sprite):
             self.rect.y += self.speed
             if self.rect.bottom >= 800:
                 self.rect.bottom = 800
+
     def shooting(self):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_SPACE] and self.bullet_timer >= self.bullet_delay:
-            # Create a new bullet sprite and add it to the bullets group
             bullet = Bullet(self.rect.center)
             bullets.add(bullet)
             self.bullet_timer = 0
         self.bullet_timer += 100
+
     def bonus_service(self):
         collided_bonus = pygame.sprite.spritecollide(self, bonuses, True)
         if collided_bonus:
             self.score += 10
+
     def update(self):
         self.movement()
         self.shooting()

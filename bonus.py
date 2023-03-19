@@ -1,8 +1,9 @@
 import pygame
-import random
 
+
+# Define the Bonus class
 class Bonus(pygame.sprite.Sprite):
-    def __init__(self, center ,speed):
+    def __init__(self, center, speed):
         super().__init__()
 
         # Stats
@@ -20,11 +21,11 @@ class Bonus(pygame.sprite.Sprite):
 
         # Position
         self.rect.center = center
+
     def movement(self):
         self.rect.y += self.speed
         if self.rect.y > 800:
             self.kill()
+
     def update(self):
         self.movement()
-
-

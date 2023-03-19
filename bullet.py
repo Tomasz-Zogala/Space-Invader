@@ -1,9 +1,8 @@
 import pygame
-import random
 
 from bonus import Bonus
 from enemy import Enemy
-from sprites import bullets, enemies, bonuses
+from sprites import enemies, bonuses
 
 
 # Define the Bullet class
@@ -31,11 +30,13 @@ class Bullet(pygame.sprite.Sprite):
         self.laser_audio = pygame.mixer.Sound('Audio/Laser_sound.mp3')
         self.laser_audio.set_volume(0.2)
         self.laser_audio.play()
+
     def movement(self):
         self.rect.y += -10
 
         if self.rect.y < -100:
             self.kill()
+
     def hit_service(self):
         collided_enemies = pygame.sprite.spritecollide(self, enemies, False)
         if collided_enemies:
@@ -48,7 +49,7 @@ class Bullet(pygame.sprite.Sprite):
                     bonuses.add(bonus)
                     enemy = Enemy()
                     enemies.add(enemy)
+
     def update(self):
         self.movement()
-
         self.hit_service()

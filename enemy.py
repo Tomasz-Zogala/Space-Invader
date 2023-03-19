@@ -3,7 +3,6 @@ import random
 
 from sprites import bullets
 
-
 # Define the Enemy class
 class Enemy(pygame.sprite.Sprite):
     def __init__(self):
@@ -26,13 +25,14 @@ class Enemy(pygame.sprite.Sprite):
         # Position
         self.rect.x = random.randrange(800 - self.rect.width)
         self.rect.y = random.randrange(-100, -self.rect.height)
+
     def movement(self):
-        # Move the enemy down the screen
         self.rect.y += self.speed
         if self.rect.y > 800:
             self.rect.x = random.randrange(800 - self.rect.width)
             self.rect.y = random.randrange(-100, -self.rect.height)
             self.default()
+
     def hp_service(self):
         if self.hp == 2:
 
@@ -56,15 +56,15 @@ class Enemy(pygame.sprite.Sprite):
             self.rect = self.image.get_rect()  # update the rect of the image
             self.rect.center = old_center
             self.image.fill('#B25959')
+
     def bullet_service(self):
         pygame.sprite.spritecollide(self, bullets, True)
+
     def update(self):
-
         self.bullet_service()
-
         self.movement()
-
         self.hp_service()
+
     def default(self):
         # Stats
         self.hp = 3

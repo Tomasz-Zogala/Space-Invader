@@ -5,7 +5,6 @@ from sprites import enemies, bullets, players, bonuses
 
 pygame.init()
 
-
 # Screen
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 800
@@ -13,26 +12,23 @@ pygame.display.set_caption('SPACE X CALIBUR')
 screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
 pygame.mouse.set_visible(False)
 
-
 # Menu Audio
 background_audio = pygame.mixer.Sound("Audio/Background_menu_v2.mp3")
 background_audio.play(loops=-1)
 background_audio.set_volume(0.2)
 background_audio.play()
 
-
 # Game messages
 font = pygame.font.Font('Font/Pixel_font.ttf', 50)
 
 play_again_m = font.render('Press SPACE to play again!', False, (0, 0, 0))
-play_again_mR = play_again_m.get_rect(center = (400, 200))
+play_again_mR = play_again_m.get_rect(center=(400, 200))
 
 welcome_m = font.render('WELCOME TO SPACE X CALIBUR', False, (0, 0, 0))
-welcome_mR = welcome_m.get_rect(center = (400, 200))
+welcome_mR = welcome_m.get_rect(center=(400, 200))
 
 to_play_m = font.render('Press SPACE to play!', False, (0, 0, 0))
-to_play_mR = to_play_m.get_rect(center = (400, 600))
-
+to_play_mR = to_play_m.get_rect(center=(400, 600))
 
 # Game setup
 player = Player()
@@ -47,11 +43,13 @@ game_over = False
 gameplay_state = False
 first_run = True
 
+
 # Display score
 def display_score(score):
     score_surf = font.render(f'Score: {score}', False, (64, 64, 64))
     score_rect = score_surf.get_rect(center=(400, 50))
     screen.blit(score_surf, score_rect)
+
 
 while not game_over:
     for event in pygame.event.get():
@@ -73,6 +71,7 @@ while not game_over:
                     player.kill()
                     player = Player()
                     players.add(player)
+
                 gameplay_state = True
 
     if gameplay_state:
@@ -96,6 +95,7 @@ while not game_over:
         if collided_player:
             first_run = False
             gameplay_state = False
+
     else:
         if first_run:
             screen.fill('#3C00AD')
@@ -105,6 +105,7 @@ while not game_over:
         else:
             screen.fill('#3C00AD')
             screen.blit(play_again_m, play_again_mR)
+
     # Update the screen
     pygame.display.flip()
     clock.tick(60)
