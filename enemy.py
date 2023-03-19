@@ -12,8 +12,9 @@ class Enemy(pygame.sprite.Sprite):
         self.weight = 30
         self.hp = 3
         self.speed = speed
+        self.color = (64, 64, 64)
         self.image = pygame.Surface([self.weight, self.height])
-        self.image.fill((0, 0, 0))
+        self.image.fill(self.color)
         self.rect = self.image.get_rect()
         self.rect.x = random.randrange(800 - self.rect.width)
         self.rect.y = random.randrange(-100, -self.rect.height)
@@ -29,11 +30,11 @@ class Enemy(pygame.sprite.Sprite):
             self.default()
 
         if (self.hp == 2):
-            self.image = pygame.Surface([self.weight-2, self.height-2])
+            self.image = pygame.Surface([self.weight-2, self.height-2]) # inflate
             self.image.fill('#A92B10')
 
         if (self.hp == 1):
-            self.image = pygame.Surface([self.weight-2, self.height-2])
+            self.image = pygame.Surface([self.weight-2, self.height-2]) # inflate
             self.image.fill('#E32800')
 
     def default(self):
@@ -42,4 +43,4 @@ class Enemy(pygame.sprite.Sprite):
         self.hp = 3
         self.speed = 5
         self.image = pygame.Surface([self.weight, self.height])
-        self.image.fill((0, 0, 0))
+        self.image.fill(self.color)

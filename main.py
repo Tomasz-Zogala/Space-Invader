@@ -5,52 +5,60 @@ from enemy import Enemy
 from player import Player
 from sprites import enemies, bullets, players, bonuses
 
-# Set the dimensions of the screen
-SCREEN_WIDTH = 800
-SCREEN_HEIGHT = 800
-
-# Initialize Pygame
 pygame.init()
 
-# Set the size of the screen
-pygame.display.set_caption('Space masters')
+# Screen
+SCREEN_WIDTH = 800
+SCREEN_HEIGHT = 800
+pygame.display.set_caption('SPACE X CALIBUR')
 screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
+pygame.mouse.set_visible(False)
 
 # Menu Audio
 background_audio = pygame.mixer.Sound("Audio/Background_menu_v2.mp3")
 background_audio.play(loops = -1)
 background_audio.play()
 
-# Hit Audio
-hit_audio = pygame.mixer.Sound("Audio/Get_hit.mp3")
-
 # Game messages
 font = pygame.font.Font('Font/Pixel_font.ttf', 50)
-game_message_menu = font.render('Press space to run', False, (0, 0, 0))
-game_message_rect = game_message_menu.get_rect(center = (400, 330))
 
-# Create the player sprite
+play_again_m = font.render('Press SPACE to play again!', False, (0, 0, 0))
+play_again_mR = play_again_m.get_rect(center = (400, 200))
+
+welcome_m = font.render('WELCOME TO SPACE X CALIBUR', False, (0, 0, 0))
+welcome_mR = welcome_m.get_rect(center = (400, 200))
+
+to_play_m = font.render('Press SPACE to play!', False, (0, 0, 0))
+to_play_mR = to_play_m.get_rect(center = (400, 600))
+
+# Game setup
 player = Player()
 players.add(player)
 
-# Create some enemies and add them to the group
 for i in range(4):
     enemy = Enemy(random.randrange(2, 4))
     enemies.add(enemy)
 
-# Set the game's clock
 clock = pygame.time.Clock()
-
-# Start the game loop
 game_over = False
-game_active = True
+gameplay_state = False
+first_run = True
+
+# Display score
+def display_score(score):
+    score_surf = font.render(f'Score: {score}', False, (64, 64, 64))
+    score_rect = score_surf.get_rect(center=(400, 50))
+    screen.blit(score_surf, score_rect)
+
 while not game_over:
     # Handle events
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             game_over = True
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+            game_over = True
 
-        if game_active:
+        if gameplay_state:
             print(".")
         else:
             if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
@@ -61,10 +69,11 @@ while not game_over:
                     player.kill()
                     player = Player()
                     players.add(player)
-                game_active = True
+                gameplay_state = True
 
-    if game_active:
+    if gameplay_state:
         screen.fill('#0E034E')
+        display_score(player.score)
 
         # Draw the sprites
         players.draw(screen)
@@ -81,12 +90,19 @@ while not game_over:
         # Check for collisions between the player and enemies
         collided_player = pygame.sprite.spritecollide(player, enemies, False)
         if collided_player:
-            game_active = False
+            first_run = False
+            gameplay_state = False
 
     else:
-        screen.fill('#5334FF')
-        screen.blit(game_message_menu, game_message_rect)
-        screen.blit(player.image, player.rect)
+
+        if first_run:
+            screen.fill('#3C00AD')
+            screen.blit(welcome_m, welcome_mR)
+            screen.blit(to_play_m, to_play_mR)
+
+        else:
+            screen.fill('#3C00AD')
+            screen.blit(play_again_m, play_again_mR)
 
 
     # Update the screen

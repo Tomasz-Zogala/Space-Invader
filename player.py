@@ -19,7 +19,7 @@ class Player(pygame.sprite.Sprite):
 
         # Weapon
         self.bullet_timer = 0
-        self.bullet_delay = 1200
+        self.bullet_delay = 1500
         self.bullet_dmg = 1
         self.weapon_upgrade_timer = 0
 
@@ -32,10 +32,14 @@ class Player(pygame.sprite.Sprite):
         self.player_appear_audio.set_volume(0.5)
         self.player_appear_audio.play()
 
+        # Info
+        self.score = 0
+
     def update(self):
         # Bonus getting
         collided_bonus = pygame.sprite.spritecollide(self, bonuses, True)
         if collided_bonus:
+            self.score += 10
             self.bullet_dmg += 1
 
         # Move the player based on arrow key input

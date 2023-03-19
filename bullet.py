@@ -33,7 +33,7 @@ class Bullet(pygame.sprite.Sprite):
                     enemy.height += -5
                     enemy.weight += -5
                 else:
-                    bonus = Bonus(enemy.rect.x, enemy.rect.y, enemy.speed)
+                    bonus = Bonus(enemy.rect.x, enemy.rect.y, enemy.speed*2)
                     enemy.kill()
                     bonuses.add(bonus)
                     enemy = Enemy(random.randrange(2, 4))
