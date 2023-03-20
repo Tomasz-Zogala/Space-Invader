@@ -1,7 +1,7 @@
 import pygame
 
-from bullet import Bullet
-from sprites import bullets, bonuses
+from Guns_package.gun import Gun
+from Sprites_package.sprites import guns, bonuses
 
 
 # Define the Player class
@@ -12,11 +12,7 @@ class Player(pygame.sprite.Sprite):
         # Stats
         self.speed = 10
         self.hp = 3
-        # Weapon
-        self.bullet_timer = 0
-        self.bullet_delay = 1500
-        self.bullet_dmg = 1
-        self.weapon_upgrade_timer = 0
+        self.player_timer = 0
 
         # Image data
         self.width = 50
@@ -33,7 +29,7 @@ class Player(pygame.sprite.Sprite):
         self.rect.centery = 700
 
         # Audio
-        self.player_appear_audio = pygame.mixer.Sound("Audio/Boss_appear.mp3")
+        self.player_appear_audio = pygame.mixer.Sound("Additional_resources/Audio/Boss_appear.mp3")
         self.player_appear_audio.set_volume(0.5)
         self.player_appear_audio.play()
 
@@ -61,11 +57,11 @@ class Player(pygame.sprite.Sprite):
 
     def shooting(self):
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_SPACE] and self.bullet_timer >= self.bullet_delay:
-            bullet = Bullet(self.rect.center)
-            bullets.add(bullet)
-            self.bullet_timer = 0
-        self.bullet_timer += 100
+        if keys[pygame.K_SPACE] and self.player_timer <= 0:
+            gun = Gun(self.rect.center)
+            guns.add(gun)
+            self.player_timer = gun.fire_rate
+        self.player_timer += -100
 
     def bonus_service(self):
         collided_bonus = pygame.sprite.spritecollide(self, bonuses, True)

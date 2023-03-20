@@ -1,10 +1,12 @@
 import pygame
 import random
 
-from sprites import bullets
+from Enemies_package.enemy import Enemy
+from Sprites_package.sprites import guns
 
-# Define the Enemy class
-class Enemy(pygame.sprite.Sprite):
+
+# Define the Asteroid class
+class Asteroid(Enemy):
     def __init__(self):
         super().__init__()
 
@@ -35,7 +37,6 @@ class Enemy(pygame.sprite.Sprite):
 
     def hp_service(self):
         if self.hp == 2:
-
             new_width = int(self.width * 0.8)  # reduce the width by 50%
             new_height = int(self.height * 0.8)  # reduce the height by 50%
             old_center = self.rect.center
@@ -47,7 +48,6 @@ class Enemy(pygame.sprite.Sprite):
             self.image.fill('#DEA0A0')
 
         if self.hp == 1:
-
             new_width = int(self.width * 0.7)  # reduce the width by 50%
             new_height = int(self.height * 0.7)  # reduce the height by 50%
             old_center = self.rect.center
@@ -58,7 +58,7 @@ class Enemy(pygame.sprite.Sprite):
             self.image.fill('#B25959')
 
     def bullet_service(self):
-        pygame.sprite.spritecollide(self, bullets, True)
+        pygame.sprite.spritecollide(self, guns, True)
 
     def update(self):
         self.bullet_service()
