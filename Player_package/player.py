@@ -11,7 +11,6 @@ class Player(pygame.sprite.Sprite):
 
         # Stats
         self.speed = 10
-        self.hp = 3
         self.player_timer = 0
 
         # Image data
@@ -25,8 +24,7 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
 
         # Position
-        self.rect.centerx = 400
-        self.rect.centery = 700
+        self.rect.center = (400, 700)
 
         # Audio
         self.player_appear_audio = pygame.mixer.Sound("Additional_resources/Audio/Boss_appear.mp3")
@@ -66,7 +64,7 @@ class Player(pygame.sprite.Sprite):
     def bonus_service(self):
         collided_bonus = pygame.sprite.spritecollide(self, bonuses, True)
         if collided_bonus:
-            self.score += 10
+            self.score += 100
 
     def update(self):
         self.movement()

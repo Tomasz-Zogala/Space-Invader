@@ -2,7 +2,7 @@ import pygame
 
 from Bonuses_package.bonus import Bonus
 from Enemies_package.asteroid import Asteroid
-from Sprites_package.sprites import asteroids, bonuses
+from Sprites_package.sprites import asteroids, bonuses, star_lords
 
 
 # Define the Gun class
@@ -12,7 +12,7 @@ class Gun(pygame.sprite.Sprite):
 
         # Stats
         self.damage = 1
-        self.fire_rate = 1500
+        self.fire_rate = 300
 
         # Image data
         self.width = 10
@@ -39,18 +39,27 @@ class Gun(pygame.sprite.Sprite):
             self.kill()
 
     def hit_service(self):
-        collided_enemies = pygame.sprite.spritecollide(self, asteroids, False)
-        if collided_enemies:
-            for enemy in collided_enemies:
-                if enemy.hp > 1:
-                    enemy.hp += -self.damage
+        collided_asteroid = pygame.sprite.spritecollide(self, asteroids, False)
+        if collided_asteroid:
+            for asteroid in collided_asteroid:
+                if asteroid.hp > 1:
+                    asteroid.hp += -self.damage
                 else:
-                    bonus = Bonus(enemy.rect.center, enemy.speed*2)
-                    enemy.kill()
+                    bonus = Bonus(asteroid.rect.center, asteroid.speed*2)
+                    asteroid.kill()
                     self.kill()
                     bonuses.add(bonus)
                     asteroid = Asteroid()
                     asteroids.add(asteroid)
+
+        collided_star_lord = pygame.sprite.spritecollide(self, star_lords, False)
+        if collided_star_lord:
+            for star_lord in collided_star_lord:
+                if star_lord.hp > 1:
+                    star_lord.hp += -self.damage
+                else:
+                    star_lord.kill()
+                    self.kill()
 
     def update(self):
         self.movement()

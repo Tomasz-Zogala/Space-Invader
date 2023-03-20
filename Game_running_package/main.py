@@ -1,8 +1,8 @@
 import pygame
 
 from Enemies_package.asteroid import Asteroid
-from Enemies_package.enemy import Enemy
-from Sprites_package.sprites import players, asteroids, guns, bonuses
+from Enemies_package.star_lord import Star_lord
+from Sprites_package.sprites import players, asteroids, guns, bonuses, star_lords
 from Player_package.player import Player
 
 pygame.init()
@@ -44,6 +44,7 @@ clock = pygame.time.Clock()
 game_over = False
 gameplay_state = False
 first_run = True
+is_boss_arrived = False
 
 
 # Display score
@@ -64,6 +65,7 @@ while not game_over:
             guns.empty()
             asteroids.empty()
             bonuses.empty()
+            star_lords.empty()
 
             for i in range(4):
                 asteroid = Asteroid()
@@ -81,12 +83,14 @@ while not game_over:
         # Draw the sprites
         players.draw(screen)
         asteroids.draw(screen)
+        star_lords.draw(screen)
         guns.draw(screen)
         bonuses.draw(screen)
 
         # Update the sprites
         players.update()
         asteroids.update()
+        star_lords.update()
         guns.update()
         bonuses.update()
 
@@ -95,6 +99,11 @@ while not game_over:
         if collided_player:
             first_run = False
             gameplay_state = False
+
+        if player.score == 200 and not is_boss_arrived:
+            is_boss_arrived = True
+            star_lord = Star_lord()
+            star_lords.add(star_lord)
 
     else:
         if first_run:
@@ -107,7 +116,6 @@ while not game_over:
             screen.blit(play_again_m, play_again_mR)
             display_score(player.score, 400, 700, '#000000')
 
-    # Update the screen
     pygame.display.flip()
     clock.tick(60)
 pygame.quit()
