@@ -1,3 +1,5 @@
+import random
+
 import pygame
 
 from Enemies_package.asteroid import Asteroid

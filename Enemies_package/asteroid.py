@@ -58,14 +58,6 @@ class Asteroid(Enemy):
             self.rect.center = old_center
             self.image.fill('#B25959')
 
-    def bullet_service(self):
-        pygame.sprite.spritecollide(self, guns, True)
-
-    def update(self):
-        self.bullet_service()
-        self.movement()
-        self.hp_service()
-
     def default(self):
         # Stats
         self.hp = 3

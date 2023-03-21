@@ -34,7 +34,3 @@ class Rocket_launcher(Gun):
         self.laser_audio = pygame.mixer.Sound('Additional_resources/Audio/Laser_sound.mp3')
         self.laser_audio.set_volume(0.2)
         self.laser_audio.play()
-
-    def update(self):
-        self.movement()
-        self.hit_service()

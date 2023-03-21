@@ -1,5 +1,6 @@
 import pygame
 
+from Guns_package.flame_thrower import Flame_thrower
 from Guns_package.laser_gun import Laser_gun
 from Guns_package.rocket_launcher import Rocket_launcher
 from Sprites_package.sprites import guns, bonuses
@@ -13,7 +14,7 @@ class Player(pygame.sprite.Sprite):
         # Stats
         self.speed = 10
         self.player_timer = 0
-        self.using_weapon_type = "Rocket_launcher"
+        self.using_weapon_type = "Flame_thrower"
 
         # Image data
         self.width = 50
@@ -66,6 +67,11 @@ class Player(pygame.sprite.Sprite):
             rocket_launcher = Rocket_launcher(self.rect.center)
             guns.add(rocket_launcher)
             self.player_timer = rocket_launcher.fire_rate
+
+        if keys[pygame.K_SPACE] and self.using_weapon_type == 'Flame_thrower' and self.player_timer <= 0:
+            flame_thrower = Flame_thrower(self.rect.center)
+            guns.add(flame_thrower)
+            self.player_timer = flame_thrower.fire_rate
 
         self.player_timer += -100
 

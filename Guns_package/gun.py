@@ -1,9 +1,10 @@
 import pygame
 
 from Bonuses_package.bonus import Bonus
+from Bonuses_package.score_bonus import Score_bonus
 from Enemies_package.asteroid import Asteroid
 from Enemies_package.star_lord import Star_lord
-from Sprites_package.sprites import bonuses, enemies
+from Sprites_package.sprites import bonuses, enemies, guns
 
 
 # Define the Gun class
@@ -45,21 +46,23 @@ class Gun(pygame.sprite.Sprite):
 
         if collided_enemies:
             for enemy in collided_enemies:
-                if enemy.hp > 0:
-                    enemy.hp += -self.damage
-                elif type(enemy) == Asteroid:
-                    bonus = Bonus(enemy.rect.center, enemy.speed_y * 2)
-                    enemy.kill()
-                    self.kill()
-                    bonuses.add(bonus)
-                    enemy = Asteroid()
-                    enemies.add(enemy)
-                elif type(enemy) == Star_lord:
-                    enemy.kill()
-                    self.kill()
-                    for i in range(2):
-                        asteroid = Asteroid()
-                        enemies.add(asteroid)
+                pygame.sprite.spritecollide(enemy, guns, True)
+                enemy.hp += -self.damage
+                if enemy.hp <= 0:
+                    if type(enemy) == Asteroid:
+
+                        enemy.kill()
+
+                        bonus = Score_bonus(enemy.rect.center, enemy.speed_y * 2)
+                        bonuses.add(bonus)
+
+                        enemy = Asteroid()
+                        enemies.add(enemy)
+                    elif type(enemy) == Star_lord:
+                        enemy.kill()
+                        for i in range(2):
+                            asteroid = Asteroid()
+                            enemies.add(asteroid)
 
     def update(self):
         self.movement()

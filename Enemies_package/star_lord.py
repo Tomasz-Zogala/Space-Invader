@@ -44,11 +44,3 @@ class Star_lord(Enemy):
     def hp_service(self):
         if self.hp <= self.hp/2:
             self.image.fill('#451212')
-
-    def bullet_service(self):
-        pygame.sprite.spritecollide(self, guns, True)
-
-    def update(self):
-        self.bullet_service()
-        self.movement()
-        self.hp_service()
