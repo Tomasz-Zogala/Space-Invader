@@ -12,7 +12,8 @@ class Asteroid(Enemy):
 
         # Stats
         self.hp = 3
-        self.speed = random.randrange(2, 4)
+        self.speed_x = 0
+        self.speed_y = random.randrange(2, 5)
 
         # Image data
         self.width = 50
@@ -29,7 +30,7 @@ class Asteroid(Enemy):
         self.rect.y = random.randrange(-100, -self.rect.height)
 
     def movement(self):
-        self.rect.y += self.speed
+        self.rect.y += self.speed_y
         if self.rect.y > 800:
             self.rect.x = random.randrange(800 - self.rect.width)
             self.rect.y = random.randrange(-100, -self.rect.height)
@@ -68,7 +69,7 @@ class Asteroid(Enemy):
     def default(self):
         # Stats
         self.hp = 3
-        self.speed = random.randrange(2, 4)
+        self.speed_y = random.randrange(2, 4)
 
         # Image data
         self.width = 50

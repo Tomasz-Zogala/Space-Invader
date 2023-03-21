@@ -2,7 +2,7 @@ import pygame
 
 from Enemies_package.asteroid import Asteroid
 from Enemies_package.star_lord import Star_lord
-from Sprites_package.sprites import players, asteroids, guns, bonuses, star_lords
+from Sprites_package.sprites import players, guns, bonuses, enemies
 from Player_package.player import Player
 
 pygame.init()
@@ -36,15 +36,12 @@ to_play_mR = to_play_m.get_rect(center=(400, 600))
 player = Player()
 players.add(player)
 
-for i in range(4):
-    asteroid = Asteroid()
-    asteroids.add(asteroid)
-
 clock = pygame.time.Clock()
 game_over = False
 gameplay_state = False
 first_run = True
-is_boss_arrived = False
+is_first_boss_arrived = False
+game_timer = 0
 
 
 # Display score
@@ -63,13 +60,13 @@ while not game_over:
 
         if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE and not gameplay_state:
             guns.empty()
-            asteroids.empty()
+            enemies.empty()
             bonuses.empty()
-            star_lords.empty()
+            is_first_boss_arrived = False
 
-            for i in range(4):
+            for i in range(2):
                 asteroid = Asteroid()
-                asteroids.add(asteroid)
+                enemies.add(asteroid)
 
             player.kill()
             player = Player()
@@ -82,28 +79,33 @@ while not game_over:
 
         # Draw the sprites
         players.draw(screen)
-        asteroids.draw(screen)
-        star_lords.draw(screen)
+        enemies.draw(screen)
         guns.draw(screen)
         bonuses.draw(screen)
 
         # Update the sprites
         players.update()
-        asteroids.update()
-        star_lords.update()
+        enemies.update()
         guns.update()
         bonuses.update()
 
+        # Score update
+        if game_timer >= 10000 and player.score > 0:
+            player.score += -10
+            game_timer = 0
+
+        game_timer += 100
+
         # Check for collisions between the player and enemies
-        collided_player = pygame.sprite.spritecollide(player, asteroids, False)
+        collided_player = pygame.sprite.spritecollide(player, enemies, False)
         if collided_player:
             first_run = False
             gameplay_state = False
 
-        if player.score == 200 and not is_boss_arrived:
-            is_boss_arrived = True
+        if player.score >= 200 and not is_first_boss_arrived:
+            is_first_boss_arrived = True
             star_lord = Star_lord()
-            star_lords.add(star_lord)
+            enemies.add(star_lord)
 
     else:
         if first_run:

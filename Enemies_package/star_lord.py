@@ -12,7 +12,8 @@ class Star_lord(Enemy):
 
         # Stats
         self.hp = 20
-        self.speed = 2
+        self.speed_x = 3
+        self.speed_y = 2
         self.star_lord_timer = 0
 
         # Image data
@@ -29,19 +30,20 @@ class Star_lord(Enemy):
         self.rect.center = (400, 50)
 
     def movement(self):
-        self.rect.x += self.speed
+        self.rect.x += self.speed_x
+        self.rect.y += self.speed_y
         if self.rect.left == 800:
             self.rect.right = 0
 
+        if self.rect.bottom >= 150:
+            self.speed_y = self.speed_y*-1
+
+        if self.rect.top <= 0:
+            self.speed_y = self.speed_y * -1
+
     def hp_service(self):
-        if self.hp == 15:
-            print(15)
-
-        if self.hp == 10:
-            print(10)
-
-        if self.hp == 5:
-            print(5)
+        if self.hp <= self.hp/2:
+            self.image.fill('#451212')
 
     def bullet_service(self):
         pygame.sprite.spritecollide(self, guns, True)
@@ -50,6 +52,3 @@ class Star_lord(Enemy):
         self.bullet_service()
         self.movement()
         self.hp_service()
-
-    def default(self):
-        pass

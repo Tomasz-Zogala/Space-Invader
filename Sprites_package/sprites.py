@@ -7,8 +7,7 @@ players = pygame.sprite.Group()
 guns = pygame.sprite.Group()
 
 # Enemies
-asteroids = pygame.sprite.Group()
-star_lords = pygame.sprite.Group()
+enemies = pygame.sprite.Group()
 
 # Bonuses
 bonuses = pygame.sprite.Group()

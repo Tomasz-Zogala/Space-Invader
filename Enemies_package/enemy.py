@@ -11,7 +11,8 @@ class Enemy(pygame.sprite.Sprite):
 
         # Stats
         self.hp = 0
-        self.speed = 0
+        self.speed_x = 0
+        self.speed_y = 0
 
         # Image data
         self.width = 0
@@ -40,6 +41,3 @@ class Enemy(pygame.sprite.Sprite):
         self.bullet_service()
         self.movement()
         self.hp_service()
-
-    def default(self):
-        pass

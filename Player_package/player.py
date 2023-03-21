@@ -1,6 +1,7 @@
 import pygame
 
-from Guns_package.gun import Gun
+from Guns_package.laser_gun import Laser_gun
+from Guns_package.rocket_launcher import Rocket_launcher
 from Sprites_package.sprites import guns, bonuses
 
 
@@ -12,6 +13,7 @@ class Player(pygame.sprite.Sprite):
         # Stats
         self.speed = 10
         self.player_timer = 0
+        self.using_weapon_type = "Rocket_launcher"
 
         # Image data
         self.width = 50
@@ -55,11 +57,19 @@ class Player(pygame.sprite.Sprite):
 
     def shooting(self):
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_SPACE] and self.player_timer <= 0:
-            gun = Gun(self.rect.center)
-            guns.add(gun)
-            self.player_timer = gun.fire_rate
+        if keys[pygame.K_SPACE] and self.using_weapon_type == 'Laser_gun' and self.player_timer <= 0:
+            laser_gun = Laser_gun(self.rect.center)
+            guns.add(laser_gun)
+            self.player_timer = laser_gun.fire_rate
+
+        if keys[pygame.K_SPACE] and self.using_weapon_type == 'Rocket_launcher' and self.player_timer <= 0:
+            rocket_launcher = Rocket_launcher(self.rect.center)
+            guns.add(rocket_launcher)
+            self.player_timer = rocket_launcher.fire_rate
+
         self.player_timer += -100
+
+
 
     def bonus_service(self):
         collided_bonus = pygame.sprite.spritecollide(self, bonuses, True)

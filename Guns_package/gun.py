@@ -2,7 +2,8 @@ import pygame
 
 from Bonuses_package.bonus import Bonus
 from Enemies_package.asteroid import Asteroid
-from Sprites_package.sprites import asteroids, bonuses, star_lords
+from Enemies_package.star_lord import Star_lord
+from Sprites_package.sprites import bonuses, enemies
 
 
 # Define the Gun class
@@ -11,12 +12,13 @@ class Gun(pygame.sprite.Sprite):
         super().__init__()
 
         # Stats
-        self.damage = 1
-        self.fire_rate = 300
+        self.damage = 0
+        self.fire_rate = 0
+        self.bullet_speed = 0
 
         # Image data
-        self.width = 10
-        self.height = 15
+        self.width = 0
+        self.height = 0
         self.color = '#938D8D'
 
         # Image
@@ -33,33 +35,31 @@ class Gun(pygame.sprite.Sprite):
         self.laser_audio.play()
 
     def movement(self):
-        self.rect.y += -10
+        self.rect.y += -self.bullet_speed
 
         if self.rect.y < -100:
             self.kill()
 
     def hit_service(self):
-        collided_asteroid = pygame.sprite.spritecollide(self, asteroids, False)
-        if collided_asteroid:
-            for asteroid in collided_asteroid:
-                if asteroid.hp > 1:
-                    asteroid.hp += -self.damage
-                else:
-                    bonus = Bonus(asteroid.rect.center, asteroid.speed*2)
-                    asteroid.kill()
+        collided_enemies = pygame.sprite.spritecollide(self, enemies, False)
+
+        if collided_enemies:
+            for enemy in collided_enemies:
+                if enemy.hp > 0:
+                    enemy.hp += -self.damage
+                elif type(enemy) == Asteroid:
+                    bonus = Bonus(enemy.rect.center, enemy.speed_y * 2)
+                    enemy.kill()
                     self.kill()
                     bonuses.add(bonus)
-                    asteroid = Asteroid()
-                    asteroids.add(asteroid)
-
-        collided_star_lord = pygame.sprite.spritecollide(self, star_lords, False)
-        if collided_star_lord:
-            for star_lord in collided_star_lord:
-                if star_lord.hp > 1:
-                    star_lord.hp += -self.damage
-                else:
-                    star_lord.kill()
+                    enemy = Asteroid()
+                    enemies.add(enemy)
+                elif type(enemy) == Star_lord:
+                    enemy.kill()
                     self.kill()
+                    for i in range(2):
+                        asteroid = Asteroid()
+                        enemies.add(asteroid)
 
     def update(self):
         self.movement()
