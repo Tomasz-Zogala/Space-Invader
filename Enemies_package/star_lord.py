@@ -11,7 +11,7 @@ class Star_lord(Enemy):
         super().__init__()
 
         # Stats
-        self.hp = 20
+        self.hp = 60
         self.speed_x = 3
         self.speed_y = 2
         self.star_lord_timer = 0
@@ -42,5 +42,9 @@ class Star_lord(Enemy):
             self.speed_y = self.speed_y * -1
 
     def hp_service(self):
-        if self.hp <= self.hp/2:
+        if self.hp <= 30:
             self.image.fill('#451212')
+
+    def update(self):
+        self.movement()
+        self.hp_service()

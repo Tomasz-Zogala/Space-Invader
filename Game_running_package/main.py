@@ -80,15 +80,16 @@ while not game_over:
         display_score(player.score, 400, 50, '#E7CFCF')
 
         # Draw the sprites
+
+        guns.draw(screen)
         players.draw(screen)
         enemies.draw(screen)
-        guns.draw(screen)
         bonuses.draw(screen)
 
         # Update the sprites
+        guns.update()
         players.update()
         enemies.update()
-        guns.update()
         bonuses.update()
 
         # Score update

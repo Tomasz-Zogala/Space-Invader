@@ -11,7 +11,7 @@ class Asteroid(Enemy):
         super().__init__()
 
         # Stats
-        self.hp = 3
+        self.hp = 15
         self.speed_x = 0
         self.speed_y = random.randrange(2, 5)
 
@@ -37,7 +37,7 @@ class Asteroid(Enemy):
             self.default()
 
     def hp_service(self):
-        if self.hp == 2:
+        if self.hp <= 10:
             new_width = int(self.width * 0.8)  # reduce the width by 50%
             new_height = int(self.height * 0.8)  # reduce the height by 50%
             old_center = self.rect.center
@@ -48,7 +48,7 @@ class Asteroid(Enemy):
 
             self.image.fill('#DEA0A0')
 
-        if self.hp == 1:
+        if self.hp <= 5:
             new_width = int(self.width * 0.7)  # reduce the width by 50%
             new_height = int(self.height * 0.7)  # reduce the height by 50%
             old_center = self.rect.center
@@ -58,9 +58,13 @@ class Asteroid(Enemy):
             self.rect.center = old_center
             self.image.fill('#B25959')
 
+    def update(self):
+        self.movement()
+        self.hp_service()
+
     def default(self):
         # Stats
-        self.hp = 3
+        self.hp = 15
         self.speed_y = random.randrange(2, 4)
 
         # Image data

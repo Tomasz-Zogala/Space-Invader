@@ -2,6 +2,8 @@ import pygame
 
 from Guns_package.flame_thrower import Flame_thrower
 from Guns_package.laser_gun import Laser_gun
+from Guns_package.laser_rifle import Laser_rifle
+from Guns_package.laser_ring import Laser_ring
 from Guns_package.rocket_launcher import Rocket_launcher
 from Sprites_package.sprites import guns, bonuses
 
@@ -14,7 +16,7 @@ class Player(pygame.sprite.Sprite):
         # Stats
         self.speed = 10
         self.player_timer = 0
-        self.using_weapon_type = "Flame_thrower"
+        self.using_weapon_type = "Laser_ring"
 
         # Image data
         self.width = 50
@@ -72,6 +74,17 @@ class Player(pygame.sprite.Sprite):
             flame_thrower = Flame_thrower(self.rect.center)
             guns.add(flame_thrower)
             self.player_timer = flame_thrower.fire_rate
+
+        if keys[pygame.K_SPACE] and self.using_weapon_type == 'Laser_rifle' and self.player_timer <= 0:
+            laser_rifle = Laser_rifle(self.rect.center)
+            guns.add(laser_rifle)
+            self.player_timer = laser_rifle.fire_rate
+
+        if keys[pygame.K_SPACE] and self.using_weapon_type == 'Laser_ring' and self.player_timer <= 0:
+            laser_ring = Laser_ring(self.rect.center)
+            guns.add(laser_ring)
+            self.player_timer = laser_ring.fire_rate
+
 
         self.player_timer += -100
 

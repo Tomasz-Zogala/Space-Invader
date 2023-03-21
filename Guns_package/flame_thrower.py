@@ -22,7 +22,7 @@ class Flame_thrower(Gun):
 
         # Image data
         self.width = 15
-        self.height = 40
+        self.height = 20
         self.color = '#033BFB'
 
         # Image

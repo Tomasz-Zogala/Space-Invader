@@ -31,9 +31,9 @@ class Gun(pygame.sprite.Sprite):
         self.rect.center = center
 
         # Audio
-        self.laser_audio = pygame.mixer.Sound('Additional_resources/Audio/Laser_sound.mp3')
-        self.laser_audio.set_volume(0.2)
-        self.laser_audio.play()
+        # self.laser_audio = pygame.mixer.Sound()
+        # self.laser_audio.set_volume(0.2)
+        # self.laser_audio.play()
 
     def movement(self):
         self.rect.y += -self.bullet_speed
