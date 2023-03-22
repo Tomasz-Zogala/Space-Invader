@@ -9,12 +9,12 @@ from Consts_package.consts import bonuses, enemies
 
 # Define the Rocket_launcher class
 class Rocket_launcher(Gun):
-    def __init__(self, center):
-        super().__init__(center)
+    def __init__(self, center, damage_multiplier, fire_rate_multiplier):
+        super().__init__(center, damage_multiplier, fire_rate_multiplier)
 
         # Stats
-        self.damage = 15
-        self.fire_rate = 4000
+        self.damage = 15 * damage_multiplier
+        self.fire_rate = 4000 * fire_rate_multiplier
         self.bullet_speed = 5
 
         # Image data

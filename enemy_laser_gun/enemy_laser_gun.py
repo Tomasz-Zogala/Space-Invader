@@ -5,18 +5,18 @@ from Consts_package.consts import players, enemies_laser_guns, SCREEN_HEIGHT
 
 
 class Enemy_laser_gun(pygame.sprite.Sprite):
-    def __init__(self, center):
+    def __init__(self, center, damage, fire_rate, bullet_speed, width, height, color):
         super().__init__()
 
         # Stats
-        self.damage = 1
-        self.fire_rate = 1000
-        self.bullet_speed = 15
+        self.damage = damage
+        self.fire_rate = fire_rate
+        self.bullet_speed = bullet_speed
 
         # Image data
-        self.width = 15
-        self.height = 30
-        self.color = '#000000'
+        self.width = width
+        self.height = height
+        self.color = color
 
         # Image
         self.image = pygame.Surface([self.width, self.height])

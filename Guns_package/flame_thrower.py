@@ -10,12 +10,12 @@ from Consts_package.consts import bonuses, enemies
 
 # Define the Flame_thrower class
 class Flame_thrower(Gun):
-    def __init__(self, center):
-        super().__init__(center)
+    def __init__(self, center, damage_multiplier, fire_rate_multiplier):
+        super().__init__(center, damage_multiplier, fire_rate_multiplier)
 
         # Stats
-        self.damage = 0.1
-        self.fire_rate = 100
+        self.damage = 0.1 * damage_multiplier
+        self.fire_rate = 100 * fire_rate_multiplier
         self.bullet_speed = 15
         self.range_timer_max = 1400
         self.range_timer_min = 0

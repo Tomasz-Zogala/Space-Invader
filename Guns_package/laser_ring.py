@@ -10,12 +10,12 @@ from Consts_package.consts import bonuses, enemies
 
 # Define the Laser_ring class
 class Laser_ring(Gun):
-    def __init__(self, center):
-        super().__init__(center)
+    def __init__(self, center, damage_multiplier, fire_rate_multiplier):
+        super().__init__(center, damage_multiplier, fire_rate_multiplier)
 
         # Stats
-        self.damage = 0.1
-        self.fire_rate = 80
+        self.damage = 0.1 * damage_multiplier
+        self.fire_rate = 80 * fire_rate_multiplier
         self.bullet_speed = 10
         self.range_timer_max = 150
         self.range_timer_min = 0

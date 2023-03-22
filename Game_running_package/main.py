@@ -1,14 +1,17 @@
-import random
-
 import pygame
 
 
 from Enemies_package.asteroid import Asteroid
+from Enemies_package.bounty_hunter import Bounty_hunter
 from Enemies_package.star_lord import Star_lord
 from Consts_package.consts import players, guns, bonuses, enemies, enemies_laser_guns, SCREEN_WIDTH, SCREEN_HEIGHT, game_over, gameplay_state, first_run, is_first_boss_arrived
 from Player_package.player import Player
 
 pygame.init()
+
+# Game clock
+clock = pygame.time.Clock()
+game_timer = 0
 
 # Screen
 pygame.display.set_caption('SPACE X CALIBUR')
@@ -33,16 +36,9 @@ welcome_mR = welcome_m.get_rect(center=(400, 200))
 to_play_m = font.render('Press SPACE to play!', False, (0, 0, 0))
 to_play_mR = to_play_m.get_rect(center=(400, 600))
 
-# Game setup
-player = Player()
-players.add(player)
-clock = pygame.time.Clock()
-game_timer = 0
-
-
 # Display score
 def display_score(score, pos_x, pos_y, color):
-    score_surf = font.render(f'Score: {score}', False, color)
+    score_surf = font.render(f'SCORE: {score}', False, color)
     score_rect = score_surf.get_rect(center=(pos_x, pos_y))
     screen.blit(score_surf, score_rect)
 
@@ -60,28 +56,31 @@ while not game_over:
             game_over = True
         if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
             game_over = True
-
         if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE and not gameplay_state:
+
+            # Reset
             guns.empty()
             enemies.empty()
             enemies_laser_guns.empty()
             bonuses.empty()
-            is_first_boss_arrived = False
 
             for i in range(5):
                 asteroid = Asteroid()
                 enemies.add(asteroid)
-
+            if not players:
+                player = Player()
+                players.add(player)
             player.kill()
             player = Player()
+
             players.add(player)
             gameplay_state = True
+            is_first_boss_arrived = False
 
     if gameplay_state:
         screen.fill('#0E034E')
 
         # Draw the sprites
-
         guns.draw(screen)
         players.draw(screen)
         enemies.draw(screen)
@@ -100,24 +99,22 @@ while not game_over:
 
         # Score update
         if game_timer >= 10000 and player.score > 0:
-            player.score += -10
+            player.score += -5
             game_timer = 0
-
         game_timer += 100
 
+        # is Player alive
         if not players:
             first_run = False
             gameplay_state = False
 
-        collided_player = pygame.sprite.spritecollide(player, enemies, False)
-        if collided_player:
-            first_run = False
-            gameplay_state = False
-
+        # is Boss arrived
         if player.score >= 0 and not is_first_boss_arrived:
             is_first_boss_arrived = True
-            star_lord = Star_lord()
-            enemies.add(star_lord)
+            # star_lord = Star_lord()
+            # enemies.add(star_lord)
+            bounty_hunter = Bounty_hunter()
+            enemies.add(bounty_hunter)
 
     else:
         if first_run:

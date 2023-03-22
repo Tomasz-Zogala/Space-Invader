@@ -9,12 +9,12 @@ from Consts_package.consts import bonuses, enemies
 
 # Define the Laser_gun class
 class Laser_gun(Gun):
-    def __init__(self, center):
-        super().__init__(center)
+    def __init__(self, center, damage_multiplier, fire_rate_multiplier):
+        super().__init__(center, damage_multiplier, fire_rate_multiplier)
 
         # Stats
-        self.damage = 1
-        self.fire_rate = 600
+        self.damage = 1 * damage_multiplier
+        self.fire_rate = 600 * fire_rate_multiplier
         self.bullet_speed = 10
 
         # Image data
