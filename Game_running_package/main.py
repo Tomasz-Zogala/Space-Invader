@@ -1,22 +1,27 @@
 import pygame
 
-
 from Enemies_package.asteroid import Asteroid
 from Enemies_package.bounty_hunter import Bounty_hunter
 from Enemies_package.star_lord import Star_lord
-from Consts_package.consts import players, guns, bonuses, enemies, enemies_laser_guns, SCREEN_WIDTH, SCREEN_HEIGHT, game_over, gameplay_state, first_run, is_first_boss_arrived
+from Consts_package.consts import players, guns, bonuses, enemies, enemies_laser_guns, SCREEN_WIDTH, SCREEN_HEIGHT, \
+    game_over, gameplay_state, first_run, star_lord_arrived, bounty_hunter_arrived
 from Player_package.player import Player
 
 pygame.init()
 
 # Game clock
 clock = pygame.time.Clock()
-game_timer = 0
+game_score_timer = 0
+game_boss_timer = 0
 
 # Screen
 pygame.display.set_caption('SPACE X CALIBUR')
-screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
+screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.FULLSCREEN)
+# screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
 pygame.mouse.set_visible(False)
+
+# Background graphics
+background_graphics = pygame.image.load('Additional_resources/Graphics/Background_wallpaper.png').convert()
 
 # Menu Audio
 background_audio = pygame.mixer.Sound("Additional_resources/Audio/Second_main_menu.mp3")
@@ -26,15 +31,17 @@ background_audio.play()
 
 # Game messages
 font = pygame.font.Font('Additional_resources/Font/Pixel_font.ttf', 50)
+font_stats = pygame.font.Font('Additional_resources/Font/Pixel_font.ttf', 25)
 
-play_again_m = font.render('Press SPACE to play again!', False, (0, 0, 0))
-play_again_mR = play_again_m.get_rect(center=(400, 200))
+play_again_m = font.render('Press SPACE to play again!', False, '#E7CFCF')
+play_again_mR = play_again_m.get_rect(center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 4))
 
-welcome_m = font.render('WELCOME TO SPACE X CALIBUR', False, (0, 0, 0))
-welcome_mR = welcome_m.get_rect(center=(400, 200))
+welcome_m = font.render('WELCOME TO SPACE X CALIBUR', False, '#E7CFCF')
+welcome_mR = welcome_m.get_rect(center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 4))
 
-to_play_m = font.render('Press SPACE to play!', False, (0, 0, 0))
-to_play_mR = to_play_m.get_rect(center=(400, 600))
+to_play_m = font.render('Press SPACE to play!', False, '#E7CFCF')
+to_play_mR = to_play_m.get_rect(center=(SCREEN_WIDTH / 2, (SCREEN_HEIGHT * 3 / 4)))
+
 
 # Display score
 def display_score(score, pos_x, pos_y, color):
@@ -45,9 +52,93 @@ def display_score(score, pos_x, pos_y, color):
 
 # Display HP
 def display_hp(hp, pos_x, pos_y, color):
-    score_surf = font.render(f'HP: {hp}', False, color)
-    score_rect = score_surf.get_rect(center=(pos_x, pos_y))
-    screen.blit(score_surf, score_rect)
+    hp_surf = font.render(f'HP: {hp}', False, color)
+    hp_rect = hp_surf.get_rect(center=(pos_x, pos_y))
+    screen.blit(hp_surf, hp_rect)
+
+
+# Display Stats
+def display_stats(speed, damage, fire_rate, pos_x, pos_y, color):
+    damage_surf = font_stats.render(f'DMG: {round(damage, 2)}', False, color)
+    damage_rect = damage_surf.get_rect(center=(pos_x, pos_y))
+    screen.blit(damage_surf, damage_rect)
+
+    fire_rate_surf = font_stats.render(f'FIRE RATE: {round(1 / fire_rate, 2)}', False, color)
+    fire_rate_rect = fire_rate_surf.get_rect(center=(pos_x, pos_y + 30))
+    screen.blit(fire_rate_surf, fire_rate_rect)
+
+    speed_surf = font_stats.render(f'SPEED: {round(speed, 2)}', False, color)
+    speed_rect = speed_surf.get_rect(center=(pos_x, pos_y + 60))
+    screen.blit(speed_surf, speed_rect)
+
+
+# Display gun type
+def display_gun(gun_type, pos_x, pos_y, color):
+    gun_surf = font_stats.render(f'GUN: {gun_type}', False, color)
+    gun_rect = gun_surf.get_rect(center=(pos_x, pos_y))
+    screen.blit(gun_surf, gun_rect)
+
+
+def display_gun_availability(gun_1, gun_2, gun_3, gun_4, gun_5, gun_6):
+    gun_1_image = pygame.Surface([15, 15])
+    if gun_1:
+        gun_1_image.fill('#60a05b')
+    else:
+        gun_1_image.fill('#e40b00')
+    gun_1_image_rect = gun_1_image.get_rect()
+    gun_1_image_rect.x = SCREEN_WIDTH / 2 - 50
+    gun_1_image_rect.y = SCREEN_HEIGHT - 20
+    screen.blit(gun_1_image, gun_1_image_rect)
+
+    gun_2_image = pygame.Surface([15, 15])
+    if gun_2:
+        gun_2_image.fill('#60a05b')
+    else:
+        gun_2_image.fill('#e40b00')
+    gun_2_image_rect = gun_2_image.get_rect()
+    gun_2_image_rect.x = SCREEN_WIDTH / 2 - 30
+    gun_2_image_rect.y = SCREEN_HEIGHT - 20
+    screen.blit(gun_2_image, gun_2_image_rect)
+
+    gun_3_image = pygame.Surface([15, 15])
+    if gun_3:
+        gun_3_image.fill('#60a05b')
+    else:
+        gun_3_image.fill('#e40b00')
+    gun_3_image_rect = gun_3_image.get_rect()
+    gun_3_image_rect.x = SCREEN_WIDTH / 2 - 10
+    gun_3_image_rect.y = SCREEN_HEIGHT - 20
+    screen.blit(gun_3_image, gun_3_image_rect)
+
+    gun_4_image = pygame.Surface([15, 15])
+    if gun_4:
+        gun_4_image.fill('#60a05b')
+    else:
+        gun_4_image.fill('#e40b00')
+    gun_4_image_rect = gun_4_image.get_rect()
+    gun_4_image_rect.x = SCREEN_WIDTH / 2 + 10
+    gun_4_image_rect.y = SCREEN_HEIGHT - 20
+    screen.blit(gun_4_image, gun_4_image_rect)
+
+    gun_5_image = pygame.Surface([15, 15])
+    if gun_5:
+        gun_5_image.fill('#60a05b')
+    else:
+        gun_5_image.fill('#e40b00')
+    gun_5_image_rect = gun_5_image.get_rect()
+    gun_5_image_rect.x = SCREEN_WIDTH / 2 + 30
+    gun_5_image_rect.y = SCREEN_HEIGHT - 20
+    screen.blit(gun_5_image, gun_5_image_rect)
+
+    gun_6_image = pygame.Surface([15, 15])
+    if gun_6:
+        gun_6_image.fill('#60a05b')
+    else:
+        gun_6_image.fill('#e40b00')
+    gun_6_image_rect = gun_6_image.get_rect()
+    gun_6_image_rect.x = SCREEN_WIDTH / 2 + 50
+    gun_6_image_rect.y = SCREEN_HEIGHT - 20
+    screen.blit(gun_6_image, gun_6_image_rect)
 
 
 while not game_over:
@@ -64,7 +155,10 @@ while not game_over:
             enemies_laser_guns.empty()
             bonuses.empty()
 
-            for i in range(5):
+            game_score_timer = 0
+            game_boss_timer = 0
+
+            for i in range(2):
                 asteroid = Asteroid()
                 enemies.add(asteroid)
             if not players:
@@ -78,7 +172,7 @@ while not game_over:
             is_first_boss_arrived = False
 
     if gameplay_state:
-        screen.fill('#0E034E')
+        screen.blit(background_graphics, (-120, 0))
 
         # Draw the sprites
         guns.draw(screen)
@@ -94,38 +188,46 @@ while not game_over:
         enemies_laser_guns.update()
         bonuses.update()
 
-        display_score(player.score, 400, 50, '#E7CFCF')
-        display_hp(player.hp, 100, SCREEN_HEIGHT-50, '#E7CFCF')
+        display_score(player.score, SCREEN_WIDTH / 2, 50, '#E7CFCF')
+        display_hp(player.hp, SCREEN_WIDTH - 100, SCREEN_HEIGHT - 50, '#E7CFCF') # 40 / 50
+        display_stats(player.speed, player.gun_damage_multiplier, player.gun_fire_rate_multiplier, 115, SCREEN_HEIGHT - 110, '#E7CFCF') # 90 / 110
+        display_gun(player.using_gun_type, SCREEN_WIDTH / 2, SCREEN_HEIGHT - 40, '#E7CFCF')
+        display_gun_availability(player.minigun, player.rocket_launcher, player.flame_thrower, player.laser_rifle, player.laser_ring, player.sniper_rifle)
+
+        # Timers
+        game_score_timer += 1
+        game_boss_timer += 1
 
         # Score update
-        if game_timer >= 10000 and player.score > 0:
+        if game_score_timer >= 100 and player.score > 0:
             player.score += -5
-            game_timer = 0
-        game_timer += 100
+            game_score_timer = 0
 
         # is Player alive
         if not players:
             first_run = False
             gameplay_state = False
 
-        # is Boss arrived
-        if player.score >= 0 and not is_first_boss_arrived:
-            is_first_boss_arrived = True
-            # star_lord = Star_lord()
-            # enemies.add(star_lord)
+        # Game script
+        if game_boss_timer >= 3000 and not star_lord_arrived:
+            star_lord_arrived = True
+            star_lord = Star_lord()
+            enemies.add(star_lord)
+
+        if game_boss_timer >= 9000 and not bounty_hunter_arrived:
+            bounty_hunter_arrived = True
             bounty_hunter = Bounty_hunter()
             enemies.add(bounty_hunter)
-
     else:
         if first_run:
-            screen.fill('#3C00AD')
+            screen.blit(background_graphics, (-120, 0))
             screen.blit(welcome_m, welcome_mR)
             screen.blit(to_play_m, to_play_mR)
 
         else:
-            screen.fill('#3C00AD')
+            screen.blit(background_graphics, (-120, 0))
             screen.blit(play_again_m, play_again_mR)
-            display_score(player.score, 400, 700, '#000000')
+            display_score(player.score, SCREEN_WIDTH / 2, SCREEN_HEIGHT - 100, '#E7CFCF')
 
     pygame.display.flip()
     clock.tick(60)

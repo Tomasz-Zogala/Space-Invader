@@ -2,7 +2,7 @@ import pygame
 import random
 
 from Enemies_package.enemy import Enemy
-from Consts_package.consts import guns, SCREEN_HEIGHT, SCREEN_WIDTH, players, enemies
+from Consts_package.consts import SCREEN_HEIGHT, SCREEN_WIDTH, players, enemies
 
 
 # Define the Asteroid class
@@ -37,7 +37,7 @@ class Asteroid(Enemy):
             self.rect.y = random.randrange(-100, -self.rect.height)
             self.default()
 
-    def attack(self):
+    def attack_melee(self):
         collided_player = pygame.sprite.spritecollide(self, players, False)
 
         if collided_player:
@@ -72,7 +72,7 @@ class Asteroid(Enemy):
             self.image.fill('#B25959')
 
     def update(self):
-        self.attack()
+        self.attack_melee()
         self.movement()
         self.hp_service()
 

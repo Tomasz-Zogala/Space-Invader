@@ -1,11 +1,13 @@
 import pygame
 
-from Guns_package.flame_thrower import Flame_thrower
-from Guns_package.laser_gun import Laser_gun
-from Guns_package.laser_rifle import Laser_rifle
-from Guns_package.laser_ring import Laser_ring
-from Guns_package.rocket_launcher import Rocket_launcher
-from Consts_package.consts import guns, bonuses, SCREEN_WIDTH, SCREEN_HEIGHT
+from Guns_package.bullet_type_gun_package.minigun import Minigun
+from Guns_package.bullet_type_gun_package.rocket_launcher import Rocket_launcher
+from Guns_package.laser_type_gun_package.laser_thrower import Laser_thrower
+from Guns_package.laser_type_gun_package.laser_rifle import Laser_rifle
+from Guns_package.laser_type_gun_package.laser_ring import Laser_ring
+
+from Consts_package.consts import guns, SCREEN_WIDTH, SCREEN_HEIGHT
+from Guns_package.bullet_type_gun_package.sniper_rifle import Sniper_rifle
 
 
 # Define the Player class
@@ -18,7 +20,7 @@ class Player(pygame.sprite.Sprite):
         self.hp = 3
 
         # Equipment
-        self.gun_list = ["Laser_gun", "Rocket_launcher", "Flame_thrower", "Laser_rifle", "Laser_ring"]
+        self.gun_list = ["Minigun", "Rocket_launcher", "Laser_thrower", "Laser_rifle", "Laser_ring", "Sniper_rifle"]
         self.gun_index = 0
         self.using_gun_type = self.gun_list[self.gun_index]
 
@@ -27,11 +29,12 @@ class Player(pygame.sprite.Sprite):
         self.gun_fire_rate_multiplier = 1
 
         # Obtained gun
-        self.laser_gun = True
-        self.rocket_launcher = True
-        self.flame_thrower = True
-        self.laser_rifle = True
-        self.laser_ring = True
+        self.minigun = True
+        self.rocket_launcher = False
+        self.flame_thrower = False
+        self.laser_rifle = False
+        self.laser_ring = False
+        self.sniper_rifle = False
 
         # Timer
         self.player_timer = 0
@@ -42,8 +45,7 @@ class Player(pygame.sprite.Sprite):
         self.color = '#384426'
 
         # Image
-        self.image = pygame.Surface([self.width, self.height])
-        self.image.fill(self.color)
+        self.image = pygame.image.load('Additional_resources/Graphics/Space_lord.png').convert_alpha()
         self.rect = self.image.get_rect()
 
         # Position
@@ -78,8 +80,8 @@ class Player(pygame.sprite.Sprite):
 
     def shooting(self):
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_SPACE] and self.using_gun_type == 'Laser_gun' and self.player_timer <= 0:
-            laser_gun = Laser_gun(self.rect.center, self.gun_damage_multiplier, self.gun_fire_rate_multiplier)
+        if keys[pygame.K_SPACE] and self.using_gun_type == 'Minigun' and self.player_timer <= 0:
+            laser_gun = Minigun(self.rect.center, self.gun_damage_multiplier, self.gun_fire_rate_multiplier)
             guns.add(laser_gun)
             self.player_timer = laser_gun.fire_rate
 
@@ -88,8 +90,8 @@ class Player(pygame.sprite.Sprite):
             guns.add(rocket_launcher)
             self.player_timer = rocket_launcher.fire_rate
 
-        if keys[pygame.K_SPACE] and self.using_gun_type == 'Flame_thrower' and self.player_timer <= 0:
-            flame_thrower = Flame_thrower(self.rect.center, self.gun_damage_multiplier, self.gun_fire_rate_multiplier)
+        if keys[pygame.K_SPACE] and self.using_gun_type == 'Laser_thrower' and self.player_timer <= 0:
+            flame_thrower = Laser_thrower(self.rect.center, self.gun_damage_multiplier, self.gun_fire_rate_multiplier)
             guns.add(flame_thrower)
             self.player_timer = flame_thrower.fire_rate
 
@@ -103,11 +105,16 @@ class Player(pygame.sprite.Sprite):
             guns.add(laser_ring)
             self.player_timer = laser_ring.fire_rate
 
+        if keys[pygame.K_SPACE] and self.using_gun_type == 'Sniper_rifle' and self.player_timer <= 0:
+            sniper_rifle = Sniper_rifle(self.rect.center, self.gun_damage_multiplier, self.gun_fire_rate_multiplier)
+            guns.add(sniper_rifle)
+            self.player_timer = sniper_rifle.fire_rate
+
         self.player_timer += -100
 
     def change_gun(self):
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_1] and self.laser_gun:
+        if keys[pygame.K_1] and self.minigun:
             self.using_gun_type = self.gun_list[0]
 
         if keys[pygame.K_2] and self.rocket_launcher:
@@ -122,13 +129,10 @@ class Player(pygame.sprite.Sprite):
         if keys[pygame.K_5] and self.laser_ring:
             self.using_gun_type = self.gun_list[4]
 
-    def bonus_service(self):
-        collided_bonus = pygame.sprite.spritecollide(self, bonuses, True)
-        if collided_bonus:
-            self.score += 100
+        if keys[pygame.K_6] and self.sniper_rifle:
+            self.using_gun_type = self.gun_list[5]
 
     def update(self):
         self.movement()
         self.shooting()
         self.change_gun()
-        self.bonus_service()

@@ -1,7 +1,9 @@
 import pygame
 
+from Consts_package.consts import players
 
-# Define the Enemy class
+
+# Define the abstract Enemy class
 class Enemy(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
@@ -28,22 +30,17 @@ class Enemy(pygame.sprite.Sprite):
     def movement(self):
         pass
 
-    def hp_service(self):
+    def attack_ranged(self):
         pass
+
+    def attack_melee(self):
+        collided_player = pygame.sprite.spritecollide(self, players, False)
+
+        if collided_player:
+            for player in collided_player:
+                player.hp += -self.damage
+                if player.hp <= 0:
+                    player.kill()
 
     def update(self):
         pass
-
-        #
-        #
-        # if self.rect.right >= ((SCREEN_WIDTH*2) / 3):
-        #     self.speed_x = self.speed_x * -1
-        #
-        # if self.rect.left <= SCREEN_WIDTH/3:
-        #     self.speed_x = self.speed_x * -1
-        #
-        # if self.rect.top <= SCREEN_HEIGHT/3:
-        #     self.speed_y = self.speed_y * -1
-        #
-        # if self.rect.bottom >= ((SCREEN_HEIGHT*2) / 3):
-        #     self.speed_y = self.speed_y * -1

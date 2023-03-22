@@ -1,24 +1,20 @@
 import pygame
 
-from Guns_package.gun import Gun
-from Bonuses_package.bonus import Bonus
-from Enemies_package.asteroid import Asteroid
-from Enemies_package.star_lord import Star_lord
-from Consts_package.consts import bonuses, enemies
+from Guns_package.bullet_type_gun_package.bullet_type_gun import Bullet_type_gun
 
 
 # Define the Rocket_launcher class
-class Rocket_launcher(Gun):
+class Rocket_launcher(Bullet_type_gun):
     def __init__(self, center, damage_multiplier, fire_rate_multiplier):
         super().__init__(center, damage_multiplier, fire_rate_multiplier)
 
         # Stats
         self.damage = 15 * damage_multiplier
-        self.fire_rate = 4000 * fire_rate_multiplier
-        self.bullet_speed = 5
+        self.fire_rate = 5000 * fire_rate_multiplier
+        self.bullet_speed = 3
 
         # Image data
-        self.width = 40
+        self.width = 60
         self.height = 60
         self.color = '#938D8D'
 
@@ -31,6 +27,3 @@ class Rocket_launcher(Gun):
         self.rect.center = center
 
         # Audio
-        self.laser_audio = pygame.mixer.Sound('Additional_resources/Audio/Laser_sound.mp3')
-        self.laser_audio.set_volume(0.2)
-        self.laser_audio.play()

@@ -1,13 +1,11 @@
-import random
-
 import pygame
 
 from Bonuses_package.bonus import Bonus
 from Consts_package.consts import players
 
 
-# Define the Stats_bonus class
-class Stats_bonus(Bonus):
+# Define the Gun_bonus class
+class Gun_bonus(Bonus):
     def __init__(self, center, speed):
         super().__init__(center, speed)
 
@@ -15,9 +13,9 @@ class Stats_bonus(Bonus):
         self.speed = speed
 
         # Image data
-        self.color = '#FFCC00'
-        self.height = 30
-        self.weight = 30
+        self.color = '#00FFFF'
+        self.height = 50
+        self.weight = 50
 
         # Image
         self.image = pygame.Surface([self.weight, self.height])
@@ -31,12 +29,20 @@ class Stats_bonus(Bonus):
         collided_player = pygame.sprite.spritecollide(self, players, False)
         if collided_player:
             for player in collided_player:
-                random_numer = random.randint(1, 3)
-                if random_numer == 1:
-                    player.gun_damage_multiplier += 0.5
-                if random_numer == 2:
-                    player.gun_fire_rate_multiplier += -0.05
-                if random_numer == 3:
-                    player.speed += 2
+                if player.laser_ring:
+                    player.sniper_rifle = True
+
+                if player.laser_rifle:
+                    player.laser_ring = True
+
+                if player.flame_thrower:
+                    player.laser_rifle = True
+
+                if player.rocket_launcher:
+                    player.flame_thrower = True
+
+                if player.minigun:
+                    player.rocket_launcher = True
+
             self.kill()
-            player.score += 50
+            player.score += 100

@@ -1,26 +1,22 @@
 import pygame
 
-from Guns_package.gun import Gun
-from Bonuses_package.bonus import Bonus
-from Enemies_package.asteroid import Asteroid
-from Enemies_package.star_lord import Star_lord
-from Consts_package.consts import bonuses, enemies
+from Guns_package.laser_type_gun_package.laser_type_gun import Laser_type_gun
 
 
-# Define the Laser_gun class
-class Laser_gun(Gun):
+# Define the Laser_rifle class
+class Laser_rifle(Laser_type_gun):
     def __init__(self, center, damage_multiplier, fire_rate_multiplier):
         super().__init__(center, damage_multiplier, fire_rate_multiplier)
 
         # Stats
-        self.damage = 1 * damage_multiplier
-        self.fire_rate = 600 * fire_rate_multiplier
+        self.damage = 0.1 * damage_multiplier
+        self.fire_rate = 80 * fire_rate_multiplier
         self.bullet_speed = 10
 
         # Image data
-        self.width = 10
-        self.height = 15
-        self.color = '#938D8D'
+        self.width = 3
+        self.height = 10
+        self.color = '#033BFB'
 
         # Image
         self.image = pygame.Surface([self.width, self.height])
@@ -34,3 +30,8 @@ class Laser_gun(Gun):
         self.laser_audio = pygame.mixer.Sound('Additional_resources/Audio/Laser_sound.mp3')
         self.laser_audio.set_volume(0.2)
         self.laser_audio.play()
+
+    def movement(self):
+        self.rect.y += -self.bullet_speed
+        if self.rect.y < -100:
+            self.kill()

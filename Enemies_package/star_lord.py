@@ -1,7 +1,7 @@
 import pygame
 
 from Enemies_package.enemy import Enemy
-from enemy_laser_gun.enemy_laser_gun import Enemy_laser_gun
+from Enemies_package.Enemy_laser_gun.enemy_laser_gun import Enemy_laser_gun
 from Consts_package.consts import enemies_laser_guns, SCREEN_WIDTH, players
 
 
