@@ -5,7 +5,7 @@ from Guns_package.laser_gun import Laser_gun
 from Guns_package.laser_rifle import Laser_rifle
 from Guns_package.laser_ring import Laser_ring
 from Guns_package.rocket_launcher import Rocket_launcher
-from Sprites_package.sprites import guns, bonuses
+from Consts_package.consts import guns, bonuses, SCREEN_WIDTH, SCREEN_HEIGHT
 
 
 # Define the Player class
@@ -16,7 +16,8 @@ class Player(pygame.sprite.Sprite):
         # Stats
         self.speed = 10
         self.player_timer = 0
-        self.using_weapon_type = "Laser_ring"
+        self.hp = 3
+        self.using_weapon_type = "Rocket_launcher"
 
         # Image data
         self.width = 50
@@ -29,7 +30,7 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
 
         # Position
-        self.rect.center = (400, 700)
+        self.rect.center = (SCREEN_WIDTH/2, SCREEN_HEIGHT-SCREEN_HEIGHT/10)
 
         # Audio
         self.player_appear_audio = pygame.mixer.Sound("Additional_resources/Audio/Boss_appear.mp3")
@@ -44,10 +45,10 @@ class Player(pygame.sprite.Sprite):
         if keys[pygame.K_LEFT]:
             self.rect.x -= self.speed
             if self.rect.right <= 0:
-                self.rect.left = 800
+                self.rect.left = SCREEN_WIDTH
         if keys[pygame.K_RIGHT]:
             self.rect.x += self.speed
-            if self.rect.left >= 800:
+            if self.rect.left >= SCREEN_WIDTH:
                 self.rect.right = 0
         if keys[pygame.K_UP]:
             self.rect.y -= self.speed
@@ -55,8 +56,8 @@ class Player(pygame.sprite.Sprite):
                 self.rect.top = 0
         if keys[pygame.K_DOWN]:
             self.rect.y += self.speed
-            if self.rect.bottom >= 800:
-                self.rect.bottom = 800
+            if self.rect.bottom >= SCREEN_HEIGHT:
+                self.rect.bottom = SCREEN_HEIGHT
 
     def shooting(self):
         keys = pygame.key.get_pressed()

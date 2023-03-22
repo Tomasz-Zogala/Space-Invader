@@ -1,7 +1,7 @@
 import pygame
 import random
 
-from Sprites_package.sprites import guns
+from Consts_package.consts import guns
 
 
 # Define the Enemy class

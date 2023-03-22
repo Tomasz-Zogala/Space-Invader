@@ -5,7 +5,7 @@ from Bonuses_package.score_bonus import Score_bonus
 from Enemies_package.asteroid import Asteroid
 from Enemies_package.star_lord import Star_lord
 from Guns_package.gun import Gun
-from Sprites_package.sprites import bonuses, enemies
+from Consts_package.consts import bonuses, enemies
 
 
 # Define the Laser_rifle class

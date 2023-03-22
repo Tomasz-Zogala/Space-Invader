@@ -2,7 +2,7 @@ import pygame
 import random
 
 from Enemies_package.enemy import Enemy
-from Sprites_package.sprites import guns
+from Consts_package.consts import guns, SCREEN_HEIGHT, SCREEN_WIDTH
 
 
 # Define the Asteroid class
@@ -31,10 +31,11 @@ class Asteroid(Enemy):
 
     def movement(self):
         self.rect.y += self.speed_y
-        if self.rect.y > 800:
-            self.rect.x = random.randrange(800 - self.rect.width)
+        if self.rect.y > SCREEN_HEIGHT:
+            self.rect.x = random.randrange(SCREEN_WIDTH - self.rect.width)
             self.rect.y = random.randrange(-100, -self.rect.height)
             self.default()
+
 
     def hp_service(self):
         if self.hp <= 10:

@@ -2,22 +2,21 @@ import random
 
 import pygame
 
+
 from Enemies_package.asteroid import Asteroid
 from Enemies_package.star_lord import Star_lord
-from Sprites_package.sprites import players, guns, bonuses, enemies
+from Consts_package.consts import players, guns, bonuses, enemies, enemies_laser_guns, SCREEN_WIDTH, SCREEN_HEIGHT, game_over, gameplay_state, first_run, is_first_boss_arrived
 from Player_package.player import Player
 
 pygame.init()
 
 # Screen
-SCREEN_WIDTH = 800
-SCREEN_HEIGHT = 800
 pygame.display.set_caption('SPACE X CALIBUR')
 screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
 pygame.mouse.set_visible(False)
 
 # Menu Audio
-background_audio = pygame.mixer.Sound("Additional_resources/Audio/Background_menu_v2.mp3")
+background_audio = pygame.mixer.Sound("Additional_resources/Audio/Second_main_menu.mp3")
 background_audio.play(loops=-1)
 background_audio.set_volume(0.2)
 background_audio.play()
@@ -37,18 +36,20 @@ to_play_mR = to_play_m.get_rect(center=(400, 600))
 # Game setup
 player = Player()
 players.add(player)
-
 clock = pygame.time.Clock()
-game_over = False
-gameplay_state = False
-first_run = True
-is_first_boss_arrived = False
 game_timer = 0
 
 
 # Display score
 def display_score(score, pos_x, pos_y, color):
     score_surf = font.render(f'Score: {score}', False, color)
+    score_rect = score_surf.get_rect(center=(pos_x, pos_y))
+    screen.blit(score_surf, score_rect)
+
+
+# Display HP
+def display_hp(hp, pos_x, pos_y, color):
+    score_surf = font.render(f'HP: {hp}', False, color)
     score_rect = score_surf.get_rect(center=(pos_x, pos_y))
     screen.blit(score_surf, score_rect)
 
@@ -63,10 +64,11 @@ while not game_over:
         if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE and not gameplay_state:
             guns.empty()
             enemies.empty()
+            enemies_laser_guns.empty()
             bonuses.empty()
             is_first_boss_arrived = False
 
-            for i in range(2):
+            for i in range(5):
                 asteroid = Asteroid()
                 enemies.add(asteroid)
 
@@ -77,20 +79,24 @@ while not game_over:
 
     if gameplay_state:
         screen.fill('#0E034E')
-        display_score(player.score, 400, 50, '#E7CFCF')
 
         # Draw the sprites
 
         guns.draw(screen)
         players.draw(screen)
         enemies.draw(screen)
+        enemies_laser_guns.draw(screen)
         bonuses.draw(screen)
 
         # Update the sprites
         guns.update()
         players.update()
         enemies.update()
+        enemies_laser_guns.update()
         bonuses.update()
+
+        display_score(player.score, 400, 50, '#E7CFCF')
+        display_hp(player.hp, 100, SCREEN_HEIGHT-50, '#E7CFCF')
 
         # Score update
         if game_timer >= 10000 and player.score > 0:
@@ -99,13 +105,16 @@ while not game_over:
 
         game_timer += 100
 
-        # Check for collisions between the player and enemies
+        if not players:
+            first_run = False
+            gameplay_state = False
+
         collided_player = pygame.sprite.spritecollide(player, enemies, False)
         if collided_player:
             first_run = False
             gameplay_state = False
 
-        if player.score >= 200 and not is_first_boss_arrived:
+        if player.score >= 0 and not is_first_boss_arrived:
             is_first_boss_arrived = True
             star_lord = Star_lord()
             enemies.add(star_lord)

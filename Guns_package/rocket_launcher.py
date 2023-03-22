@@ -4,7 +4,7 @@ from Guns_package.gun import Gun
 from Bonuses_package.bonus import Bonus
 from Enemies_package.asteroid import Asteroid
 from Enemies_package.star_lord import Star_lord
-from Sprites_package.sprites import bonuses, enemies
+from Consts_package.consts import bonuses, enemies
 
 
 # Define the Rocket_launcher class
@@ -13,13 +13,13 @@ class Rocket_launcher(Gun):
         super().__init__(center)
 
         # Stats
-        self.damage = 6
+        self.damage = 15
         self.fire_rate = 4000
         self.bullet_speed = 5
 
         # Image data
-        self.width = 25
-        self.height = 40
+        self.width = 40
+        self.height = 60
         self.color = '#938D8D'
 
         # Image

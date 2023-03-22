@@ -4,7 +4,7 @@ from Bonuses_package.bonus import Bonus
 from Bonuses_package.score_bonus import Score_bonus
 from Enemies_package.asteroid import Asteroid
 from Enemies_package.star_lord import Star_lord
-from Sprites_package.sprites import bonuses, enemies, guns
+from Consts_package.consts import bonuses, enemies, guns
 
 
 # Define the Gun class
