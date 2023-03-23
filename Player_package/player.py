@@ -26,7 +26,7 @@ class Player(pygame.sprite.Sprite):
 
         # Weapon upgrade
         self.gun_damage_multiplier = 1
-        self.gun_fire_rate_multiplier = 1
+        self.gun_fire_rate_multiplier = 0.3
 
         # Obtained gun
         self.minigun = True
@@ -34,7 +34,7 @@ class Player(pygame.sprite.Sprite):
         self.flame_thrower = False
         self.laser_rifle = False
         self.laser_ring = False
-        self.sniper_rifle = False
+        self.sniper_rifle = True
 
         # Timer
         self.player_timer = 0

@@ -14,9 +14,9 @@ class Gun_bonus(Bonus):
         self.score_bonus = 100
 
         # Image data
-        self.color = '##5100FF'
-        self.height = SCREEN_HEIGHT / 16
-        self.width = SCREEN_WIDTH / 16
+        self.color = '#5100FF'
+        self.height = 50
+        self.width = 50
 
         # Image
         self.image = pygame.Surface([self.width, self.height])

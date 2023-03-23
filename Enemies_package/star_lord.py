@@ -1,4 +1,5 @@
 import pygame
+import random
 
 from Enemies_package.enemy import Enemy
 from Enemies_package.Enemy_laser_gun.enemy_laser_gun import Enemy_laser_gun
@@ -20,8 +21,8 @@ class Star_lord(Enemy):
         self.star_lord_timer = 0
 
         # Image data
-        self.width = SCREEN_WIDTH/8
-        self.height = SCREEN_HEIGHT/16
+        self.width = 100
+        self.height = 50
         self.color = '#145343'
 
         # Image
@@ -30,12 +31,13 @@ class Star_lord(Enemy):
         self.rect = self.image.get_rect()
 
         # Position
-        self.rect.center = (SCREEN_WIDTH/2, 50)
+        self.rect.x = random.randrange(200, SCREEN_WIDTH-200)
+        self.rect.y = 200
 
     def movement(self):
         self.rect.x += self.speed_x
         self.rect.y += self.speed_y
-        if self.rect.left == SCREEN_WIDTH:
+        if self.rect.left >= SCREEN_WIDTH:
             self.rect.right = 0
 
         if self.rect.bottom >= 150:

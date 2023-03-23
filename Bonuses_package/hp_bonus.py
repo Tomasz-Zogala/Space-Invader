@@ -15,8 +15,8 @@ class Hp_bonus(Bonus):
 
         # Image data
         self.color = '##FA4CDA'
-        self.height = SCREEN_HEIGHT / 16
-        self.width = SCREEN_WIDTH / 16
+        self.height = 50
+        self.width = 50
 
         # Image
         self.image = pygame.Surface([self.width, self.height])

@@ -1,18 +1,22 @@
 import pygame
 
 # Screen
-# SCREEN_WIDTH = 2560
-# SCREEN_HEIGHT = 1600
+SCREEN_WIDTH = 2560
+SCREEN_HEIGHT = 1600
 
-SCREEN_WIDTH = 800
-SCREEN_HEIGHT = 800
+# SCREEN_WIDTH = 800
+# SCREEN_HEIGHT = 800
 
 # Game
 game_over = False
 gameplay_state = False
 first_run = True
+
+# Bosses
 star_lord_arrived = False
 bounty_hunter_arrived = False
+ghast_of_the_void_arrived = False
+galactic_devourer_arrived = False
 
 # Player
 players = pygame.sprite.Group()

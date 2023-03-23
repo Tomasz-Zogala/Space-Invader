@@ -1,10 +1,10 @@
 import pygame
 
 from Bonuses_package.gun_bonus import Gun_bonus
-from Bonuses_package.hp_bonus import Hp_bonus
-from Bonuses_package.stats_bonus import Stats_bonus
 from Enemies_package.asteroid import Asteroid
 from Enemies_package.bounty_hunter import Bounty_hunter
+from Enemies_package.galactic_devourer import Galactic_devourer
+from Enemies_package.ghast_of_the_void import Ghast_of_the_void
 from Enemies_package.star_lord import Star_lord
 from Consts_package.consts import bonuses, enemies, guns
 from Guns_package.gun import Gun
@@ -41,7 +41,7 @@ class Bullet_type_gun(Gun):
     def killing(self, enemy):
         if type(enemy) == Asteroid:
             enemy.kill()
-            bonus = Stats_bonus(enemy.rect.center, enemy.speed_y * 2)
+            bonus = Gun_bonus(enemy.rect.center, enemy.speed_y * 2)
             bonuses.add(bonus)
             enemy = Asteroid()
             enemies.add(enemy)
@@ -49,16 +49,18 @@ class Bullet_type_gun(Gun):
         elif type(enemy) == Star_lord:
             enemy.kill()
             self.kill()
-            for i in range(2):
-                asteroid = Asteroid()
-                enemies.add(asteroid)
 
         elif type(enemy) == Bounty_hunter:
             enemy.kill()
             self.kill()
-            for i in range(2):
-                asteroid = Asteroid()
-                enemies.add(asteroid)
+
+        elif type(enemy) == Ghast_of_the_void:
+            enemy.kill()
+            self.kill()
+
+        elif type(enemy) == Galactic_devourer:
+            enemy.kill()
+            self.kill()
 
     def hit_service(self):
         collided_enemies = pygame.sprite.spritecollide(self, enemies, False)

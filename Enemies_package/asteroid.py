@@ -17,8 +17,8 @@ class Asteroid(Enemy):
         self.damage = 1
 
         # Image data
-        self.width = SCREEN_WIDTH/16
-        self.height = SCREEN_HEIGHT/16
+        self.width = 50
+        self.height = 50
         self.color = '#938D8D'
 
         # Image
@@ -27,8 +27,8 @@ class Asteroid(Enemy):
         self.rect = self.image.get_rect()
 
         # Position
-        self.rect.x = random.randrange(800 - self.rect.width)
-        self.rect.y = random.randrange(-100, -self.rect.height)
+        self.rect.x = random.randrange(0, SCREEN_WIDTH)
+        self.rect.y = -20
 
     def movement(self):
         self.rect.y += self.speed_y

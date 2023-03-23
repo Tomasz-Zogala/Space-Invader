@@ -2,9 +2,11 @@ import pygame
 
 from Enemies_package.asteroid import Asteroid
 from Enemies_package.bounty_hunter import Bounty_hunter
+from Enemies_package.galactic_devourer import Galactic_devourer
+from Enemies_package.ghast_of_the_void import Ghast_of_the_void
 from Enemies_package.star_lord import Star_lord
 from Consts_package.consts import players, guns, bonuses, enemies, enemies_laser_guns, SCREEN_WIDTH, SCREEN_HEIGHT, \
-    game_over, gameplay_state, first_run, star_lord_arrived, bounty_hunter_arrived
+    game_over, gameplay_state, first_run, star_lord_arrived, bounty_hunter_arrived, ghast_of_the_void_arrived, galactic_devourer_arrived
 from Player_package.player import Player
 
 pygame.init()
@@ -16,8 +18,8 @@ game_boss_timer = 0
 
 # Screen
 pygame.display.set_caption('SPACE X CALIBUR')
-# screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.FULLSCREEN)
-screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
+screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.FULLSCREEN)
+# screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
 pygame.mouse.set_visible(False)
 
 # Background graphics
@@ -52,7 +54,7 @@ def display_score(score, pos_x, pos_y, color):
 
 # Display HP
 def display_hp(hp, pos_x, pos_y, color):
-    hp_surf = font.render(f'HP: {hp}', False, color)
+    hp_surf = font.render(f'HP: {round(hp, 2)}', False, color)
     hp_rect = hp_surf.get_rect(center=(pos_x, pos_y))
     screen.blit(hp_surf, hp_rect)
 
@@ -209,7 +211,7 @@ while not game_over:
             gameplay_state = False
 
         # Game script
-        if game_boss_timer >= 100 and not star_lord_arrived:
+        if game_boss_timer >= 10000 and not star_lord_arrived:
             star_lord_arrived = True
             star_lord = Star_lord()
             enemies.add(star_lord)
@@ -218,6 +220,16 @@ while not game_over:
             bounty_hunter_arrived = True
             bounty_hunter = Bounty_hunter()
             enemies.add(bounty_hunter)
+
+        if game_boss_timer >= 100 and not ghast_of_the_void_arrived:
+            ghast_of_the_void_arrived = True
+            ghast_of_the_void = Ghast_of_the_void()
+            enemies.add(ghast_of_the_void)
+
+        if game_boss_timer >= 100 and not galactic_devourer_arrived:
+            galactic_devourer_arrived = True
+            galactic_devourer = Galactic_devourer()
+            enemies.add(galactic_devourer)
     else:
         if first_run:
             screen.blit(background_graphics, (-120, 0))

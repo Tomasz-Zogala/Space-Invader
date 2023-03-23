@@ -16,12 +16,12 @@ class Stats_bonus(Bonus):
         self.score_bonus = 50
 
         # Image data
-        self.color = '#FFCC00'
+        self.color = '#000000'
         self.color_damage_up = '#F3A31F'
         self.color_fire_rate_up = '#F3DA1F'
         self.color_speed_up = '#1FF3D3'
-        self.height = SCREEN_HEIGHT / 23
-        self.width = SCREEN_WIDTH / 23
+        self.height = 50
+        self.width = 50
 
         # Image
         self.image = pygame.Surface([self.width, self.height])
