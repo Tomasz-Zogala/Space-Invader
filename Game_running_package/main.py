@@ -6,7 +6,8 @@ from Enemies_package.galactic_devourer import Galactic_devourer
 from Enemies_package.ghast_of_the_void import Ghast_of_the_void
 from Enemies_package.star_lord import Star_lord
 from Consts_package.consts import players, guns, bonuses, enemies, enemies_laser_guns, SCREEN_WIDTH, SCREEN_HEIGHT, \
-    game_over, gameplay_state, first_run, star_lord_arrived, bounty_hunter_arrived, ghast_of_the_void_arrived, galactic_devourer_arrived
+    game_over, gameplay_state, first_run, star_lord_arrived, bounty_hunter_arrived, ghast_of_the_void_arrived, \
+    galactic_devourer_arrived, fullscreen
 from Player_package.player import Player
 
 pygame.init()
@@ -18,8 +19,12 @@ game_boss_timer = 0
 
 # Screen
 pygame.display.set_caption('SPACE X CALIBUR')
-screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.FULLSCREEN)
-# screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
+if fullscreen:
+    screen_background_position = (-120, 0)
+    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.FULLSCREEN)
+else:
+    screen_background_position = (-770, -300)
+    screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
 pygame.mouse.set_visible(False)
 
 # Background graphics
@@ -157,24 +162,29 @@ while not game_over:
             enemies_laser_guns.empty()
             bonuses.empty()
 
-            game_score_timer = 0
-            game_boss_timer = 0
+            gameplay_state = True
+            star_lord_arrived = False
+            bounty_hunter_arrived = False
+            ghast_of_the_void_arrived = False
+            galactic_devourer_arrived = False
 
             for i in range(2):
                 asteroid = Asteroid()
                 enemies.add(asteroid)
+
             if not players:
                 player = Player()
                 players.add(player)
+
             player.kill()
             player = Player()
-
             players.add(player)
-            gameplay_state = True
-            is_first_boss_arrived = False
+
+            game_score_timer = 0
+            game_boss_timer = 0
 
     if gameplay_state:
-        screen.blit(background_graphics, (-120, 0))
+        screen.blit(background_graphics, screen_background_position)
 
         # Draw the sprites
         guns.draw(screen)
@@ -191,8 +201,8 @@ while not game_over:
         bonuses.update()
 
         display_score(player.score, SCREEN_WIDTH / 2, 50, '#E7CFCF')
-        display_hp(player.hp, SCREEN_WIDTH - 100, SCREEN_HEIGHT - 50, '#E7CFCF') # 40 / 50
-        display_stats(player.speed, player.gun_damage_multiplier, player.gun_fire_rate_multiplier, 115, SCREEN_HEIGHT - 110, '#E7CFCF') # 90 / 110
+        display_hp(player.hp, SCREEN_WIDTH - 110, SCREEN_HEIGHT - 50, '#E7CFCF')
+        display_stats(player.speed, player.gun_damage_multiplier, player.gun_fire_rate_multiplier, 115, SCREEN_HEIGHT - 110, '#E7CFCF')
         display_gun(player.using_gun_type, SCREEN_WIDTH / 2, SCREEN_HEIGHT - 40, '#E7CFCF')
         display_gun_availability(player.minigun, player.rocket_launcher, player.flame_thrower, player.laser_rifle, player.laser_ring, player.sniper_rifle)
 
@@ -232,12 +242,12 @@ while not game_over:
             enemies.add(galactic_devourer)
     else:
         if first_run:
-            screen.blit(background_graphics, (-120, 0))
+            screen.blit(background_graphics, screen_background_position)
             screen.blit(welcome_m, welcome_mR)
             screen.blit(to_play_m, to_play_mR)
 
         else:
-            screen.blit(background_graphics, (-120, 0))
+            screen.blit(background_graphics, screen_background_position)
             screen.blit(play_again_m, play_again_mR)
             display_score(player.score, SCREEN_WIDTH / 2, SCREEN_HEIGHT - 100, '#E7CFCF')
 

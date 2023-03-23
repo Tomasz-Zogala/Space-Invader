@@ -6,7 +6,7 @@ from Guns_package.laser_type_gun_package.laser_thrower import Laser_thrower
 from Guns_package.laser_type_gun_package.laser_rifle import Laser_rifle
 from Guns_package.laser_type_gun_package.laser_ring import Laser_ring
 
-from Consts_package.consts import guns, SCREEN_WIDTH, SCREEN_HEIGHT
+from Consts_package.consts import guns, SCREEN_WIDTH, SCREEN_HEIGHT, SCALE
 from Guns_package.bullet_type_gun_package.sniper_rifle import Sniper_rifle
 
 
@@ -16,7 +16,7 @@ class Player(pygame.sprite.Sprite):
         super().__init__()
 
         # Stats
-        self.speed = 10
+        self.speed = 10 * SCALE
         self.hp = 3
 
         # Equipment
@@ -40,8 +40,8 @@ class Player(pygame.sprite.Sprite):
         self.player_timer = 0
 
         # Image data
-        self.width = 50
-        self.height = 50
+        self.width = 50 * SCALE
+        self.height = 50 * SCALE
         self.color = '#384426'
 
         # Image

@@ -3,7 +3,7 @@ import random
 import pygame
 
 from Bonuses_package.bonus import Bonus
-from Consts_package.consts import players, SCREEN_HEIGHT, SCREEN_WIDTH
+from Consts_package.consts import players, SCREEN_HEIGHT, SCREEN_WIDTH, SCALE
 
 
 # Define the Stats_bonus class
@@ -12,7 +12,7 @@ class Stats_bonus(Bonus):
         super().__init__(center, speed)
 
         # Stats
-        self.speed = speed
+        self.speed = speed * SCALE
         self.score_bonus = 50
 
         # Image data
@@ -20,8 +20,8 @@ class Stats_bonus(Bonus):
         self.color_damage_up = '#F3A31F'
         self.color_fire_rate_up = '#F3DA1F'
         self.color_speed_up = '#1FF3D3'
-        self.height = 50
-        self.width = 50
+        self.height = 25 * SCALE
+        self.width = 25 * SCALE
 
         # Image
         self.image = pygame.Surface([self.width, self.height])
@@ -48,6 +48,6 @@ class Stats_bonus(Bonus):
                 if self.bonus_type == 2:
                     player.gun_fire_rate_multiplier += -0.05
                 if self.bonus_type == 3:
-                    player.speed += 2
+                    player.speed += 2 * SCALE
                 self.kill()
                 player.score += self.score_bonus

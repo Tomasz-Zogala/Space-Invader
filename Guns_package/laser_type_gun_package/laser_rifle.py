@@ -1,5 +1,6 @@
 import pygame
 
+from Consts_package.consts import SCREEN_HEIGHT, SCALE
 from Guns_package.laser_type_gun_package.laser_type_gun import Laser_type_gun
 
 
@@ -11,11 +12,11 @@ class Laser_rifle(Laser_type_gun):
         # Stats
         self.damage = 0.1 * damage_multiplier
         self.fire_rate = 80 * fire_rate_multiplier
-        self.bullet_speed = 10
+        self.bullet_speed = 10 * SCALE
 
         # Image data
-        self.width = 3
-        self.height = 10
+        self.width = 15 * SCALE
+        self.height = 35 * SCALE
         self.color = '#033BFB'
 
         # Image
@@ -27,9 +28,6 @@ class Laser_rifle(Laser_type_gun):
         self.rect.center = center
 
         # Audio
-        self.laser_audio = pygame.mixer.Sound('Additional_resources/Audio/Laser_sound.mp3')
-        self.laser_audio.set_volume(0.2)
-        self.laser_audio.play()
 
     def movement(self):
         self.rect.y += -self.bullet_speed

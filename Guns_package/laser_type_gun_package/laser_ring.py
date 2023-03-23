@@ -1,6 +1,6 @@
 import pygame
 
-
+from Consts_package.consts import SCREEN_HEIGHT, SCALE
 from Guns_package.laser_type_gun_package.laser_type_gun import Laser_type_gun
 
 
@@ -12,13 +12,13 @@ class Laser_ring(Laser_type_gun):
         # Stats
         self.damage = 0.1 * damage_multiplier
         self.fire_rate = 80 * fire_rate_multiplier
-        self.bullet_speed = 10
-        self.range_timer_max = 150
+        self.bullet_speed = 10 * SCALE
+        self.range_timer_max = 150 * SCALE
         self.range_timer_min = 0
 
         # Image data
-        self.width = 250
-        self.height = 250
+        self.width = 300 * SCALE
+        self.height = 300 * SCALE
         self.color = '#033BFB'
 
         # Image

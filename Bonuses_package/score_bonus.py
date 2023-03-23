@@ -1,7 +1,7 @@
 import pygame
 
 from Bonuses_package.bonus import Bonus
-from Consts_package.consts import SCREEN_HEIGHT, SCREEN_WIDTH, players
+from Consts_package.consts import SCREEN_HEIGHT, SCREEN_WIDTH, players, SCALE
 
 
 # Define the Score_bonus class
@@ -10,13 +10,13 @@ class Score_bonus(Bonus):
         super().__init__(center, speed)
 
         # Stats
-        self.speed = speed
+        self.speed = speed * SCALE
         self.score_bonus = 50
 
         # Image data
         self.color = '#A6E742'
-        self.height = 25
-        self.width = 25
+        self.height = 25 * SCALE
+        self.width = 25 * SCALE
 
         # Image
         self.image = pygame.Surface([self.width, self.height])

@@ -1,7 +1,7 @@
 import pygame
 
 from Bonuses_package.bonus import Bonus
-from Consts_package.consts import players, SCREEN_HEIGHT, SCREEN_WIDTH
+from Consts_package.consts import players, SCREEN_HEIGHT, SCREEN_WIDTH, SCALE
 
 
 # Define the Gun_bonus class
@@ -10,13 +10,13 @@ class Gun_bonus(Bonus):
         super().__init__(center, speed)
 
         # Stats
-        self.speed = speed
+        self.speed = speed * SCALE
         self.score_bonus = 100
 
         # Image data
         self.color = '#5100FF'
-        self.height = 50
-        self.width = 50
+        self.height = 20 * SCALE
+        self.width = 20 * SCALE
 
         # Image
         self.image = pygame.Surface([self.width, self.height])

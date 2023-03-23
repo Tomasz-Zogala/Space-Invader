@@ -1,6 +1,6 @@
 import pygame
 
-
+from Consts_package.consts import SCREEN_HEIGHT, SCALE
 from Guns_package.laser_type_gun_package.laser_type_gun import Laser_type_gun
 
 
@@ -12,13 +12,13 @@ class Laser_thrower(Laser_type_gun):
         # Stats
         self.damage = 0.1 * damage_multiplier
         self.fire_rate = 100 * fire_rate_multiplier
-        self.bullet_speed = 15
-        self.range_timer_max = 1400
+        self.bullet_speed = 15 * SCALE
+        self.range_timer_max = 1400 * SCALE
         self.range_timer_min = 0
 
         # Image data
-        self.width = 15
-        self.height = 20
+        self.width = 20 * SCALE
+        self.height = 40 * SCALE
         self.color = '#033BFB'
 
         # Image

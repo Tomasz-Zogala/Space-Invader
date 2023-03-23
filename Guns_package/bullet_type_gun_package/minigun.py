@@ -1,5 +1,6 @@
 import pygame
 
+from Consts_package.consts import SCREEN_HEIGHT, SCALE
 from Guns_package.bullet_type_gun_package.bullet_type_gun import Bullet_type_gun
 
 
@@ -11,11 +12,11 @@ class Minigun(Bullet_type_gun):
         # Stats
         self.damage = 1 * damage_multiplier
         self.fire_rate = 500 * fire_rate_multiplier
-        self.bullet_speed = 10
+        self.bullet_speed = 10 * SCALE
 
         # Image data
-        self.width = 10
-        self.height = 15
+        self.width = 5 * SCALE
+        self.height = 5 * SCALE
         self.color = '#938D8D'
 
         # Image

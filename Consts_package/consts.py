@@ -1,11 +1,16 @@
 import pygame
 
-# Screen
-SCREEN_WIDTH = 2560
-SCREEN_HEIGHT = 1600
+fullscreen = True
 
-# SCREEN_WIDTH = 800
-# SCREEN_HEIGHT = 800
+# Screen
+if fullscreen:
+    SCREEN_WIDTH = 2560
+    SCREEN_HEIGHT = 1600
+    SCALE = SCREEN_HEIGHT/800
+else:
+    SCREEN_WIDTH = 1280
+    SCREEN_HEIGHT = 800
+    SCALE = SCREEN_HEIGHT / 800
 
 # Game
 game_over = False

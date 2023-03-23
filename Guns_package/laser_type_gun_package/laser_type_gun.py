@@ -6,7 +6,7 @@ from Bonuses_package.stats_bonus import Stats_bonus
 from Enemies_package.asteroid import Asteroid
 from Enemies_package.bounty_hunter import Bounty_hunter
 from Enemies_package.star_lord import Star_lord
-from Consts_package.consts import bonuses, enemies
+from Consts_package.consts import bonuses, enemies, SCREEN_HEIGHT, SCALE
 from Guns_package.gun import Gun
 
 
@@ -18,12 +18,12 @@ class Laser_type_gun(Gun):
         # Stats
         self.damage = 0 * damage_multiplier
         self.fire_rate = 0 * fire_rate_multiplier
-        self.bullet_speed = 0
+        self.bullet_speed = 0 * SCALE
 
         # Image data
-        self.width = 0
-        self.height = 0
-        self.color = '#938D8D'
+        self.width = 0 * SCALE
+        self.height = 0 * SCALE
+        self.color = '#000000'
 
         # Image
         self.image = pygame.Surface([self.width, self.height])
@@ -47,15 +47,9 @@ class Laser_type_gun(Gun):
 
         elif type(enemy) == Star_lord:
             enemy.kill()
-            for i in range(2):
-                asteroid = Asteroid()
-                enemies.add(asteroid)
 
         elif type(enemy) == Bounty_hunter:
             enemy.kill()
-            for i in range(2):
-                asteroid = Asteroid()
-                enemies.add(asteroid)
 
     def hit_service(self):
         collided_enemies = pygame.sprite.spritecollide(self, enemies, False)

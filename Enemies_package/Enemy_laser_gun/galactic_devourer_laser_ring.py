@@ -1,7 +1,7 @@
 import pygame
 
 
-from Consts_package.consts import players
+from Consts_package.consts import players, SCALE
 from Enemies_package.Enemy_laser_gun.enemy_laser_gun import Enemy_laser_gun
 
 
@@ -9,7 +9,7 @@ class Galactic_devourer_laser_ring(Enemy_laser_gun):
     def __init__(self, center, damage, fire_rate, bullet_speed, width, height, color):
         super().__init__(center, damage, fire_rate, bullet_speed, width, height, color)
 
-        self.range_timer_max = 150
+        self.range_timer_max = 150 * SCALE
         self.range_timer_min = 0
 
         # Audio

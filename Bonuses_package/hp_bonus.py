@@ -1,7 +1,7 @@
 import pygame
 
 from Bonuses_package.bonus import Bonus
-from Consts_package.consts import players, SCREEN_HEIGHT, SCREEN_WIDTH
+from Consts_package.consts import players, SCREEN_HEIGHT, SCREEN_WIDTH, SCALE
 
 
 # Define the Hp_Bonus class
@@ -10,13 +10,13 @@ class Hp_bonus(Bonus):
         super().__init__(center, speed)
 
         # Stats
-        self.speed = speed
+        self.speed = speed * SCALE
         self.score_bonus = 75
 
         # Image data
         self.color = '##FA4CDA'
-        self.height = 50
-        self.width = 50
+        self.height = 25 * SCALE
+        self.width = 25 * SCALE
 
         # Image
         self.image = pygame.Surface([self.width, self.height])
@@ -30,7 +30,7 @@ class Hp_bonus(Bonus):
         collided_player = pygame.sprite.spritecollide(self, players, False)
         if collided_player:
             for player in collided_player:
-                if player.hp >= 3:
+                if player.hp >= 10:
                     pass
                 else:
                     player.hp += 1

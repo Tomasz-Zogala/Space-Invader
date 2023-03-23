@@ -3,7 +3,7 @@ import random
 
 from Enemies_package.Enemy_laser_gun.galactic_devourer_laser_ring import Galactic_devourer_laser_ring
 from Enemies_package.enemy import Enemy
-from Consts_package.consts import enemies_laser_guns, SCREEN_WIDTH, players, SCREEN_HEIGHT
+from Consts_package.consts import enemies_laser_guns, SCREEN_WIDTH, players, SCREEN_HEIGHT, SCALE
 
 
 # Define the Galactic_devourer class
@@ -15,8 +15,8 @@ class Galactic_devourer(Enemy):
         self.damage = 0.5
         self.hp = 40
         self.acceleration = 1
-        self.speed_x = random.randint(-5, 5)
-        self.speed_y = random.randint(-5, 5)
+        self.speed_x = random.randint(-2, 2) * SCALE
+        self.speed_y = random.randint(-4, 4) * SCALE
 
         # Timer
         self.galactic_devourer_timer = 0
@@ -26,8 +26,8 @@ class Galactic_devourer(Enemy):
         self.overheating_passed = True
 
         # Image data
-        self.width = 200
-        self.height = 200
+        self.width = 120 * SCALE
+        self.height = 120 * SCALE
         self.color = '#145343'
 
         # Image
@@ -37,7 +37,7 @@ class Galactic_devourer(Enemy):
 
         # Position
         self.rect.x = random.randrange(0, SCREEN_WIDTH)
-        self.rect.y = 200
+        self.rect.y = SCREEN_HEIGHT/8
 
     def movement(self):
         self.rect.x += self.speed_x * self.acceleration
@@ -51,10 +51,10 @@ class Galactic_devourer(Enemy):
         if self.galactic_devourer_overheating_timer <= self.galactic_devourer_overheating_timer_max:
 
             if self.galactic_devourer_timer <= 0:
-                galactic_devourer_laser_ring = Galactic_devourer_laser_ring(self.rect.center, 1, 300, 10, 300, 300, "#73FE1E")
+                galactic_devourer_laser_ring = Galactic_devourer_laser_ring(self.rect.center, 1, 300, 10, 250, 250, "#73FE1E")
                 enemies_laser_guns.add(galactic_devourer_laser_ring)
                 self.galactic_devourer_timer = galactic_devourer_laser_ring.fire_rate
-                self.acceleration = 5
+                self.acceleration = 3
 
             self.galactic_devourer_timer += -100
             self.galactic_devourer_overheating_timer += 100

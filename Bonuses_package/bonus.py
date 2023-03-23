@@ -9,13 +9,13 @@ class Bonus(pygame.sprite.Sprite):
         super().__init__()
 
         # Stats
-        self.speed = speed
+        self.speed = speed * SCREEN_HEIGHT/800
         self.score_bonus = 0
 
         # Image data
         self.color = '#000000'
-        self.height = 0
-        self.width = 0
+        self.height = 0 * SCREEN_HEIGHT/800
+        self.width = 0 * SCREEN_HEIGHT/800
 
         # Image
         self.image = pygame.Surface([self.width, self.height])

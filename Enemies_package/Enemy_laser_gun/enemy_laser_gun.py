@@ -1,7 +1,7 @@
 import pygame
 
 
-from Consts_package.consts import players, enemies_laser_guns, SCREEN_HEIGHT
+from Consts_package.consts import players, enemies_laser_guns, SCREEN_HEIGHT, SCALE
 
 
 class Enemy_laser_gun(pygame.sprite.Sprite):
@@ -11,11 +11,11 @@ class Enemy_laser_gun(pygame.sprite.Sprite):
         # Stats
         self.damage = damage
         self.fire_rate = fire_rate
-        self.bullet_speed = bullet_speed
+        self.bullet_speed = bullet_speed * SCALE
 
         # Image data
-        self.width = width
-        self.height = height
+        self.width = width * SCALE
+        self.height = height * SCALE
         self.color = color
 
         # Image

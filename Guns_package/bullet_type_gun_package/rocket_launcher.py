@@ -1,5 +1,6 @@
 import pygame
 
+from Consts_package.consts import SCREEN_HEIGHT, SCALE
 from Guns_package.bullet_type_gun_package.bullet_type_gun import Bullet_type_gun
 
 
@@ -11,11 +12,11 @@ class Rocket_launcher(Bullet_type_gun):
         # Stats
         self.damage = 15 * damage_multiplier
         self.fire_rate = 5000 * fire_rate_multiplier
-        self.bullet_speed = 3
+        self.bullet_speed = 3 * SCALE
 
         # Image data
-        self.width = 60
-        self.height = 60
+        self.width = 30 * SCALE
+        self.height = 50 * SCALE
         self.color = '#938D8D'
 
         # Image
