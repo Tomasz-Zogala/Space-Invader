@@ -1,7 +1,7 @@
 import pygame
 
 from Bonuses_package.bonus import Bonus
-from Consts_package.consts import players
+from Consts_package.consts import players, SCREEN_HEIGHT, SCREEN_WIDTH
 
 
 # Define the Gun_bonus class
@@ -11,14 +11,15 @@ class Gun_bonus(Bonus):
 
         # Stats
         self.speed = speed
+        self.score_bonus = 100
 
         # Image data
-        self.color = '#00FFFF'
-        self.height = 50
-        self.weight = 50
+        self.color = '##5100FF'
+        self.height = SCREEN_HEIGHT / 16
+        self.width = SCREEN_WIDTH / 16
 
         # Image
-        self.image = pygame.Surface([self.weight, self.height])
+        self.image = pygame.Surface([self.width, self.height])
         self.image.fill(self.color)
         self.rect = self.image.get_rect()
 
@@ -44,5 +45,5 @@ class Gun_bonus(Bonus):
                 if player.minigun:
                     player.rocket_launcher = True
 
-            self.kill()
-            player.score += 100
+                self.kill()
+                player.score += self.score_bonus

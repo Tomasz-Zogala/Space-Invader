@@ -2,7 +2,7 @@ import pygame
 
 from Enemies_package.enemy import Enemy
 from Enemies_package.Enemy_laser_gun.enemy_laser_gun import Enemy_laser_gun
-from Consts_package.consts import enemies_laser_guns, SCREEN_WIDTH, players
+from Consts_package.consts import enemies_laser_guns, SCREEN_WIDTH, players, SCREEN_HEIGHT
 
 
 # Define the Star_lord class
@@ -20,8 +20,8 @@ class Star_lord(Enemy):
         self.star_lord_timer = 0
 
         # Image data
-        self.width = 100
-        self.height = 50
+        self.width = SCREEN_WIDTH/8
+        self.height = SCREEN_HEIGHT/16
         self.color = '#145343'
 
         # Image

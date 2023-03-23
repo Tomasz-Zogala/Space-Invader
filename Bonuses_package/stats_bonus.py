@@ -3,7 +3,7 @@ import random
 import pygame
 
 from Bonuses_package.bonus import Bonus
-from Consts_package.consts import players
+from Consts_package.consts import players, SCREEN_HEIGHT, SCREEN_WIDTH
 
 
 # Define the Stats_bonus class
@@ -13,16 +13,28 @@ class Stats_bonus(Bonus):
 
         # Stats
         self.speed = speed
+        self.score_bonus = 50
 
         # Image data
         self.color = '#FFCC00'
-        self.height = 30
-        self.weight = 30
+        self.color_damage_up = '#F3A31F'
+        self.color_fire_rate_up = '#F3DA1F'
+        self.color_speed_up = '#1FF3D3'
+        self.height = SCREEN_HEIGHT / 23
+        self.width = SCREEN_WIDTH / 23
 
         # Image
-        self.image = pygame.Surface([self.weight, self.height])
-        self.image.fill(self.color)
+        self.image = pygame.Surface([self.width, self.height])
         self.rect = self.image.get_rect()
+
+        # Set bonus
+        self.bonus_type = random.randint(1, 3)
+        if self.bonus_type == 1:
+            self.image.fill(self.color_damage_up)
+        if self.bonus_type == 2:
+            self.image.fill(self.color_fire_rate_up)
+        if self.bonus_type == 3:
+            self.image.fill(self.color_speed_up)
 
         # Position
         self.rect.center = center
@@ -31,12 +43,11 @@ class Stats_bonus(Bonus):
         collided_player = pygame.sprite.spritecollide(self, players, False)
         if collided_player:
             for player in collided_player:
-                random_numer = random.randint(1, 3)
-                if random_numer == 1:
+                if self.bonus_type == 1:
                     player.gun_damage_multiplier += 0.5
-                if random_numer == 2:
+                if self.bonus_type == 2:
                     player.gun_fire_rate_multiplier += -0.05
-                if random_numer == 3:
+                if self.bonus_type == 3:
                     player.speed += 2
-            self.kill()
-            player.score += 50
+                self.kill()
+                player.score += self.score_bonus

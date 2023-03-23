@@ -17,8 +17,8 @@ class Asteroid(Enemy):
         self.damage = 1
 
         # Image data
-        self.width = 50
-        self.height = 50
+        self.width = SCREEN_WIDTH/16
+        self.height = SCREEN_HEIGHT/16
         self.color = '#938D8D'
 
         # Image

@@ -1,7 +1,7 @@
 import pygame
 
 from Bonuses_package.bonus import Bonus
-from Consts_package.consts import players
+from Consts_package.consts import players, SCREEN_HEIGHT, SCREEN_WIDTH
 
 
 # Define the Hp_Bonus class
@@ -11,14 +11,15 @@ class Hp_bonus(Bonus):
 
         # Stats
         self.speed = speed
+        self.score_bonus = 75
 
         # Image data
-        self.color = '#00FF00'
-        self.height = 30
-        self.weight = 30
+        self.color = '##FA4CDA'
+        self.height = SCREEN_HEIGHT / 16
+        self.width = SCREEN_WIDTH / 16
 
         # Image
-        self.image = pygame.Surface([self.weight, self.height])
+        self.image = pygame.Surface([self.width, self.height])
         self.image.fill(self.color)
         self.rect = self.image.get_rect()
 
@@ -33,5 +34,5 @@ class Hp_bonus(Bonus):
                     pass
                 else:
                     player.hp += 1
-            self.kill()
-            player.score += 50
+                self.kill()
+                player.score += self.score_bonus

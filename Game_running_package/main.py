@@ -16,8 +16,8 @@ game_boss_timer = 0
 
 # Screen
 pygame.display.set_caption('SPACE X CALIBUR')
-screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.FULLSCREEN)
-# screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
+# screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.FULLSCREEN)
+screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
 pygame.mouse.set_visible(False)
 
 # Background graphics
@@ -209,12 +209,12 @@ while not game_over:
             gameplay_state = False
 
         # Game script
-        if game_boss_timer >= 3000 and not star_lord_arrived:
+        if game_boss_timer >= 100 and not star_lord_arrived:
             star_lord_arrived = True
             star_lord = Star_lord()
             enemies.add(star_lord)
 
-        if game_boss_timer >= 9000 and not bounty_hunter_arrived:
+        if game_boss_timer >= 10000 and not bounty_hunter_arrived:
             bounty_hunter_arrived = True
             bounty_hunter = Bounty_hunter()
             enemies.add(bounty_hunter)

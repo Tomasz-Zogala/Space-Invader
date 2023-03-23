@@ -40,7 +40,7 @@ class Laser_type_gun(Gun):
         if type(enemy) == Asteroid:
 
             enemy.kill()
-            bonus = Gun_bonus(enemy.rect.center, enemy.speed_y * 2)
+            bonus = Stats_bonus(enemy.rect.center, enemy.speed_y * 2)
             bonuses.add(bonus)
             enemy = Asteroid()
             enemies.add(enemy)
