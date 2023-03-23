@@ -11,10 +11,10 @@ class Hp_bonus(Bonus):
 
         # Stats
         self.speed = speed * SCALE
-        self.score_bonus = 75
+        self.score_bonus = 50
 
         # Image data
-        self.color = '##FA4CDA'
+        self.color = '#FA4CDA'
         self.height = 25 * SCALE
         self.width = 25 * SCALE
 

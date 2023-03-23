@@ -11,7 +11,7 @@ class Gun_bonus(Bonus):
 
         # Stats
         self.speed = speed * SCALE
-        self.score_bonus = 100
+        self.score_bonus = 150
 
         # Image data
         self.color = '#5100FF'
@@ -36,11 +36,11 @@ class Gun_bonus(Bonus):
                 if player.laser_rifle:
                     player.laser_ring = True
 
-                if player.flame_thrower:
+                if player.laser_thrower:
                     player.laser_rifle = True
 
                 if player.rocket_launcher:
-                    player.flame_thrower = True
+                    player.laser_thrower = True
 
                 if player.minigun:
                     player.rocket_launcher = True

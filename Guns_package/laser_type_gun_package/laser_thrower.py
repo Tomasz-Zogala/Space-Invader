@@ -10,15 +10,15 @@ class Laser_thrower(Laser_type_gun):
         super().__init__(center, damage_multiplier, fire_rate_multiplier)
 
         # Stats
-        self.damage = 0.1 * damage_multiplier
-        self.fire_rate = 100 * fire_rate_multiplier
-        self.bullet_speed = 15 * SCALE
-        self.range_timer_max = 1400 * SCALE
+        self.damage = 0.08 * damage_multiplier
+        self.fire_rate = 80 * fire_rate_multiplier
+        self.bullet_speed = 10 * SCALE
+        self.range_timer_max = 800 * SCALE
         self.range_timer_min = 0
 
         # Image data
-        self.width = 20 * SCALE
-        self.height = 40 * SCALE
+        self.width = 45 * SCALE
+        self.height = 45 * SCALE
         self.color = '#033BFB'
 
         # Image

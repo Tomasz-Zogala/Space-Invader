@@ -22,13 +22,12 @@ pygame.display.set_caption('SPACE X CALIBUR')
 if fullscreen:
     screen_background_position = (-120, 0)
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.FULLSCREEN)
+    background_graphics = pygame.image.load('Additional_resources/Graphics/Background_wallpaper.png').convert()
 else:
-    screen_background_position = (-770, -300)
+    screen_background_position = (0, 0)
     screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
+    background_graphics = pygame.image.load('Additional_resources/Graphics/Background_wallpaper2.png').convert()
 pygame.mouse.set_visible(False)
-
-# Background graphics
-background_graphics = pygame.image.load('Additional_resources/Graphics/Background_wallpaper.png').convert()
 
 # Menu Audio
 background_audio = pygame.mixer.Sound("Additional_resources/Audio/Second_main_menu.mp3")
@@ -204,7 +203,7 @@ while not game_over:
         display_hp(player.hp, SCREEN_WIDTH - 110, SCREEN_HEIGHT - 50, '#E7CFCF')
         display_stats(player.speed, player.gun_damage_multiplier, player.gun_fire_rate_multiplier, 115, SCREEN_HEIGHT - 110, '#E7CFCF')
         display_gun(player.using_gun_type, SCREEN_WIDTH / 2, SCREEN_HEIGHT - 40, '#E7CFCF')
-        display_gun_availability(player.minigun, player.rocket_launcher, player.flame_thrower, player.laser_rifle, player.laser_ring, player.sniper_rifle)
+        display_gun_availability(player.minigun, player.rocket_launcher, player.laser_thrower, player.laser_rifle, player.laser_ring, player.sniper_rifle)
 
         # Timers
         game_score_timer += 1
@@ -231,12 +230,12 @@ while not game_over:
             bounty_hunter = Bounty_hunter()
             enemies.add(bounty_hunter)
 
-        if game_boss_timer >= 100 and not ghast_of_the_void_arrived:
+        if game_boss_timer >= 10000 and not ghast_of_the_void_arrived:
             ghast_of_the_void_arrived = True
-            ghast_of_the_void = Ghast_of_the_void()
+            ghast_of_the_void = Ghast_of_the_void(SCREEN_HEIGHT/16, SCREEN_HEIGHT/16, 1, True)
             enemies.add(ghast_of_the_void)
 
-        if game_boss_timer >= 100 and not galactic_devourer_arrived:
+        if game_boss_timer >= 10000 and not galactic_devourer_arrived:
             galactic_devourer_arrived = True
             galactic_devourer = Galactic_devourer()
             enemies.add(galactic_devourer)

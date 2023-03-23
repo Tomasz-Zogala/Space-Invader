@@ -13,12 +13,15 @@ class Bounty_hunter(Enemy):
         super().__init__()
 
         # Stats
-        self.hp = 100
-        self.speed_x = 3 * SCALE
+        self.hp = 180
+        self.speed_x = 300 * SCALE
         self.speed_y = 3 * SCALE
         self.damage = 1
         self.radius = 100 * SCALE
         self.angle = 0
+
+        self.jumped_right = False
+        self.jumped_left = False
 
         # Timer
         self.bounty_hunter_timer = 0
@@ -41,15 +44,25 @@ class Bounty_hunter(Enemy):
         self.rect.center = (SCREEN_WIDTH/2-self.radius/2, SCREEN_HEIGHT/10)
 
     def movement(self):
-        self.rect.x = SCREEN_WIDTH / 2 - self.radius + self.radius * math.cos(self.angle)
-        self.rect.y = SCREEN_HEIGHT / 10 + self.radius * math.sin(self.angle)
+
         self.angle += 0.1
+        if self.hp >= 120:
+            self.rect.x = SCREEN_WIDTH / 2 - self.radius + self.radius * math.cos(self.angle)
+            self.rect.y = SCREEN_HEIGHT / 7 + self.radius * math.sin(self.angle)
+
+        if 120 > self.hp >= 60:
+            self.rect.x = SCREEN_WIDTH / 4 + self.radius * math.cos(self.angle)
+            self.rect.y = SCREEN_HEIGHT / 7 + self.radius * math.sin(self.angle)
+
+        if self.hp < 60:
+            self.rect.x = SCREEN_WIDTH * 3 / 4 + self.radius * math.cos(self.angle)
+            self.rect.y = SCREEN_HEIGHT / 7 + self.radius * math.sin(self.angle)
 
     def attack_ranged(self):
         if self.bounty_hunter_overheating_timer <= self.bounty_hunter_overheating_timer_max:
 
             if self.bounty_hunter_timer <= 0:
-                enemy_laser_gun = Enemy_laser_gun(self.rect.center, 1, 1500, 10, 25, 25, "#73FE1E")
+                enemy_laser_gun = Enemy_laser_gun(self.rect.center, 1, 1750, 15, 20, 20, "#73FE1E")
                 enemies_laser_guns.add(enemy_laser_gun)
                 self.bounty_hunter_timer = enemy_laser_gun.fire_rate
 

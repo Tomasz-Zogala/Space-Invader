@@ -10,7 +10,7 @@ if fullscreen:
 else:
     SCREEN_WIDTH = 1280
     SCREEN_HEIGHT = 800
-    SCALE = SCREEN_HEIGHT / 800
+    SCALE = SCREEN_HEIGHT/800
 
 # Game
 game_over = False

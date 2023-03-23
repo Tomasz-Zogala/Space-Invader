@@ -10,13 +10,13 @@ class Sniper_rifle(Bullet_type_gun):
         super().__init__(center, damage_multiplier, fire_rate_multiplier)
 
         # Stats
-        self.damage = 15 * damage_multiplier
-        self.fire_rate = 5000 * fire_rate_multiplier
+        self.damage = 20 * damage_multiplier
+        self.fire_rate = 8000 * fire_rate_multiplier
         self.bullet_speed = 50 * SCALE
 
         # Image data
-        self.width = 10 * SCALE
-        self.height = 10 * SCALE
+        self.width = 15 * SCALE
+        self.height = 15 * SCALE
         self.color = '#938D8D'
 
         # Image

@@ -5,6 +5,8 @@ from Bonuses_package.hp_bonus import Hp_bonus
 from Bonuses_package.stats_bonus import Stats_bonus
 from Enemies_package.asteroid import Asteroid
 from Enemies_package.bounty_hunter import Bounty_hunter
+from Enemies_package.galactic_devourer import Galactic_devourer
+from Enemies_package.ghast_of_the_void import Ghast_of_the_void
 from Enemies_package.star_lord import Star_lord
 from Consts_package.consts import bonuses, enemies, SCREEN_HEIGHT, SCALE
 from Guns_package.gun import Gun
@@ -40,7 +42,7 @@ class Laser_type_gun(Gun):
         if type(enemy) == Asteroid:
 
             enemy.kill()
-            bonus = Stats_bonus(enemy.rect.center, enemy.speed_y * 2)
+            bonus = Hp_bonus(enemy.rect.center, enemy.speed_y * 2)
             bonuses.add(bonus)
             enemy = Asteroid()
             enemies.add(enemy)
@@ -49,6 +51,12 @@ class Laser_type_gun(Gun):
             enemy.kill()
 
         elif type(enemy) == Bounty_hunter:
+            enemy.kill()
+
+        elif type(enemy) == Ghast_of_the_void:
+            enemy.kill()
+
+        elif type(enemy) == Galactic_devourer:
             enemy.kill()
 
     def hit_service(self):

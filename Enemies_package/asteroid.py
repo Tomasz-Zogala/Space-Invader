@@ -11,14 +11,14 @@ class Asteroid(Enemy):
         super().__init__()
 
         # Stats
-        self.hp = 15
+        self.hp = 20
         self.speed_x = 0 * SCALE
-        self.speed_y = random.randrange(1, 3) * SCALE
+        self.speed_y = random.randrange(3, 5) * SCALE
         self.damage = 1
 
         # Image data
-        self.width = 30 * SCALE
-        self.height = 30 * SCALE
+        self.width = 50 * SCALE
+        self.height = 50 * SCALE
         self.color = '#938D8D'
 
         # Image
@@ -28,13 +28,13 @@ class Asteroid(Enemy):
 
         # Position
         self.rect.x = random.randrange(0, SCREEN_WIDTH)
-        self.rect.y = -20 * SCALE
+        self.rect.y = -50 * SCALE
 
     def movement(self):
         self.rect.y += self.speed_y
         if self.rect.y > SCREEN_HEIGHT:
             self.rect.x = random.randrange(0, SCREEN_WIDTH)
-            self.rect.y = -20 * SCALE
+            self.rect.y = -50 * SCALE
             self.default()
 
     def attack_melee(self):
@@ -50,7 +50,7 @@ class Asteroid(Enemy):
                     player.kill()
 
     def hp_service(self):
-        if self.hp <= 10:
+        if self.hp <= 13:
             new_width = int(self.width * 0.8)
             new_height = int(self.height * 0.8)
             old_center = self.rect.center
@@ -60,7 +60,7 @@ class Asteroid(Enemy):
             self.rect.center = old_center
             self.image.fill('#DEA0A0')
 
-        if self.hp <= 5:
+        if self.hp <= 7:
             new_width = int(self.width * 0.7)
             new_height = int(self.height * 0.7)
             old_center = self.rect.center
@@ -77,14 +77,14 @@ class Asteroid(Enemy):
 
     def default(self):
         # Stats
-        self.hp = 15
+        self.hp = 20
         self.speed_x = 0 * SCALE
-        self.speed_y = random.randrange(1, 3) * SCALE
+        self.speed_y = random.randrange(3, 5) * SCALE
         self.damage = 1
 
         # Image data
-        self.width = 30 * SCALE
-        self.height = 30 * SCALE
+        self.width = 50 * SCALE
+        self.height = 50 * SCALE
         self.color = '#938D8D'
 
         # Image
@@ -94,4 +94,4 @@ class Asteroid(Enemy):
 
         # Position
         self.rect.x = random.randrange(0, SCREEN_WIDTH)
-        self.rect.y = -20 * SCALE
+        self.rect.y = -50 * SCALE

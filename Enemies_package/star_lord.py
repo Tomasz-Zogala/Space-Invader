@@ -14,15 +14,16 @@ class Star_lord(Enemy):
         # Stats
         self.hp = 120
         self.speed_x = 3 * SCALE
-        self.speed_y = 2 * SCALE
+        self.speed_y = 5 * SCALE
+        self.acceleration = 1
         self.damage = 1
 
         # Timer
         self.star_lord_timer = 0
 
         # Image data
-        self.width = 40 * SCALE
-        self.height = 120 * SCALE
+        self.width = 100 * SCALE
+        self.height = 40 * SCALE
         self.color = '#145343'
 
         # Image
@@ -35,20 +36,25 @@ class Star_lord(Enemy):
         self.rect.y = 100 * SCALE
 
     def movement(self):
-        self.rect.x += self.speed_x
+        self.rect.x += self.speed_x * self.acceleration
         self.rect.y += self.speed_y
         if self.rect.left >= SCREEN_WIDTH:
             self.rect.right = 0
 
-        if self.rect.bottom >= 150 * SCALE:
+        if self.rect.bottom >= 300 * SCALE:
             self.speed_y = self.speed_y*-1
 
         if self.rect.top <= 0:
             self.speed_y = self.speed_y*-1
 
+        if self.rect.centery <= 150:
+            self.acceleration = 5
+        else:
+            self.acceleration = 1
+
     def attack_ranged(self):
         if self.star_lord_timer <= 0:
-            enemy_laser_gun = Enemy_laser_gun(self.rect.center, 1, 2500, 5, 20, 25, "#FE1E1E")
+            enemy_laser_gun = Enemy_laser_gun(self.rect.center, 1.5, 2500, 10, 40, 65, "#FE1E1E")
             enemies_laser_guns.add(enemy_laser_gun)
             self.star_lord_timer = enemy_laser_gun.fire_rate
         self.star_lord_timer += -100
@@ -63,7 +69,7 @@ class Star_lord(Enemy):
                     player.kill()
 
     def hp_service(self):
-        if self.hp <= 30:
+        if self.hp <= 60:
             self.image.fill('#451212')
 
     def update(self):

@@ -10,13 +10,13 @@ class Rocket_launcher(Bullet_type_gun):
         super().__init__(center, damage_multiplier, fire_rate_multiplier)
 
         # Stats
-        self.damage = 15 * damage_multiplier
-        self.fire_rate = 5000 * fire_rate_multiplier
-        self.bullet_speed = 3 * SCALE
+        self.damage = 50 * damage_multiplier
+        self.fire_rate = 15000 * fire_rate_multiplier
+        self.bullet_speed = 7 * SCALE
 
         # Image data
-        self.width = 30 * SCALE
-        self.height = 50 * SCALE
+        self.width = 35 * SCALE
+        self.height = 65 * SCALE
         self.color = '#938D8D'
 
         # Image

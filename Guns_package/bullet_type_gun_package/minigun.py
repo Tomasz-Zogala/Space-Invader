@@ -10,13 +10,13 @@ class Minigun(Bullet_type_gun):
         super().__init__(center, damage_multiplier, fire_rate_multiplier)
 
         # Stats
-        self.damage = 1 * damage_multiplier
-        self.fire_rate = 500 * fire_rate_multiplier
-        self.bullet_speed = 10 * SCALE
+        self.damage = 1.2 * damage_multiplier
+        self.fire_rate = 400 * fire_rate_multiplier
+        self.bullet_speed = 20 * SCALE
 
         # Image data
-        self.width = 5 * SCALE
-        self.height = 5 * SCALE
+        self.width = 7 * SCALE
+        self.height = 7 * SCALE
         self.color = '#938D8D'
 
         # Image

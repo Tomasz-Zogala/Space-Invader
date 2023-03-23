@@ -10,15 +10,15 @@ class Laser_ring(Laser_type_gun):
         super().__init__(center, damage_multiplier, fire_rate_multiplier)
 
         # Stats
-        self.damage = 0.1 * damage_multiplier
+        self.damage = 0.08 * damage_multiplier
         self.fire_rate = 80 * fire_rate_multiplier
         self.bullet_speed = 10 * SCALE
-        self.range_timer_max = 150 * SCALE
+        self.range_timer_max = 100 * SCALE
         self.range_timer_min = 0
 
         # Image data
-        self.width = 300 * SCALE
-        self.height = 300 * SCALE
+        self.width = 350 * SCALE
+        self.height = 350 * SCALE
         self.color = '#033BFB'
 
         # Image
