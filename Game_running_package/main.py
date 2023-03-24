@@ -235,7 +235,7 @@ while not game_over:
             ghast_of_the_void = Ghast_of_the_void(SCREEN_HEIGHT/16, SCREEN_HEIGHT/16, 1, True)
             enemies.add(ghast_of_the_void)
 
-        if game_boss_timer >= 10000 and not galactic_devourer_arrived:
+        if game_boss_timer >= 100 and not galactic_devourer_arrived:
             galactic_devourer_arrived = True
             galactic_devourer = Galactic_devourer()
             enemies.add(galactic_devourer)
