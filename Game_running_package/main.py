@@ -1,4 +1,5 @@
 import pygame
+import re
 
 from Enemies_package.asteroid import Asteroid
 from Enemies_package.bounty_hunter import Bounty_hunter
@@ -7,7 +8,7 @@ from Enemies_package.ghast_of_the_void import Ghast_of_the_void
 from Enemies_package.star_lord import Star_lord
 from Consts_package.consts import players, guns, bonuses, enemies, enemies_laser_guns, SCREEN_WIDTH, SCREEN_HEIGHT, \
     game_over, gameplay_state, first_run, star_lord_arrived, bounty_hunter_arrived, ghast_of_the_void_arrived, \
-    galactic_devourer_arrived, fullscreen, user_giving_data, first_stardust, second_stardust, third_stardust, show_leaderboard
+    galactic_devourer_arrived, fullscreen, user_giving_data, first_stardust, second_stardust, third_stardust, incorrect_nickname_flag
 from Enemies_package.stardust import Stardust
 from Player_package.player import Player
 
@@ -64,6 +65,9 @@ leaderboard_mR = leaderboard_m.get_rect(center=(SCREEN_WIDTH / 2, 100))
 
 to_leaderboard_m1 = font.render('LEADERBOARD', False, '#E7CFCF')
 to_leaderboard_mR1 = to_leaderboard_m1.get_rect(center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 + SCREEN_HEIGHT / 4))
+
+incorrect_nickname = font.render('INCORRECT NICKNAME', False, '#E7CFCF')
+incorrect_nicknameR = incorrect_nickname.get_rect(center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 + SCREEN_HEIGHT / 4))
 
 # Boss announcements
 warning_m = font.render('!!! WARNING WARNING WARNING !!!', False, '#E7CFCF')
@@ -216,47 +220,50 @@ def display_gun_availability(gun_1, gun_2, gun_3, gun_4, gun_5, gun_6):
     gun_6_image_rect.y = SCREEN_HEIGHT - 20
     screen.blit(gun_6_image, gun_6_image_rect)
 
-player_search = ''
+def reset_game():
+    guns.empty()
+    enemies.empty()
+    enemies_laser_guns.empty()
+    bonuses.empty()
+    players.empty()
+
+    for i in range(9):
+        asteroid = Asteroid()
+        enemies.add(asteroid)
+
+
 player_nickname = ''
 player_score_map_input = {}
 player_score_map_output = {}
+
 while not game_over:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             game_over = True
         if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
             game_over = True
+
         if not gameplay_state:
             if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE and first_run:
-                # Reset
-                guns.empty()
-                enemies.empty()
-                enemies_laser_guns.empty()
-                bonuses.empty()
+                reset_game()
+
+                player = Player()
+                players.add(player)
 
                 star_lord_arrived = False
                 bounty_hunter_arrived = False
                 ghast_of_the_void_arrived = False
                 galactic_devourer_arrived = False
-
-                for i in range(9):
-                    asteroid = Asteroid()
-                    enemies.add(asteroid)
-
-                if not players:
-                    player = Player()
-                    players.add(player)
-
-                player.kill()
-                player = Player()
-                players.add(player)
+                first_stardust = False
+                second_stardust = False
+                third_stardust = False
 
                 game_score_timer = 0
                 game_boss_timer = 0
 
                 gameplay_state = True
                 first_run = False
-            if not first_run:
+            else:
                 if user_giving_data:
                     if event.type == pygame.KEYDOWN and event.key != pygame.K_BACKSPACE and event.key != pygame.K_RETURN and event.key != pygame.K_SPACE:
                         player_nickname += event.unicode
@@ -264,23 +271,25 @@ while not game_over:
                         player_nickname = player_nickname[:-1]
                     if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN and player_nickname:
 
-                        player_score_map_input = {player_nickname: player.score}
+                        nickname_pattern = re.compile(r'^[a-zA-Z0-9]{1,12}$')
 
-                        with open("Leader_board.txt", "a") as f:
-                            for key, value in player_score_map_input.items():
-                                f.write(key + ":" + str(value) + "\n")
+                        if nickname_pattern.match(player_nickname):
+                            player_score_map_input = {player_nickname: player.score}
 
-                        player_score_map_input.clear()
-                        player_nickname = ''
-                        user_giving_data = False
-                if not user_giving_data:
+                            with open("Leader_board.txt", "a") as f:
+                                for key, value in player_score_map_input.items():
+                                    f.write(key + ":" + str(value) + "\n")
+
+                            player_score_map_input.clear()
+                            player_nickname = ''
+                            user_giving_data = False
+                            incorrect_nickname_flag = False
+                        else:
+                            player_nickname = ''
+                            incorrect_nickname_flag = True
+                else:
                     if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
-                        #####################################
-                        guns.empty()
-                        enemies.empty()
-                        enemies_laser_guns.empty()
-                        bonuses.empty()
-                        players.empty()
+                        reset_game()
 
                         player = Player()
                         players.add(player)
@@ -289,44 +298,17 @@ while not game_over:
                         bounty_hunter_arrived = False
                         ghast_of_the_void_arrived = False
                         galactic_devourer_arrived = False
-
-                        for i in range(9):
-                            asteroid = Asteroid()
-                            enemies.add(asteroid)
+                        first_stardust = False
+                        second_stardust = False
+                        third_stardust = False
 
                         game_score_timer = 0
                         game_boss_timer = 0
-                        #######################
+
                         user_giving_data = True
                         gameplay_state = True
-                    if event.type == pygame.KEYDOWN and event.key == pygame.K_l:
-                        show_leaderboard = True
-                        if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
-                            #####################################
-                            guns.empty()
-                            enemies.empty()
-                            enemies_laser_guns.empty()
-                            bonuses.empty()
-                            players.empty()
-
-                            player = Player()
-                            players.add(player)
-
-                            star_lord_arrived = False
-                            bounty_hunter_arrived = False
-                            ghast_of_the_void_arrived = False
-                            galactic_devourer_arrived = False
-
-                            for i in range(9):
-                                asteroid = Asteroid()
-                                enemies.add(asteroid)
-
-                            game_score_timer = 0
-                            game_boss_timer = 0
-                            #######################
-                            user_giving_data = True
-                            gameplay_state = True
     if gameplay_state:
+        # Background
         screen.blit(background_graphics, screen_background_position)
 
         # Draw the sprites
@@ -429,15 +411,13 @@ while not game_over:
                 screen.blit(enter_nickname_m, enter_nickname_mR)
                 display_score(player.score, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 + SCREEN_HEIGHT/12, '#E7CFCF')
                 display_user_input_nickname(player_nickname, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 3 + SCREEN_HEIGHT / 10, '#E7CFCF')
+                if incorrect_nickname_flag:
+                    screen.blit(incorrect_nickname, incorrect_nicknameR)
             else:
                 screen.blit(background_graphics, screen_background_position)
-                screen.blit(play_again_m, play_again_mR)
-                screen.blit(to_leaderboard_m, to_leaderboard_mR)
-                if show_leaderboard:
-                    screen.blit(background_graphics, screen_background_position)
-                    screen.blit(leaderboard_m, leaderboard_mR)
-                    display_leader_board(SCREEN_WIDTH/2 - SCREEN_WIDTH/5 + SCREEN_WIDTH/30, 300, '#E7CFCF')
-                    screen.blit(to_play_leaderboard_m, to_play_leaderboard_mR)
+                screen.blit(leaderboard_m, leaderboard_mR)
+                display_leader_board(SCREEN_WIDTH/2 - SCREEN_WIDTH/5 + SCREEN_WIDTH/30, 300, '#E7CFCF')
+                screen.blit(to_play_leaderboard_m, to_play_leaderboard_mR)
 
     pygame.display.flip()
     clock.tick(60)

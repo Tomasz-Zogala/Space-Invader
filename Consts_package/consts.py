@@ -18,14 +18,14 @@ gameplay_state = False
 first_run = True
 user_giving_data = True
 show_leaderboard = False
-# game_reset = False
+play_again = False
+incorrect_nickname_flag = False
 
 # Bosses
 star_lord_arrived = False
 bounty_hunter_arrived = False
 ghast_of_the_void_arrived = False
 galactic_devourer_arrived = False
-
 first_stardust = False
 second_stardust = False
 third_stardust = False

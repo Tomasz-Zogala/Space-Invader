@@ -1,13 +1,13 @@
 import pygame
 
 from Guns_package.bullet_type_gun_package.minigun import Minigun
-from Guns_package.bullet_type_gun_package.rocket_launcher import Rocket_launcher
-from Guns_package.laser_type_gun_package.laser_thrower import Laser_thrower
 from Guns_package.laser_type_gun_package.laser_rifle import Laser_rifle
+from Guns_package.bullet_type_gun_package.rocket_launcher import Rocket_launcher
 from Guns_package.laser_type_gun_package.laser_ring import Laser_ring
+from Guns_package.bullet_type_gun_package.sniper_rifle import Sniper_rifle
+from Guns_package.laser_type_gun_package.laser_thrower import Laser_thrower
 
 from Consts_package.consts import guns, SCREEN_WIDTH, SCREEN_HEIGHT, SCALE
-from Guns_package.bullet_type_gun_package.sniper_rifle import Sniper_rifle
 
 
 # Define the Player class
@@ -17,7 +17,7 @@ class Player(pygame.sprite.Sprite):
 
         # Stats
         self.speed = 10 * SCALE
-        self.hp = 4
+        self.hp = 3
 
         # Equipment
         self.gun_list = ["Minigun", "Laser_rifle", "Rocket_launcher", "Laser_ring", "Sniper_rifle", "Laser_thrower"]
@@ -40,7 +40,9 @@ class Player(pygame.sprite.Sprite):
         self.player_timer = 0
 
         # Image
-        self.image = pygame.image.load('Additional_resources/Graphics/Space_lord.png').convert_alpha()
+        # self.image = pygame.image.load('Additional_resources/Graphics/Space_lord.png').convert_alpha()
+        self.image = pygame.Surface([150, 150])
+        self.image.fill('#000000')
         self.rect = self.image.get_rect()
 
         # Position
