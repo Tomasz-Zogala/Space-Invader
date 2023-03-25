@@ -13,7 +13,7 @@ class Laser_thrower(Laser_type_gun):
         self.damage = 0.08 * damage_multiplier
         self.fire_rate = 80 * fire_rate_multiplier
         self.bullet_speed = 10 * SCALE
-        self.range_timer_max = 800 * SCALE
+        self.range_timer_max = 1200 * SCALE
         self.range_timer_min = 0
 
         # Image data

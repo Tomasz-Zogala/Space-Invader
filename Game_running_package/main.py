@@ -7,7 +7,7 @@ from Enemies_package.ghast_of_the_void import Ghast_of_the_void
 from Enemies_package.star_lord import Star_lord
 from Consts_package.consts import players, guns, bonuses, enemies, enemies_laser_guns, SCREEN_WIDTH, SCREEN_HEIGHT, \
     game_over, gameplay_state, first_run, star_lord_arrived, bounty_hunter_arrived, ghast_of_the_void_arrived, \
-    galactic_devourer_arrived, fullscreen
+    galactic_devourer_arrived, fullscreen, user_giving_data
 from Player_package.player import Player
 
 pygame.init()
@@ -40,13 +40,16 @@ font = pygame.font.Font('Additional_resources/Font/Pixel_font.ttf', 50)
 font_stats = pygame.font.Font('Additional_resources/Font/Pixel_font.ttf', 25)
 
 play_again_m = font.render('Press SPACE to play again!', False, '#E7CFCF')
-play_again_mR = play_again_m.get_rect(center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 4))
+play_again_mR = play_again_m.get_rect(center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 3))
 
 welcome_m = font.render('WELCOME TO SPACE X CALIBUR', False, '#E7CFCF')
 welcome_mR = welcome_m.get_rect(center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 4))
 
 to_play_m = font.render('Press SPACE to play!', False, '#E7CFCF')
 to_play_mR = to_play_m.get_rect(center=(SCREEN_WIDTH / 2, (SCREEN_HEIGHT * 3 / 4)))
+
+enter_nickname_m = font.render('Enter your nickname:', False, '#E7CFCF')
+enter_nickname_mR = enter_nickname_m.get_rect(center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 3))
 
 
 # Display score
@@ -83,6 +86,12 @@ def display_gun(gun_type, pos_x, pos_y, color):
     gun_surf = font_stats.render(f'GUN: {gun_type}', False, color)
     gun_rect = gun_surf.get_rect(center=(pos_x, pos_y))
     screen.blit(gun_surf, gun_rect)
+
+
+def display_user_input_nickname(nickname, pos_x, pos_y, color):
+    nickname_surf = font.render(f' {nickname}', False, color)
+    nickname_rect = nickname_surf.get_rect(center=(pos_x, pos_y))
+    screen.blit(nickname_surf, nickname_rect)
 
 
 def display_gun_availability(gun_1, gun_2, gun_3, gun_4, gun_5, gun_6):
@@ -147,41 +156,82 @@ def display_gun_availability(gun_1, gun_2, gun_3, gun_4, gun_5, gun_6):
     screen.blit(gun_6_image, gun_6_image_rect)
 
 
+user_text = ''
 while not game_over:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             game_over = True
         if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
             game_over = True
-        if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE and not gameplay_state:
+        if not gameplay_state:
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE and first_run:
+                # Reset
+                guns.empty()
+                enemies.empty()
+                enemies_laser_guns.empty()
+                bonuses.empty()
 
-            # Reset
-            guns.empty()
-            enemies.empty()
-            enemies_laser_guns.empty()
-            bonuses.empty()
+                star_lord_arrived = False
+                bounty_hunter_arrived = False
+                ghast_of_the_void_arrived = False
+                galactic_devourer_arrived = False
 
-            gameplay_state = True
-            star_lord_arrived = False
-            bounty_hunter_arrived = False
-            ghast_of_the_void_arrived = False
-            galactic_devourer_arrived = False
+                for i in range(2):
+                    asteroid = Asteroid()
+                    enemies.add(asteroid)
 
-            for i in range(2):
-                asteroid = Asteroid()
-                enemies.add(asteroid)
+                if not players:
+                    player = Player()
+                    players.add(player)
 
-            if not players:
+                player.kill()
                 player = Player()
                 players.add(player)
 
-            player.kill()
-            player = Player()
-            players.add(player)
+                game_score_timer = 0
+                game_boss_timer = 0
 
-            game_score_timer = 0
-            game_boss_timer = 0
+                gameplay_state = True
+                first_run = False
+            if not first_run:
+                if user_giving_data:
+                    if event.type == pygame.KEYDOWN and event.key != pygame.K_BACKSPACE and event.key != pygame.K_RETURN:
+                        user_text += event.unicode
+                    if event.type == pygame.KEYDOWN and event.key == pygame.K_BACKSPACE:
+                        user_text = user_text[:-1]
+                    if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN and user_text:
+                        user_giving_data = False
+                if not user_giving_data:
+                    if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+                        # Reset
+                        guns.empty()
+                        enemies.empty()
+                        enemies_laser_guns.empty()
+                        bonuses.empty()
 
+                        star_lord_arrived = False
+                        bounty_hunter_arrived = False
+                        ghast_of_the_void_arrived = False
+                        galactic_devourer_arrived = False
+
+                        for i in range(2):
+                            asteroid = Asteroid()
+                            enemies.add(asteroid)
+
+                        if not players:
+                            player = Player()
+                            players.add(player)
+
+                        player.kill()
+                        player = Player()
+                        players.add(player)
+
+                        game_score_timer = 0
+                        game_boss_timer = 0
+
+                        user_giving_data = True
+                        gameplay_state = True
+                        user_text = ''
     if gameplay_state:
         screen.blit(background_graphics, screen_background_position)
 
@@ -201,9 +251,11 @@ while not game_over:
 
         display_score(player.score, SCREEN_WIDTH / 2, 50, '#E7CFCF')
         display_hp(player.hp, SCREEN_WIDTH - 110, SCREEN_HEIGHT - 50, '#E7CFCF')
-        display_stats(player.speed, player.gun_damage_multiplier, player.gun_fire_rate_multiplier, 115, SCREEN_HEIGHT - 110, '#E7CFCF')
+        display_stats(player.speed, player.gun_damage_multiplier, player.gun_fire_rate_multiplier, 115,
+                      SCREEN_HEIGHT - 110, '#E7CFCF')
         display_gun(player.using_gun_type, SCREEN_WIDTH / 2, SCREEN_HEIGHT - 40, '#E7CFCF')
-        display_gun_availability(player.minigun, player.rocket_launcher, player.laser_thrower, player.laser_rifle, player.laser_ring, player.sniper_rifle)
+        display_gun_availability(player.minigun, player.rocket_launcher, player.laser_thrower, player.laser_rifle,
+                                 player.laser_ring, player.sniper_rifle)
 
         # Timers
         game_score_timer += 1
@@ -216,7 +268,6 @@ while not game_over:
 
         # is Player alive
         if not players:
-            first_run = False
             gameplay_state = False
 
         # Game script
@@ -232,7 +283,7 @@ while not game_over:
 
         if game_boss_timer >= 10000 and not ghast_of_the_void_arrived:
             ghast_of_the_void_arrived = True
-            ghast_of_the_void = Ghast_of_the_void(SCREEN_HEIGHT/16, SCREEN_HEIGHT/16, 1, True)
+            ghast_of_the_void = Ghast_of_the_void(SCREEN_HEIGHT / 16, SCREEN_HEIGHT / 16, 1, True)
             enemies.add(ghast_of_the_void)
 
         if game_boss_timer >= 100 and not galactic_devourer_arrived:
@@ -244,11 +295,15 @@ while not game_over:
             screen.blit(background_graphics, screen_background_position)
             screen.blit(welcome_m, welcome_mR)
             screen.blit(to_play_m, to_play_mR)
-
         else:
-            screen.blit(background_graphics, screen_background_position)
-            screen.blit(play_again_m, play_again_mR)
-            display_score(player.score, SCREEN_WIDTH / 2, SCREEN_HEIGHT - 100, '#E7CFCF')
+            if user_giving_data:
+                screen.blit(background_graphics, screen_background_position)
+                screen.blit(enter_nickname_m, enter_nickname_mR)
+                display_score(player.score, SCREEN_WIDTH / 2, SCREEN_HEIGHT - 100, '#E7CFCF')
+                display_user_input_nickname(user_text, SCREEN_WIDTH/2, SCREEN_HEIGHT/3 + SCREEN_HEIGHT/10, '#E7CFCF')
+            else:
+                screen.blit(background_graphics, screen_background_position)
+                screen.blit(play_again_m, play_again_mR)
 
     pygame.display.flip()
     clock.tick(60)

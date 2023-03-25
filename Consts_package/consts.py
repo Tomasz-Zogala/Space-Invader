@@ -16,6 +16,8 @@ else:
 game_over = False
 gameplay_state = False
 first_run = True
+user_giving_data = True
+# game_reset = False
 
 # Bosses
 star_lord_arrived = False
@@ -35,3 +37,4 @@ enemies_laser_guns = pygame.sprite.Group()
 
 # Bonuses
 bonuses = pygame.sprite.Group()
+
