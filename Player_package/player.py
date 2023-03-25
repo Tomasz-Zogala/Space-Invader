@@ -17,7 +17,7 @@ class Player(pygame.sprite.Sprite):
 
         # Stats
         self.speed = 10 * SCALE
-        self.hp = 100
+        self.hp = 4
 
         # Equipment
         self.gun_list = ["Minigun", "Laser_rifle", "Rocket_launcher", "Laser_ring", "Sniper_rifle", "Laser_thrower"]
@@ -25,16 +25,16 @@ class Player(pygame.sprite.Sprite):
         self.using_gun_type = self.gun_list[self.gun_index]
 
         # Weapon upgrade
-        self.gun_damage_multiplier = 10
+        self.gun_damage_multiplier = 1
         self.gun_fire_rate_multiplier = 1
 
         # Obtained gun
         self.minigun = True
-        self.laser_rifle = True
-        self.rocket_launcher = True
-        self.laser_ring = True
-        self.sniper_rifle = True
-        self.laser_thrower = True
+        self.laser_rifle = False
+        self.rocket_launcher = False
+        self.laser_ring = False
+        self.sniper_rifle = False
+        self.laser_thrower = False
 
         # Timer
         self.player_timer = 0

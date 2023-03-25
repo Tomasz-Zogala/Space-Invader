@@ -17,6 +17,7 @@ game_over = False
 gameplay_state = False
 first_run = True
 user_giving_data = True
+show_leaderboard = False
 # game_reset = False
 
 # Bosses

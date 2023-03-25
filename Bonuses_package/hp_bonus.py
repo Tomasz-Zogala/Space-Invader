@@ -15,8 +15,8 @@ class Hp_bonus(Bonus):
 
         # Image data
         self.color = '#FA4CDA'
-        self.height = 25 * SCALE
-        self.width = 25 * SCALE
+        self.height = 40 * SCALE
+        self.width = 40 * SCALE
 
         # Image
         self.image = pygame.Surface([self.width, self.height])
@@ -30,9 +30,12 @@ class Hp_bonus(Bonus):
         collided_player = pygame.sprite.spritecollide(self, players, False)
         if collided_player:
             for player in collided_player:
-                if player.hp >= 10:
+                if player.hp >= 5:
                     pass
                 else:
-                    player.hp += 1
+                    if player.hp + 1 >= 5:
+                        player.hp = 5
+                    else:
+                        player.hp += 1
                 self.kill()
                 player.score += self.score_bonus

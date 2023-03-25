@@ -16,7 +16,7 @@ class Gun_bonus(Bonus):
         # Image data
         self.color = '#5100FF'
         self.height = 20 * SCALE
-        self.width = 20 * SCALE
+        self.width = 40 * SCALE
 
         # Image
         self.image = pygame.Surface([self.width, self.height])
@@ -30,20 +30,20 @@ class Gun_bonus(Bonus):
         collided_player = pygame.sprite.spritecollide(self, players, False)
         if collided_player:
             for player in collided_player:
+                if player.sniper_rifle:
+                    player.laser_thrower = True
+
                 if player.laser_ring:
                     player.sniper_rifle = True
 
-                if player.laser_rifle:
+                if player.rocket_launcher:
                     player.laser_ring = True
 
-                if player.laser_thrower:
-                    player.laser_rifle = True
-
-                if player.rocket_launcher:
-                    player.laser_thrower = True
+                if player.laser_rifle:
+                    player.rocket_launcher = True
 
                 if player.minigun:
-                    player.rocket_launcher = True
+                    player.laser_rifle = True
 
                 self.kill()
                 player.score += self.score_bonus

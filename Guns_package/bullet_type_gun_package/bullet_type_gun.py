@@ -50,16 +50,16 @@ class Bullet_type_gun(Gun):
             enemy.kill()
             self.kill()
             if self.bonus_probability <= 60:
-                bonus = Score_bonus(enemy.rect.center, enemy.speed_y * 2)
+                bonus = Score_bonus(enemy.rect.center, enemy.speed_y * 0.5)
                 bonuses.add(bonus)
             elif 60 < self.bonus_probability <= 80:
-                bonus = Stats_bonus(enemy.rect.center, enemy.speed_y * 2)
+                bonus = Stats_bonus(enemy.rect.center, enemy.speed_y * 0.5)
                 bonuses.add(bonus)
             elif 80 < self.bonus_probability <= 95:
-                bonus = Hp_bonus(enemy.rect.center, enemy.speed_y * 2)
+                bonus = Hp_bonus(enemy.rect.center, enemy.speed_y * 0.5)
                 bonuses.add(bonus)
             else:
-                bonus = Gun_bonus(enemy.rect.center, enemy.speed_y * 2)
+                bonus = Gun_bonus(enemy.rect.center, enemy.speed_y * 0.5)
                 bonuses.add(bonus)
             enemy = Asteroid()
             enemies.add(enemy)

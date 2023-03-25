@@ -7,7 +7,7 @@ from Enemies_package.ghast_of_the_void import Ghast_of_the_void
 from Enemies_package.star_lord import Star_lord
 from Consts_package.consts import players, guns, bonuses, enemies, enemies_laser_guns, SCREEN_WIDTH, SCREEN_HEIGHT, \
     game_over, gameplay_state, first_run, star_lord_arrived, bounty_hunter_arrived, ghast_of_the_void_arrived, \
-    galactic_devourer_arrived, fullscreen, user_giving_data, first_stardust, second_stardust, third_stardust
+    galactic_devourer_arrived, fullscreen, user_giving_data, first_stardust, second_stardust, third_stardust, show_leaderboard
 from Enemies_package.stardust import Stardust
 from Player_package.player import Player
 
@@ -37,8 +37,9 @@ background_audio.set_volume(0.2)
 background_audio.play()
 
 # Game messages
-font = pygame.font.Font('Additional_resources/Font/Pixel_font.ttf', 50)
+font = pygame.font.Font('Additional_resources/Font/Pixel_font.ttf', 120)
 font_stats = pygame.font.Font('Additional_resources/Font/Pixel_font.ttf', 25)
+font_nicknames = pygame.font.Font('Additional_resources/Font/Pixel_font.ttf', 80)
 
 play_again_m = font.render('Press SPACE to play again!', False, '#E7CFCF')
 play_again_mR = play_again_m.get_rect(center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 3))
@@ -49,8 +50,20 @@ welcome_mR = welcome_m.get_rect(center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 4))
 to_play_m = font.render('Press SPACE to play!', False, '#E7CFCF')
 to_play_mR = to_play_m.get_rect(center=(SCREEN_WIDTH / 2, (SCREEN_HEIGHT * 3 / 4)))
 
+to_play_leaderboard_m = font.render('Press SPACE to play!', False, '#E7CFCF')
+to_play_leaderboard_mR = to_play_leaderboard_m.get_rect(center=(SCREEN_WIDTH / 2, (SCREEN_HEIGHT-150)))
+
 enter_nickname_m = font.render('Enter your nickname:', False, '#E7CFCF')
 enter_nickname_mR = enter_nickname_m.get_rect(center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 3))
+
+to_leaderboard_m = font.render('Press L to check leaderboard', False, '#E7CFCF')
+to_leaderboard_mR = to_leaderboard_m.get_rect(center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 + SCREEN_HEIGHT / 4))
+
+leaderboard_m = font.render('Leaderboard:', False, '#E7CFCF')
+leaderboard_mR = leaderboard_m.get_rect(center=(SCREEN_WIDTH / 2, 100))
+
+to_leaderboard_m1 = font.render('LEADERBOARD', False, '#E7CFCF')
+to_leaderboard_mR1 = to_leaderboard_m1.get_rect(center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 + SCREEN_HEIGHT / 4))
 
 # Boss announcements
 warning_m = font.render('!!! WARNING WARNING WARNING !!!', False, '#E7CFCF')
@@ -118,6 +131,29 @@ def display_user_input_nickname(nickname, pos_x, pos_y, color):
     nickname_rect = nickname_surf.get_rect(center=(pos_x, pos_y))
     screen.blit(nickname_surf, nickname_rect)
 
+# Display score
+def display_leader_board(pos_x, pos_y, color):
+    with open("Leader_board.txt", "r") as f:
+        for line in f:
+            line = line.strip()
+            if line:
+                key, value = line.split(":")
+                player_score_map_output[key] = int(value)
+
+    sorted_player_score_map_output = {k: v for k, v in sorted(player_score_map_output.items(), key=lambda item: item[1], reverse=True)}
+
+    for i, (key, value) in enumerate(sorted_player_score_map_output.items()):
+        if i < 9:
+            text = f"{i + 1}.  {key} {value}"
+            text_surface = font_nicknames.render(text, True, color)
+            screen.blit(text_surface, (pos_x, i * 100 + pos_y))
+        else:
+            text = f"{i + 1}. {key} {value}"
+            text_surface = font_nicknames.render(text, True, color)
+            screen.blit(text_surface, (pos_x, i * 100 + pos_y))
+        if i == 9:
+            break
+
 
 def display_gun_availability(gun_1, gun_2, gun_3, gun_4, gun_5, gun_6):
     gun_1_image = pygame.Surface([15, 15])
@@ -180,9 +216,10 @@ def display_gun_availability(gun_1, gun_2, gun_3, gun_4, gun_5, gun_6):
     gun_6_image_rect.y = SCREEN_HEIGHT - 20
     screen.blit(gun_6_image, gun_6_image_rect)
 
-
-user_nickname = ''
-player_score_map = {}
+player_search = ''
+player_nickname = ''
+player_score_map_input = {}
+player_score_map_output = {}
 while not game_over:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -202,7 +239,7 @@ while not game_over:
                 ghast_of_the_void_arrived = False
                 galactic_devourer_arrived = False
 
-                for i in range(14):
+                for i in range(9):
                     asteroid = Asteroid()
                     enemies.add(asteroid)
 
@@ -221,50 +258,74 @@ while not game_over:
                 first_run = False
             if not first_run:
                 if user_giving_data:
-                    if event.type == pygame.KEYDOWN and event.key != pygame.K_BACKSPACE and event.key != pygame.K_RETURN:
-                        user_nickname += event.unicode
+                    if event.type == pygame.KEYDOWN and event.key != pygame.K_BACKSPACE and event.key != pygame.K_RETURN and event.key != pygame.K_SPACE:
+                        player_nickname += event.unicode
                     if event.type == pygame.KEYDOWN and event.key == pygame.K_BACKSPACE:
-                        user_nickname = user_nickname[:-1]
-                    if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN and user_nickname:
+                        player_nickname = player_nickname[:-1]
+                    if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN and player_nickname:
+
+                        player_score_map_input = {player_nickname: player.score}
+
+                        with open("Leader_board.txt", "a") as f:
+                            for key, value in player_score_map_input.items():
+                                f.write(key + ":" + str(value) + "\n")
+
+                        player_score_map_input.clear()
+                        player_nickname = ''
                         user_giving_data = False
                 if not user_giving_data:
                     if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
-
-                        player_score_map = {user_nickname: player.score}
-
-                        with open("Leader_board.txt", "a") as f:
-                            for key, value in player_score_map.items():
-                                f.write(key + ":" + str(value) + "\n")
-
                         #####################################
                         guns.empty()
                         enemies.empty()
                         enemies_laser_guns.empty()
                         bonuses.empty()
+                        players.empty()
+
+                        player = Player()
+                        players.add(player)
 
                         star_lord_arrived = False
                         bounty_hunter_arrived = False
                         ghast_of_the_void_arrived = False
                         galactic_devourer_arrived = False
 
-                        for i in range(14):
+                        for i in range(9):
                             asteroid = Asteroid()
                             enemies.add(asteroid)
-
-                        if not players:
-                            player = Player()
-                            players.add(player)
-
-                        player.kill()
-                        player = Player()
-                        players.add(player)
 
                         game_score_timer = 0
                         game_boss_timer = 0
                         #######################
                         user_giving_data = True
                         gameplay_state = True
-                        user_nickname = ''
+                    if event.type == pygame.KEYDOWN and event.key == pygame.K_l:
+                        show_leaderboard = True
+                        if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+                            #####################################
+                            guns.empty()
+                            enemies.empty()
+                            enemies_laser_guns.empty()
+                            bonuses.empty()
+                            players.empty()
+
+                            player = Player()
+                            players.add(player)
+
+                            star_lord_arrived = False
+                            bounty_hunter_arrived = False
+                            ghast_of_the_void_arrived = False
+                            galactic_devourer_arrived = False
+
+                            for i in range(9):
+                                asteroid = Asteroid()
+                                enemies.add(asteroid)
+
+                            game_score_timer = 0
+                            game_boss_timer = 0
+                            #######################
+                            user_giving_data = True
+                            gameplay_state = True
     if gameplay_state:
         screen.blit(background_graphics, screen_background_position)
 
@@ -287,7 +348,7 @@ while not game_over:
         display_hp(player.hp, SCREEN_WIDTH - 110, SCREEN_HEIGHT - 50, '#E7CFCF')
         display_stats(player.speed, player.gun_damage_multiplier, player.gun_fire_rate_multiplier, 115, SCREEN_HEIGHT - 110, '#E7CFCF')
         display_gun(player.using_gun_type, SCREEN_WIDTH / 2, SCREEN_HEIGHT - 40, '#E7CFCF')
-        display_gun_availability(player.minigun, player.rocket_launcher, player.laser_thrower, player.laser_rifle, player.laser_ring, player.sniper_rifle)
+        display_gun_availability(player.minigun, player.laser_rifle, player.rocket_launcher, player.laser_ring, player.sniper_rifle, player.laser_thrower)
 
         # Timers
         game_score_timer += 1
@@ -366,11 +427,17 @@ while not game_over:
             if user_giving_data:
                 screen.blit(background_graphics, screen_background_position)
                 screen.blit(enter_nickname_m, enter_nickname_mR)
-                display_score(player.score, SCREEN_WIDTH / 2, SCREEN_HEIGHT - 100, '#E7CFCF')
-                display_user_input_nickname(user_nickname, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 3 + SCREEN_HEIGHT / 10, '#E7CFCF')
+                display_score(player.score, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 + SCREEN_HEIGHT/12, '#E7CFCF')
+                display_user_input_nickname(player_nickname, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 3 + SCREEN_HEIGHT / 10, '#E7CFCF')
             else:
                 screen.blit(background_graphics, screen_background_position)
                 screen.blit(play_again_m, play_again_mR)
+                screen.blit(to_leaderboard_m, to_leaderboard_mR)
+                if show_leaderboard:
+                    screen.blit(background_graphics, screen_background_position)
+                    screen.blit(leaderboard_m, leaderboard_mR)
+                    display_leader_board(SCREEN_WIDTH/2 - SCREEN_WIDTH/5 + SCREEN_WIDTH/30, 300, '#E7CFCF')
+                    screen.blit(to_play_leaderboard_m, to_play_leaderboard_mR)
 
     pygame.display.flip()
     clock.tick(60)

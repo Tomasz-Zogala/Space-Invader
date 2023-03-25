@@ -15,8 +15,8 @@ class Score_bonus(Bonus):
 
         # Image data
         self.color = '#A6E742'
-        self.height = 25 * SCALE
-        self.width = 25 * SCALE
+        self.height = 20 * SCALE
+        self.width = 20 * SCALE
 
         # Image
         self.image = pygame.Surface([self.width, self.height])
