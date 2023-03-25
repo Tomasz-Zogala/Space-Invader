@@ -51,6 +51,24 @@ to_play_mR = to_play_m.get_rect(center=(SCREEN_WIDTH / 2, (SCREEN_HEIGHT * 3 / 4
 enter_nickname_m = font.render('Enter your nickname:', False, '#E7CFCF')
 enter_nickname_mR = enter_nickname_m.get_rect(center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 3))
 
+# Boss announcements
+warning_m = font.render('!!! WARNING WARNING WARNING !!!', False, '#E7CFCF')
+warning_mR = warning_m.get_rect(center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 4))
+
+star_lord_announcement_m = font.render('Star lord has detected our presence in space', False, '#E7CFCF')
+star_lord_announcement_mR = star_lord_announcement_m.get_rect(center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 3 + SCREEN_HEIGHT / 12))
+
+bounty_hunter_announcement_m = font.render('Bounty hunter?\'s engines make the air vibrate', False, '#E7CFCF')
+bounty_hunter_announcement_mR = bounty_hunter_announcement_m.get_rect(center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 3 + SCREEN_HEIGHT / 12))
+
+ghast_of_the_void_announcement_m = font.render('The swarm queen is seen on the radar', False, '#E7CFCF')
+ghast_of_the_void_announcement_mR = ghast_of_the_void_announcement_m.get_rect(center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 3 + SCREEN_HEIGHT / 12))
+
+galactic_devourer_announcement_m = font.render('Unexplained anomaly ahead', False, '#E7CFCF')
+galactic_devourer_announcement_mR = galactic_devourer_announcement_m.get_rect(center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 3 + SCREEN_HEIGHT / 12))
+galactic_devourer_announcement_m2 = font.render('WHAT IS IT???', False, '#E7CFCF')
+galactic_devourer_announcement_mR2 = galactic_devourer_announcement_m2.get_rect(center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 3 + SCREEN_HEIGHT / 8))
+
 
 # Display score
 def display_score(score, pos_x, pos_y, color):
@@ -58,6 +76,11 @@ def display_score(score, pos_x, pos_y, color):
     score_rect = score_surf.get_rect(center=(pos_x, pos_y))
     screen.blit(score_surf, score_rect)
 
+# Display gun type
+def display_timer(timer, pos_x, pos_y, color):
+    timer_surf = font.render(f'TIME: {round(timer/60, 1)}', False, color)
+    timer_rect = timer_surf.get_rect(center=(pos_x, pos_y))
+    screen.blit(timer_surf, timer_rect)
 
 # Display HP
 def display_hp(hp, pos_x, pos_y, color):
@@ -88,6 +111,7 @@ def display_gun(gun_type, pos_x, pos_y, color):
     screen.blit(gun_surf, gun_rect)
 
 
+# Display user input nickname
 def display_user_input_nickname(nickname, pos_x, pos_y, color):
     nickname_surf = font.render(f' {nickname}', False, color)
     nickname_rect = nickname_surf.get_rect(center=(pos_x, pos_y))
@@ -156,7 +180,8 @@ def display_gun_availability(gun_1, gun_2, gun_3, gun_4, gun_5, gun_6):
     screen.blit(gun_6_image, gun_6_image_rect)
 
 
-user_text = ''
+user_nickname = ''
+player_score_map = {}
 while not game_over:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -196,14 +221,21 @@ while not game_over:
             if not first_run:
                 if user_giving_data:
                     if event.type == pygame.KEYDOWN and event.key != pygame.K_BACKSPACE and event.key != pygame.K_RETURN:
-                        user_text += event.unicode
+                        user_nickname += event.unicode
                     if event.type == pygame.KEYDOWN and event.key == pygame.K_BACKSPACE:
-                        user_text = user_text[:-1]
-                    if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN and user_text:
+                        user_nickname = user_nickname[:-1]
+                    if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN and user_nickname:
                         user_giving_data = False
                 if not user_giving_data:
                     if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
-                        # Reset
+
+                        player_score_map = {user_nickname: player.score}
+
+                        with open("Leader_board.txt", "a") as f:
+                            for key, value in player_score_map.items():
+                                f.write(key + ":" + str(value) + "\n")
+
+                        #####################################
                         guns.empty()
                         enemies.empty()
                         enemies_laser_guns.empty()
@@ -228,10 +260,10 @@ while not game_over:
 
                         game_score_timer = 0
                         game_boss_timer = 0
-
+                        #######################
                         user_giving_data = True
                         gameplay_state = True
-                        user_text = ''
+                        user_nickname = ''
     if gameplay_state:
         screen.blit(background_graphics, screen_background_position)
 
@@ -250,12 +282,11 @@ while not game_over:
         bonuses.update()
 
         display_score(player.score, SCREEN_WIDTH / 2, 50, '#E7CFCF')
+        display_timer(game_boss_timer, SCREEN_WIDTH / 2, 150, '#E7CFCF')
         display_hp(player.hp, SCREEN_WIDTH - 110, SCREEN_HEIGHT - 50, '#E7CFCF')
-        display_stats(player.speed, player.gun_damage_multiplier, player.gun_fire_rate_multiplier, 115,
-                      SCREEN_HEIGHT - 110, '#E7CFCF')
+        display_stats(player.speed, player.gun_damage_multiplier, player.gun_fire_rate_multiplier, 115, SCREEN_HEIGHT - 110, '#E7CFCF')
         display_gun(player.using_gun_type, SCREEN_WIDTH / 2, SCREEN_HEIGHT - 40, '#E7CFCF')
-        display_gun_availability(player.minigun, player.rocket_launcher, player.laser_thrower, player.laser_rifle,
-                                 player.laser_ring, player.sniper_rifle)
+        display_gun_availability(player.minigun, player.rocket_launcher, player.laser_thrower, player.laser_rifle, player.laser_ring, player.sniper_rifle)
 
         # Timers
         game_score_timer += 1
@@ -271,22 +302,39 @@ while not game_over:
             gameplay_state = False
 
         # Game script
-        if game_boss_timer >= 10000 and not star_lord_arrived:
+        if 1200 <= game_boss_timer <= 1800:
+            screen.blit(warning_m, warning_mR)
+            screen.blit(star_lord_announcement_m, star_lord_announcement_mR)
+
+        if game_boss_timer >= 1800 and not star_lord_arrived:
             star_lord_arrived = True
             star_lord = Star_lord()
             enemies.add(star_lord)
 
-        if game_boss_timer >= 10000 and not bounty_hunter_arrived:
+        if 3000 <= game_boss_timer <= 3600:
+            screen.blit(warning_m, warning_mR)
+            screen.blit(bounty_hunter_announcement_m, bounty_hunter_announcement_mR)
+
+        if game_boss_timer >= 3600 and not bounty_hunter_arrived:
             bounty_hunter_arrived = True
             bounty_hunter = Bounty_hunter()
             enemies.add(bounty_hunter)
 
-        if game_boss_timer >= 10000 and not ghast_of_the_void_arrived:
+        if 4800 <= game_boss_timer <= 5400:
+            screen.blit(warning_m, warning_mR)
+            screen.blit(ghast_of_the_void_announcement_m, ghast_of_the_void_announcement_mR)
+
+        if game_boss_timer >= 5400 and not ghast_of_the_void_arrived:
             ghast_of_the_void_arrived = True
             ghast_of_the_void = Ghast_of_the_void(SCREEN_HEIGHT / 16, SCREEN_HEIGHT / 16, 1, True)
             enemies.add(ghast_of_the_void)
 
-        if game_boss_timer >= 100 and not galactic_devourer_arrived:
+        if 6600 <= game_boss_timer <= 7200:
+            screen.blit(warning_m, warning_mR)
+            screen.blit(galactic_devourer_announcement_m, galactic_devourer_announcement_mR)
+            screen.blit(galactic_devourer_announcement_m2, galactic_devourer_announcement_mR2)
+
+        if game_boss_timer >= 7200 and not galactic_devourer_arrived:
             galactic_devourer_arrived = True
             galactic_devourer = Galactic_devourer()
             enemies.add(galactic_devourer)
@@ -300,7 +348,8 @@ while not game_over:
                 screen.blit(background_graphics, screen_background_position)
                 screen.blit(enter_nickname_m, enter_nickname_mR)
                 display_score(player.score, SCREEN_WIDTH / 2, SCREEN_HEIGHT - 100, '#E7CFCF')
-                display_user_input_nickname(user_text, SCREEN_WIDTH/2, SCREEN_HEIGHT/3 + SCREEN_HEIGHT/10, '#E7CFCF')
+                display_user_input_nickname(user_nickname, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 3 + SCREEN_HEIGHT / 10,
+                                            '#E7CFCF')
             else:
                 screen.blit(background_graphics, screen_background_position)
                 screen.blit(play_again_m, play_again_mR)

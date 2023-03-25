@@ -17,7 +17,7 @@ class Player(pygame.sprite.Sprite):
 
         # Stats
         self.speed = 10 * SCALE
-        self.hp = 3
+        self.hp = 100
 
         # Equipment
         self.gun_list = ["Minigun", "Laser_rifle", "Rocket_launcher", "Laser_ring", "Sniper_rifle", "Laser_thrower"]
