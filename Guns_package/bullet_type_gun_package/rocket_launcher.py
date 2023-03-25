@@ -29,3 +29,6 @@ class Rocket_launcher(Bullet_type_gun):
         self.rect.center = center
 
         # Audio
+        self.audio = pygame.mixer.Sound("Additional_resources/Audio/rocket_launcher.mp3")
+        self.audio.set_volume(0.5)
+        self.audio.play()

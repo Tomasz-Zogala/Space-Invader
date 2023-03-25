@@ -13,6 +13,9 @@ class Galactic_devourer_laser_ring(Enemy_laser_gun):
         self.range_timer_min = 0
 
         # Audio
+        self.audio = pygame.mixer.Sound("Additional_resources/Audio/devourer_gun.mp3")
+        self.audio.set_volume(0.5)
+        self.audio.play()
 
     def movement_service(self):
         self.rect.y += -self.bullet_speed

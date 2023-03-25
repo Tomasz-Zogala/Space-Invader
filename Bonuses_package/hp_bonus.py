@@ -7,11 +7,11 @@ from Constants_package.constants import players, SCALE
 
 # Define the Hp_Bonus class
 class Hp_bonus(Bonus):
-    def __init__(self, center, speed):
-        super().__init__(center, speed)
+    def __init__(self, center):
+        super().__init__(center)
 
         # Stats
-        self.speed = speed * SCALE
+        self.speed = 2 * SCALE
         self.score_bonus = 50
 
         # Image data
@@ -26,8 +26,6 @@ class Hp_bonus(Bonus):
 
         # Position
         self.rect.center = center
-
-        # Audio
 
     def collision_with_player_service(self):
         collided_player = pygame.sprite.spritecollide(self, players, False)

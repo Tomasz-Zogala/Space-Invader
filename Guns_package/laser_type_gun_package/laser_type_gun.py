@@ -42,78 +42,96 @@ class Laser_type_gun(Gun):
         # Position
         self.rect.center = center
 
+        # Audio
+        self.boss_died_audio = pygame.mixer.Sound("Additional_resources/Audio/laser_rifle.mp3")
+        self.boss_died_audio.set_volume(0.5)
+
     def movement_service(self):
         pass
 
     def killing_enemy_service(self, enemy):
         if type(enemy) == Asteroid:
-            enemy.kill()
             if self.bonus_probability <= 60:
-                bonus = Score_bonus(enemy.rect.center, enemy.speed_y * 0.5)
+                bonus = Score_bonus(enemy.rect.center)
                 bonuses.add(bonus)
             elif 60 < self.bonus_probability <= 80:
-                bonus = Stats_bonus(enemy.rect.center, enemy.speed_y * 0.5)
+                bonus = Stats_bonus(enemy.rect.center)
                 bonuses.add(bonus)
             elif 80 < self.bonus_probability <= 95:
-                bonus = Hp_bonus(enemy.rect.center, enemy.speed_y * 0.5)
+                bonus = Hp_bonus(enemy.rect.center)
                 bonuses.add(bonus)
             else:
-                bonus = Gun_bonus(enemy.rect.center, enemy.speed_y * 0.5)
+                enemy = Asteroid()
+                enemies.add(enemy)
+                bonus = Gun_bonus(enemy.rect.center)
                 bonuses.add(bonus)
+            enemy.kill()
             enemy = Asteroid()
             enemies.add(enemy)
 
         elif type(enemy) == Star_lord:
-            enemy.kill()
-            bonus = Gun_bonus(enemy.rect.center, enemy.speed_y * 0.5)
+            self.boss_died_audio.play()
+            bonus = Gun_bonus(enemy.rect.center)
             bonuses.add(bonus)
-            bonus = Hp_bonus(enemy.rect.center, enemy.speed_y * 0.5)
+            bonus = Hp_bonus(enemy.rect.center)
             bonuses.add(bonus)
             if self.bonus_probability <= 90:
-                bonus = Score_bonus(enemy.rect.center, enemy.speed_y * 1)
+                bonus = Score_bonus(enemy.rect.center)
                 bonuses.add(bonus)
             else:
-                bonus = Stats_bonus(enemy.rect.center, enemy.speed_y * 1)
+                bonus = Stats_bonus(enemy.rect.center)
                 bonuses.add(bonus)
+            enemy.kill()
+            enemy = Asteroid()
+            enemies.add(enemy)
 
         elif type(enemy) == Bounty_hunter:
-            enemy.kill()
-            bonus = Gun_bonus(enemy.rect.center, enemy.speed_y * 0.5)
+            self.boss_died_audio.play()
+            bonus = Gun_bonus(enemy.rect.center)
             bonuses.add(bonus)
-            bonus = Hp_bonus(enemy.rect.center, enemy.speed_y * 0.5)
+            bonus = Hp_bonus(enemy.rect.center)
             bonuses.add(bonus)
             if self.bonus_probability <= 90:
-                bonus = Score_bonus(enemy.rect.center, enemy.speed_y * 1)
+                bonus = Score_bonus(enemy.rect.center)
                 bonuses.add(bonus)
             else:
-                bonus = Stats_bonus(enemy.rect.center, enemy.speed_y * 1)
+                bonus = Stats_bonus(enemy.rect.center)
                 bonuses.add(bonus)
+            enemy.kill()
+            enemy = Asteroid()
+            enemies.add(enemy)
 
         elif type(enemy) == Ghast_of_the_void:
-            enemy.kill()
-            bonus = Gun_bonus(enemy.rect.center, enemy.speed_y * 0.5)
+            self.boss_died_audio.play()
+            bonus = Gun_bonus(enemy.rect.center)
             bonuses.add(bonus)
-            bonus = Hp_bonus(enemy.rect.center, enemy.speed_y * 0.5)
+            bonus = Hp_bonus(enemy.rect.center)
             bonuses.add(bonus)
             if self.bonus_probability <= 90:
-                bonus = Score_bonus(enemy.rect.center, enemy.speed_y * 1)
+                bonus = Score_bonus(enemy.rect.center)
                 bonuses.add(bonus)
             else:
-                bonus = Stats_bonus(enemy.rect.center, enemy.speed_y * 1)
+                bonus = Stats_bonus(enemy.rect.center)
                 bonuses.add(bonus)
+            enemy.kill()
+            enemy = Asteroid()
+            enemies.add(enemy)
 
         elif type(enemy) == Galactic_devourer:
-            enemy.kill()
-            bonus = Gun_bonus(enemy.rect.center, enemy.speed_y * 0.5)
+            self.boss_died_audio.play()
+            bonus = Gun_bonus(enemy.rect.center)
             bonuses.add(bonus)
-            bonus = Hp_bonus(enemy.rect.center, enemy.speed_y * 0.5)
+            bonus = Hp_bonus(enemy.rect.center)
             bonuses.add(bonus)
             if self.bonus_probability <= 90:
-                bonus = Score_bonus(enemy.rect.center, enemy.speed_y * 1)
+                bonus = Score_bonus(enemy.rect.center)
                 bonuses.add(bonus)
             else:
-                bonus = Stats_bonus(enemy.rect.center, enemy.speed_y * 1)
+                bonus = Stats_bonus(enemy.rect.center)
                 bonuses.add(bonus)
+            enemy.kill()
+            enemy = Asteroid()
+            enemies.add(enemy)
 
         elif type(enemy) == Stardust:
             enemy.kill()

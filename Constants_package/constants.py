@@ -1,7 +1,7 @@
 import pygame
 
 # Fullscreen flag
-fullscreen_flag = False
+fullscreen_flag = True
 
 # Screen
 if fullscreen_flag:
@@ -26,9 +26,11 @@ star_lord_arrived_flag = False
 bounty_hunter_arrived_flag = False
 ghast_of_the_void_arrived_flag = False
 galactic_devourer_arrived_flag = False
+boss_rush_arrived_flag = False
 first_stardust_wave_flag = False
 second_stardust_wave_flag = False
 third_stardust_wave_flag = False
+fourth_stardust_wave_flag = False
 
 # Players sprite group
 players = pygame.sprite.Group()

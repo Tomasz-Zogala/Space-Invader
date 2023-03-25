@@ -37,6 +37,11 @@ class Ghast_of_the_void(Enemy):
         self.pos_y = pos_y
         self.rect.center = (self.pos_x, self.pos_y)
 
+        # Audio
+        self.audio = pygame.mixer.Sound("Additional_resources/Audio/ghast_of_the_void.mp3")
+        self.audio.set_volume(0.5)
+        self.audio.play()
+
     def movement_service(self):
 
         if self.first_in_colony:

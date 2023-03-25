@@ -45,6 +45,11 @@ class Bounty_hunter(Enemy):
         # Position
         self.rect.center = (SCREEN_WIDTH/2-self.radius/2, SCREEN_HEIGHT/10)
 
+        # Audio
+        self.audio = pygame.mixer.Sound("Additional_resources/Audio/bounty_hunter.mp3")
+        self.audio.set_volume(0.5)
+        self.audio.play()
+
     def movement_service(self):
 
         self.angle += 0.1

@@ -36,6 +36,11 @@ class Star_lord(Enemy):
         self.rect.x = random.randrange(100 * SCALE, SCREEN_WIDTH - 100 * SCALE)
         self.rect.y = 100 * SCALE
 
+        # Audio
+        self.audio = pygame.mixer.Sound("Additional_resources/Audio/star_lord.mp3")
+        self.audio.set_volume(0.5)
+        self.audio.play()
+
     def movement_service(self):
         self.rect.x += self.speed_x * self.acceleration
         self.rect.y += self.speed_y

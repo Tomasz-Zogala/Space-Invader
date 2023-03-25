@@ -16,10 +16,10 @@ class Player(pygame.sprite.Sprite):
         super().__init__()
 
         # Stats
-        self.gun_damage_multiplier = 1
+        self.gun_damage_multiplier = 5
         self.gun_fire_rate_multiplier = 1
-        self.speed = 7 * SCALE
-        self.hp = 3
+        self.speed = 10 * SCALE
+        self.hp = 1000
 
         # Info
         self.score = 0
@@ -31,11 +31,11 @@ class Player(pygame.sprite.Sprite):
 
         # Obtained guns
         self.minigun = True
-        self.laser_rifle = False
-        self.rocket_launcher = False
-        self.laser_ring = False
-        self.sniper_rifle = False
-        self.laser_thrower = False
+        self.laser_rifle = True
+        self.rocket_launcher = True
+        self.laser_ring = True
+        self.sniper_rifle = True
+        self.laser_thrower = True
 
         # Timer
         self.player_timer = 0
@@ -50,9 +50,9 @@ class Player(pygame.sprite.Sprite):
         self.rect.center = (SCREEN_WIDTH/2, SCREEN_HEIGHT-SCREEN_HEIGHT/10)
 
         # Audio
-        self.player_appear_audio = pygame.mixer.Sound("Additional_resources/Audio/Boss_appear.mp3")
-        self.player_appear_audio.set_volume(0.5)
-        self.player_appear_audio.play()
+        self.audio = pygame.mixer.Sound("Additional_resources/Audio/player.mp3")
+        self.audio.set_volume(0.5)
+        self.audio.play()
 
     def movement_service(self):
         keys = pygame.key.get_pressed()

@@ -44,6 +44,11 @@ class Galactic_devourer(Enemy):
         self.rect.x = random.randrange(200 * SCALE, SCREEN_WIDTH-200 * SCALE)
         self.rect.y = 200 * SCALE
 
+        # Audio
+        self.audio = pygame.mixer.Sound("Additional_resources/Audio/galactic_devourer.mp3")
+        self.audio.set_volume(0.5)
+        self.audio.play()
+
     def movement_service(self):
         self.rect.x += self.speed_x * 2 * self.acceleration
         self.rect.y += self.speed_y * self.acceleration

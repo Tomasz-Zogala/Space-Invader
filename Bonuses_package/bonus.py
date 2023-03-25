@@ -5,11 +5,11 @@ from Constants_package.constants import SCREEN_HEIGHT
 
 # Define the abstract Bonus class
 class Bonus(pygame.sprite.Sprite):
-    def __init__(self, center, speed):
+    def __init__(self, center):
         super().__init__()
 
         # Stats
-        self.speed = speed * SCREEN_HEIGHT/800
+        self.speed = 2 * SCREEN_HEIGHT/800
         self.score_bonus = 0
 
         # Image data
@@ -24,8 +24,6 @@ class Bonus(pygame.sprite.Sprite):
 
         # Position
         self.rect.center = center
-
-        # Audio
 
     def movement_service(self):
         self.rect.y += self.speed
