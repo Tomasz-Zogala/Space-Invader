@@ -28,7 +28,7 @@ class Asteroid(Enemy):
 
         # Position
         self.rect.x = random.randrange(0, SCREEN_WIDTH)
-        self.rect.y = -50 * SCALE
+        self.rect.y = random.randrange(-250, -50)
 
     def movement(self):
         self.rect.y += self.speed_y

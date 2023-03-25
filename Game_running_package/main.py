@@ -7,7 +7,8 @@ from Enemies_package.ghast_of_the_void import Ghast_of_the_void
 from Enemies_package.star_lord import Star_lord
 from Consts_package.consts import players, guns, bonuses, enemies, enemies_laser_guns, SCREEN_WIDTH, SCREEN_HEIGHT, \
     game_over, gameplay_state, first_run, star_lord_arrived, bounty_hunter_arrived, ghast_of_the_void_arrived, \
-    galactic_devourer_arrived, fullscreen, user_giving_data
+    galactic_devourer_arrived, fullscreen, user_giving_data, first_stardust, second_stardust, third_stardust
+from Enemies_package.stardust import Stardust
 from Player_package.player import Player
 
 pygame.init()
@@ -201,7 +202,7 @@ while not game_over:
                 ghast_of_the_void_arrived = False
                 galactic_devourer_arrived = False
 
-                for i in range(2):
+                for i in range(14):
                     asteroid = Asteroid()
                     enemies.add(asteroid)
 
@@ -246,7 +247,7 @@ while not game_over:
                         ghast_of_the_void_arrived = False
                         galactic_devourer_arrived = False
 
-                        for i in range(2):
+                        for i in range(14):
                             asteroid = Asteroid()
                             enemies.add(asteroid)
 
@@ -302,7 +303,7 @@ while not game_over:
             gameplay_state = False
 
         # Game script
-        if 1200 <= game_boss_timer <= 1800:
+        if 1500 <= game_boss_timer <= 1800:
             screen.blit(warning_m, warning_mR)
             screen.blit(star_lord_announcement_m, star_lord_announcement_mR)
 
@@ -311,7 +312,13 @@ while not game_over:
             star_lord = Star_lord()
             enemies.add(star_lord)
 
-        if 3000 <= game_boss_timer <= 3600:
+        if game_boss_timer >= 3000 and not first_stardust:
+            for i in range(200):
+                stardust = Stardust()
+                enemies.add(stardust)
+            first_stardust = True
+
+        if 3300 <= game_boss_timer <= 3600:
             screen.blit(warning_m, warning_mR)
             screen.blit(bounty_hunter_announcement_m, bounty_hunter_announcement_mR)
 
@@ -320,7 +327,13 @@ while not game_over:
             bounty_hunter = Bounty_hunter()
             enemies.add(bounty_hunter)
 
-        if 4800 <= game_boss_timer <= 5400:
+        if game_boss_timer >= 4800 and not second_stardust:
+            for i in range(200):
+                stardust = Stardust()
+                enemies.add(stardust)
+            second_stardust = True
+
+        if 5100 <= game_boss_timer <= 5400:
             screen.blit(warning_m, warning_mR)
             screen.blit(ghast_of_the_void_announcement_m, ghast_of_the_void_announcement_mR)
 
@@ -329,7 +342,13 @@ while not game_over:
             ghast_of_the_void = Ghast_of_the_void(SCREEN_HEIGHT / 16, SCREEN_HEIGHT / 16, 1, True)
             enemies.add(ghast_of_the_void)
 
-        if 6600 <= game_boss_timer <= 7200:
+        if game_boss_timer >= 6600 and not third_stardust:
+            for i in range(200):
+                stardust = Stardust()
+                enemies.add(stardust)
+            third_stardust = True
+
+        if 6900 <= game_boss_timer <= 7200:
             screen.blit(warning_m, warning_mR)
             screen.blit(galactic_devourer_announcement_m, galactic_devourer_announcement_mR)
             screen.blit(galactic_devourer_announcement_m2, galactic_devourer_announcement_mR2)
@@ -348,8 +367,7 @@ while not game_over:
                 screen.blit(background_graphics, screen_background_position)
                 screen.blit(enter_nickname_m, enter_nickname_mR)
                 display_score(player.score, SCREEN_WIDTH / 2, SCREEN_HEIGHT - 100, '#E7CFCF')
-                display_user_input_nickname(user_nickname, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 3 + SCREEN_HEIGHT / 10,
-                                            '#E7CFCF')
+                display_user_input_nickname(user_nickname, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 3 + SCREEN_HEIGHT / 10, '#E7CFCF')
             else:
                 screen.blit(background_graphics, screen_background_position)
                 screen.blit(play_again_m, play_again_mR)

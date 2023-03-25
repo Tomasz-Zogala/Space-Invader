@@ -25,6 +25,10 @@ bounty_hunter_arrived = False
 ghast_of_the_void_arrived = False
 galactic_devourer_arrived = False
 
+first_stardust = False
+second_stardust = False
+third_stardust = False
+
 # Player
 players = pygame.sprite.Group()
 
