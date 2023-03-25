@@ -1,7 +1,8 @@
 import pygame
 
-from Consts_package.consts import SCREEN_HEIGHT, SCALE
 from Guns_package.laser_type_gun_package.laser_type_gun import Laser_type_gun
+
+from Constants_package.constants import SCALE
 
 
 # Define the Laser_ring class
@@ -19,7 +20,7 @@ class Laser_ring(Laser_type_gun):
         # Image data
         self.width = 350 * SCALE
         self.height = 350 * SCALE
-        self.color = '#033BFB'
+        self.color = '#BB00FF'
 
         # Image
         self.image = pygame.Surface([self.width, self.height])
@@ -31,9 +32,8 @@ class Laser_ring(Laser_type_gun):
 
         # Audio
 
-    def movement(self):
+    def movement_service(self):
         self.rect.y += -self.bullet_speed
-
         if self.range_timer_max <= self.range_timer_min:
             self.kill()
             self.range_timer_max = 0

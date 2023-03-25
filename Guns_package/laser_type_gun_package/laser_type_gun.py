@@ -1,18 +1,21 @@
 import pygame
 import random
 
-from Bonuses_package.gun_bonus import Gun_bonus
-from Bonuses_package.hp_bonus import Hp_bonus
+from Guns_package.gun import Gun
+
 from Bonuses_package.score_bonus import Score_bonus
 from Bonuses_package.stats_bonus import Stats_bonus
+from Bonuses_package.hp_bonus import Hp_bonus
+from Bonuses_package.gun_bonus import Gun_bonus
+
 from Enemies_package.asteroid import Asteroid
-from Enemies_package.bounty_hunter import Bounty_hunter
-from Enemies_package.galactic_devourer import Galactic_devourer
-from Enemies_package.ghast_of_the_void import Ghast_of_the_void
-from Enemies_package.star_lord import Star_lord
-from Consts_package.consts import bonuses, enemies, SCALE
 from Enemies_package.stardust import Stardust
-from Guns_package.gun import Gun
+from Enemies_package.star_lord import Star_lord
+from Enemies_package.bounty_hunter import Bounty_hunter
+from Enemies_package.ghast_of_the_void import Ghast_of_the_void
+from Enemies_package.galactic_devourer import Galactic_devourer
+
+from Constants_package.constants import bonuses, enemies, SCALE
 
 
 # Define the abstract Laser_type_gun class
@@ -39,10 +42,10 @@ class Laser_type_gun(Gun):
         # Position
         self.rect.center = center
 
-    def movement(self):
+    def movement_service(self):
         pass
 
-    def killing(self, enemy):
+    def killing_enemy_service(self, enemy):
         if type(enemy) == Asteroid:
             enemy.kill()
             if self.bonus_probability <= 60:
@@ -62,7 +65,7 @@ class Laser_type_gun(Gun):
 
         elif type(enemy) == Star_lord:
             enemy.kill()
-            bonus = Gun_bonus(enemy.rect.center, enemy.speed_y * 0.3)
+            bonus = Gun_bonus(enemy.rect.center, enemy.speed_y * 0.5)
             bonuses.add(bonus)
             bonus = Hp_bonus(enemy.rect.center, enemy.speed_y * 0.5)
             bonuses.add(bonus)
@@ -75,7 +78,7 @@ class Laser_type_gun(Gun):
 
         elif type(enemy) == Bounty_hunter:
             enemy.kill()
-            bonus = Gun_bonus(enemy.rect.center, enemy.speed_y * 0.3)
+            bonus = Gun_bonus(enemy.rect.center, enemy.speed_y * 0.5)
             bonuses.add(bonus)
             bonus = Hp_bonus(enemy.rect.center, enemy.speed_y * 0.5)
             bonuses.add(bonus)
@@ -88,7 +91,7 @@ class Laser_type_gun(Gun):
 
         elif type(enemy) == Ghast_of_the_void:
             enemy.kill()
-            bonus = Gun_bonus(enemy.rect.center, enemy.speed_y * 0.3)
+            bonus = Gun_bonus(enemy.rect.center, enemy.speed_y * 0.5)
             bonuses.add(bonus)
             bonus = Hp_bonus(enemy.rect.center, enemy.speed_y * 0.5)
             bonuses.add(bonus)
@@ -101,7 +104,7 @@ class Laser_type_gun(Gun):
 
         elif type(enemy) == Galactic_devourer:
             enemy.kill()
-            bonus = Gun_bonus(enemy.rect.center, enemy.speed_y * 0.3)
+            bonus = Gun_bonus(enemy.rect.center, enemy.speed_y * 0.5)
             bonuses.add(bonus)
             bonus = Hp_bonus(enemy.rect.center, enemy.speed_y * 0.5)
             bonuses.add(bonus)
@@ -115,10 +118,10 @@ class Laser_type_gun(Gun):
         elif type(enemy) == Stardust:
             enemy.kill()
 
-    def hit_service(self):
+    def collision_with_enemy_service(self):
         collided_enemies = pygame.sprite.spritecollide(self, enemies, False)
         if collided_enemies:
             for enemy in collided_enemies:
                 enemy.hp += -self.damage
                 if enemy.hp <= 0:
-                    self.killing(enemy)
+                    self.killing_enemy_service(enemy)

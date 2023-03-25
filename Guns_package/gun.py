@@ -1,6 +1,6 @@
 import pygame
 
-from Consts_package.consts import SCALE
+from Constants_package.constants import SCALE
 
 
 # Define the abstract Gun class
@@ -26,15 +26,15 @@ class Gun(pygame.sprite.Sprite):
         # Position
         self.rect.center = center
 
-    def movement(self):
+    def movement_service(self):
         pass
 
-    def killing(self, enemy):
+    def killing_enemy_service(self, enemy):
         pass
 
-    def hit_service(self):
+    def collision_with_enemy_service(self):
         pass
 
     def update(self):
-        self.movement()
-        self.hit_service()
+        self.movement_service()
+        self.collision_with_enemy_service()

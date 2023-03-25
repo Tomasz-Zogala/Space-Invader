@@ -7,7 +7,7 @@ from Guns_package.laser_type_gun_package.laser_ring import Laser_ring
 from Guns_package.bullet_type_gun_package.sniper_rifle import Sniper_rifle
 from Guns_package.laser_type_gun_package.laser_thrower import Laser_thrower
 
-from Consts_package.consts import guns, SCREEN_WIDTH, SCREEN_HEIGHT, SCALE
+from Constants_package.constants import guns, SCALE, SCREEN_WIDTH, SCREEN_HEIGHT
 
 
 # Define the Player class
@@ -16,19 +16,20 @@ class Player(pygame.sprite.Sprite):
         super().__init__()
 
         # Stats
-        self.speed = 10 * SCALE
+        self.gun_damage_multiplier = 1
+        self.gun_fire_rate_multiplier = 1
+        self.speed = 7 * SCALE
         self.hp = 3
 
+        # Info
+        self.score = 0
+
         # Equipment
-        self.gun_list = ["Minigun", "Laser_rifle", "Rocket_launcher", "Laser_ring", "Sniper_rifle", "Laser_thrower"]
+        self.gun_list = ["Minigun", "Laser Rifle", "Rocket Launcher", "Laser Ring", "Sniper Rifle", "Laser Thrower"]
         self.gun_index = 0
         self.using_gun_type = self.gun_list[self.gun_index]
 
-        # Weapon upgrade
-        self.gun_damage_multiplier = 1
-        self.gun_fire_rate_multiplier = 1
-
-        # Obtained gun
+        # Obtained guns
         self.minigun = True
         self.laser_rifle = False
         self.rocket_launcher = False
@@ -53,10 +54,7 @@ class Player(pygame.sprite.Sprite):
         self.player_appear_audio.set_volume(0.5)
         self.player_appear_audio.play()
 
-        # Info
-        self.score = 0
-
-    def movement(self):
+    def movement_service(self):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_LEFT]:
             self.rect.x -= self.speed
@@ -75,41 +73,41 @@ class Player(pygame.sprite.Sprite):
             if self.rect.bottom >= SCREEN_HEIGHT:
                 self.rect.bottom = SCREEN_HEIGHT
 
-    def shooting(self):
+    def shooting_service(self):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_SPACE] and self.using_gun_type == 'Minigun' and self.player_timer <= 0:
             minigun = Minigun(self.rect.center, self.gun_damage_multiplier, self.gun_fire_rate_multiplier)
             guns.add(minigun)
             self.player_timer = minigun.fire_rate
 
-        if keys[pygame.K_SPACE] and self.using_gun_type == 'Laser_rifle' and self.player_timer <= 0:
+        if keys[pygame.K_SPACE] and self.using_gun_type == 'Laser Rifle' and self.player_timer <= 0:
             laser_rifle = Laser_rifle(self.rect.center, self.gun_damage_multiplier, self.gun_fire_rate_multiplier)
             guns.add(laser_rifle)
             self.player_timer = laser_rifle.fire_rate
 
-        if keys[pygame.K_SPACE] and self.using_gun_type == 'Rocket_launcher' and self.player_timer <= 0:
+        if keys[pygame.K_SPACE] and self.using_gun_type == 'Rocket Launcher' and self.player_timer <= 0:
             rocket_launcher = Rocket_launcher(self.rect.center, self.gun_damage_multiplier, self.gun_fire_rate_multiplier)
             guns.add(rocket_launcher)
             self.player_timer = rocket_launcher.fire_rate
 
-        if keys[pygame.K_SPACE] and self.using_gun_type == 'Laser_ring' and self.player_timer <= 0:
+        if keys[pygame.K_SPACE] and self.using_gun_type == 'Laser Ring' and self.player_timer <= 0:
             laser_ring = Laser_ring(self.rect.center, self.gun_damage_multiplier, self.gun_fire_rate_multiplier)
             guns.add(laser_ring)
             self.player_timer = laser_ring.fire_rate
 
-        if keys[pygame.K_SPACE] and self.using_gun_type == 'Sniper_rifle' and self.player_timer <= 0:
+        if keys[pygame.K_SPACE] and self.using_gun_type == 'Sniper Rifle' and self.player_timer <= 0:
             sniper_rifle = Sniper_rifle(self.rect.center, self.gun_damage_multiplier, self.gun_fire_rate_multiplier)
             guns.add(sniper_rifle)
             self.player_timer = sniper_rifle.fire_rate
 
-        if keys[pygame.K_SPACE] and self.using_gun_type == 'Laser_thrower' and self.player_timer <= 0:
+        if keys[pygame.K_SPACE] and self.using_gun_type == 'Laser Thrower' and self.player_timer <= 0:
             laser_thrower = Laser_thrower(self.rect.center, self.gun_damage_multiplier, self.gun_fire_rate_multiplier)
             guns.add(laser_thrower)
             self.player_timer = laser_thrower.fire_rate
 
         self.player_timer += -100
 
-    def change_gun(self):
+    def gun_switching_service(self):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_1] and self.minigun:
             self.using_gun_type = self.gun_list[0]
@@ -130,6 +128,6 @@ class Player(pygame.sprite.Sprite):
             self.using_gun_type = self.gun_list[5]
 
     def update(self):
-        self.movement()
-        self.shooting()
-        self.change_gun()
+        self.movement_service()
+        self.shooting_service()
+        self.gun_switching_service()

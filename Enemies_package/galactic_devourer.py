@@ -1,9 +1,10 @@
 import pygame
 import random
 
-from Enemies_package.Enemy_laser_gun.galactic_devourer_laser_ring import Galactic_devourer_laser_ring
 from Enemies_package.enemy import Enemy
-from Consts_package.consts import enemies_laser_guns, SCREEN_WIDTH, players, SCREEN_HEIGHT, SCALE
+from Enemies_package.Enemy_laser_gun.galactic_devourer_laser_ring import Galactic_devourer_laser_ring
+
+from Constants_package.constants import players, enemies_laser_guns, SCREEN_WIDTH, SCREEN_HEIGHT, SCALE
 
 
 # Define the Galactic_devourer class
@@ -43,7 +44,7 @@ class Galactic_devourer(Enemy):
         self.rect.x = random.randrange(200 * SCALE, SCREEN_WIDTH-200 * SCALE)
         self.rect.y = 200 * SCALE
 
-    def movement(self):
+    def movement_service(self):
         self.rect.x += self.speed_x * 2 * self.acceleration
         self.rect.y += self.speed_y * self.acceleration
         if self.rect.right >= SCREEN_WIDTH or self.rect.left <= 0:
@@ -51,7 +52,16 @@ class Galactic_devourer(Enemy):
         if self.rect.bottom >= SCREEN_HEIGHT or self.rect.top <= 0:
             self.speed_y *= -1
 
-    def attack_ranged(self):
+    def melee_attack_service(self):
+        collided_player = pygame.sprite.spritecollide(self, players, False)
+
+        if collided_player:
+            for player in collided_player:
+                player.hp += -self.damage
+                if player.hp <= 0:
+                    player.kill()
+
+    def range_attack_service(self):
         if self.galactic_devourer_overheating_timer <= self.galactic_devourer_overheating_timer_max:
 
             if self.galactic_devourer_timer <= 0:
@@ -71,21 +81,6 @@ class Galactic_devourer(Enemy):
 
             self.galactic_devourer_overheating_timer_2 += 100
 
-    def attack_melee(self):
-        collided_player = pygame.sprite.spritecollide(self, players, False)
-
-        if collided_player:
-            for player in collided_player:
-                player.hp += -self.damage
-                if player.hp <= 0:
-                    player.kill()
-
-    def hp_service(self):
+    def HP_service(self):
         if self.hp <= 250:
             self.image.fill('#451212')
-
-    def update(self):
-        self.attack_ranged()
-        self.attack_melee()
-        self.movement()
-        self.hp_service()

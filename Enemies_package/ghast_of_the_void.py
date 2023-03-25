@@ -2,7 +2,8 @@ import pygame
 
 from Enemies_package.enemy import Enemy
 from Enemies_package.Enemy_laser_gun.enemy_laser_gun import Enemy_laser_gun
-from Consts_package.consts import enemies_laser_guns, SCREEN_WIDTH, players, enemies, SCREEN_HEIGHT, SCALE
+
+from Constants_package.constants import players, enemies, enemies_laser_guns, SCREEN_WIDTH, SCREEN_HEIGHT, SCALE
 
 
 # Define the Ghast_of_the_void class
@@ -36,7 +37,7 @@ class Ghast_of_the_void(Enemy):
         self.pos_y = pos_y
         self.rect.center = (self.pos_x, self.pos_y)
 
-    def movement(self):
+    def movement_service(self):
 
         if self.first_in_colony:
             self.rect.x += self.speed_x * self.move_direction * 2
@@ -60,14 +61,7 @@ class Ghast_of_the_void(Enemy):
         if self.rect.top >= SCREEN_WIDTH + 100:
             self.kill()
 
-    def attack_ranged(self):
-        if self.ghast_of_the_void_timer <= 0:
-            enemy_laser_gun = Enemy_laser_gun(self.rect.center, 0.2, 2000, 15, 15, 45, "#FE1E1E")
-            enemies_laser_guns.add(enemy_laser_gun)
-            self.ghast_of_the_void_timer = enemy_laser_gun.fire_rate
-        self.ghast_of_the_void_timer += -100
-
-    def attack_melee(self):
+    def melee_attack_service(self):
         collided_player = pygame.sprite.spritecollide(self, players, False)
 
         if collided_player:
@@ -76,12 +70,13 @@ class Ghast_of_the_void(Enemy):
                 if player.hp <= 0:
                     player.kill()
 
-    def hp_service(self):
+    def range_attack_service(self):
+        if self.ghast_of_the_void_timer <= 0:
+            enemy_laser_gun = Enemy_laser_gun(self.rect.center, 0.2, 2000, 15, 15, 45, "#FE1E1E")
+            enemies_laser_guns.add(enemy_laser_gun)
+            self.ghast_of_the_void_timer = enemy_laser_gun.fire_rate
+        self.ghast_of_the_void_timer += -100
+
+    def HP_service(self):
         if self.hp <= 30:
             self.image.fill('#451212')
-
-    def update(self):
-        self.attack_ranged()
-        self.attack_melee()
-        self.movement()
-        self.hp_service()

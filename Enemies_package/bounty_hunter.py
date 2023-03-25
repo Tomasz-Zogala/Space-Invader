@@ -4,7 +4,8 @@ import math
 
 from Enemies_package.enemy import Enemy
 from Enemies_package.Enemy_laser_gun.enemy_laser_gun import Enemy_laser_gun
-from Consts_package.consts import enemies_laser_guns, SCREEN_WIDTH, players, SCREEN_HEIGHT, SCALE
+
+from Constants_package.constants import players, enemies_laser_guns, SCREEN_WIDTH, SCREEN_HEIGHT, SCALE
 
 
 # Define the Bounty_hunter class
@@ -20,6 +21,7 @@ class Bounty_hunter(Enemy):
         self.radius = 100 * SCALE
         self.angle = 0
 
+        # Flags
         self.jumped_right = False
         self.jumped_left = False
 
@@ -43,7 +45,7 @@ class Bounty_hunter(Enemy):
         # Position
         self.rect.center = (SCREEN_WIDTH/2-self.radius/2, SCREEN_HEIGHT/10)
 
-    def movement(self):
+    def movement_service(self):
 
         self.angle += 0.1
         if self.hp >= 120:
@@ -58,7 +60,16 @@ class Bounty_hunter(Enemy):
             self.rect.x = SCREEN_WIDTH * 3 / 4 + self.radius * math.cos(self.angle)
             self.rect.y = SCREEN_HEIGHT / 7 + self.radius * math.sin(self.angle)
 
-    def attack_ranged(self):
+    def melee_attack_service(self):
+        collided_player = pygame.sprite.spritecollide(self, players, False)
+
+        if collided_player:
+            for player in collided_player:
+                player.hp += -self.damage
+                if player.hp <= 0:
+                    player.kill()
+
+    def range_attack_service(self):
         if self.bounty_hunter_overheating_timer <= self.bounty_hunter_overheating_timer_max:
 
             if self.bounty_hunter_timer <= 0:
@@ -77,21 +88,6 @@ class Bounty_hunter(Enemy):
 
             self.bounty_hunter_overheating_timer_2 += 100
 
-    def attack_melee(self):
-        collided_player = pygame.sprite.spritecollide(self, players, False)
-
-        if collided_player:
-            for player in collided_player:
-                player.hp += -self.damage
-                if player.hp <= 0:
-                    player.kill()
-
-    def hp_service(self):
+    def HP_service(self):
         if self.hp <= 30:
             self.image.fill('#451212')
-
-    def update(self):
-        self.attack_ranged()
-        self.attack_melee()
-        self.movement()
-        self.hp_service()

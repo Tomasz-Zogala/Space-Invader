@@ -1,7 +1,7 @@
 import pygame
 
 
-from Consts_package.consts import players, enemies_laser_guns, SCREEN_HEIGHT, SCALE
+from Constants_package.constants import players, enemies_laser_guns, SCREEN_HEIGHT, SCALE
 
 
 class Enemy_laser_gun(pygame.sprite.Sprite):
@@ -28,13 +28,13 @@ class Enemy_laser_gun(pygame.sprite.Sprite):
 
         # Audio
 
-    def movement(self):
+    def movement_service(self):
         self.rect.y += self.bullet_speed
 
         if self.rect.y > SCREEN_HEIGHT+100:
             self.kill()
 
-    def hit_service(self):
+    def collision_and_killing_player_service(self):
         collided_player = pygame.sprite.spritecollide(self, players, False)
 
         if collided_player:
@@ -45,5 +45,5 @@ class Enemy_laser_gun(pygame.sprite.Sprite):
                     player.kill()
 
     def update(self):
-        self.movement()
-        self.hit_service()
+        self.movement_service()
+        self.collision_and_killing_player_service()

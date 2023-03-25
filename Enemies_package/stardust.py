@@ -2,7 +2,7 @@ import pygame
 import random
 
 from Enemies_package.enemy import Enemy
-from Consts_package.consts import SCREEN_HEIGHT, SCREEN_WIDTH, players, enemies, SCALE
+from Constants_package.constants import players, enemies, SCREEN_WIDTH, SCREEN_HEIGHT, SCALE
 
 
 # Define the Stardust class
@@ -30,13 +30,13 @@ class Stardust(Enemy):
         self.rect.x = random.randrange(0, SCREEN_WIDTH)
         self.rect.y = random.randrange(-250, -50)
 
-    def movement(self):
+    def movement_service(self):
         self.rect.y += self.speed_y
         self.rect.x += self.speed_x
         if self.rect.y > SCREEN_HEIGHT+50:
             self.kill()
 
-    def attack_melee(self):
+    def melee_attack_service(self):
         collided_player = pygame.sprite.spritecollide(self, players, False)
 
         if collided_player:
@@ -46,7 +46,7 @@ class Stardust(Enemy):
                 if player.hp <= 0:
                     player.kill()
 
-    def hp_service(self):
+    def HP_service(self):
         if self.hp <= 50:
             self.image.fill('#DEA0A0')
 
@@ -54,6 +54,6 @@ class Stardust(Enemy):
             self.image.fill('#B25959')
 
     def update(self):
-        self.attack_melee()
-        self.movement()
-        self.hp_service()
+        self.movement_service()
+        self.melee_attack_service()
+        self.HP_service()

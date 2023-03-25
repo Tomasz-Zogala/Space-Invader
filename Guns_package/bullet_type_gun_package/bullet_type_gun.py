@@ -1,19 +1,21 @@
+import pygame
 import random
 
-import pygame
+from Guns_package.gun import Gun
 
-from Bonuses_package.gun_bonus import Gun_bonus
-from Bonuses_package.hp_bonus import Hp_bonus
 from Bonuses_package.score_bonus import Score_bonus
 from Bonuses_package.stats_bonus import Stats_bonus
+from Bonuses_package.hp_bonus import Hp_bonus
+from Bonuses_package.gun_bonus import Gun_bonus
+
 from Enemies_package.asteroid import Asteroid
-from Enemies_package.bounty_hunter import Bounty_hunter
-from Enemies_package.galactic_devourer import Galactic_devourer
-from Enemies_package.ghast_of_the_void import Ghast_of_the_void
-from Enemies_package.star_lord import Star_lord
-from Consts_package.consts import bonuses, enemies, guns, SCALE
 from Enemies_package.stardust import Stardust
-from Guns_package.gun import Gun
+from Enemies_package.star_lord import Star_lord
+from Enemies_package.bounty_hunter import Bounty_hunter
+from Enemies_package.ghast_of_the_void import Ghast_of_the_void
+from Enemies_package.galactic_devourer import Galactic_devourer
+
+from Constants_package.constants import enemies, guns, bonuses, SCALE
 
 
 # Define the abstract Bullet_type_gun class
@@ -40,12 +42,12 @@ class Bullet_type_gun(Gun):
         # Position
         self.rect.center = center
 
-    def movement(self):
+    def movement_service(self):
         self.rect.y += -self.bullet_speed
         if self.rect.y < -100:
             self.kill()
 
-    def killing(self, enemy):
+    def killing_enemy_service(self, enemy):
         if type(enemy) == Asteroid:
             enemy.kill()
             self.kill()
@@ -124,11 +126,11 @@ class Bullet_type_gun(Gun):
             enemy.kill()
             self.kill()
 
-    def hit_service(self):
+    def collision_with_enemy_service(self):
         collided_enemies = pygame.sprite.spritecollide(self, enemies, False)
         if collided_enemies:
             for enemy in collided_enemies:
                 pygame.sprite.spritecollide(enemy, guns, True)
                 enemy.hp += -self.damage
                 if enemy.hp <= 0:
-                    self.killing(enemy)
+                    self.killing_enemy_service(enemy)

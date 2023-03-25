@@ -1,8 +1,8 @@
 import pygame
 
 
-from Consts_package.consts import players, SCALE
 from Enemies_package.Enemy_laser_gun.enemy_laser_gun import Enemy_laser_gun
+from Constants_package.constants import players, SCALE
 
 
 class Galactic_devourer_laser_ring(Enemy_laser_gun):
@@ -14,7 +14,7 @@ class Galactic_devourer_laser_ring(Enemy_laser_gun):
 
         # Audio
 
-    def movement(self):
+    def movement_service(self):
         self.rect.y += -self.bullet_speed
 
         if self.range_timer_max <= self.range_timer_min:
@@ -22,7 +22,7 @@ class Galactic_devourer_laser_ring(Enemy_laser_gun):
             self.range_timer_max = 0
         self.range_timer_min += 100
 
-    def hit_service(self):
+    def collision_and_killing_player_service(self):
         collided_player = pygame.sprite.spritecollide(self, players, False)
 
         if collided_player:
@@ -30,7 +30,3 @@ class Galactic_devourer_laser_ring(Enemy_laser_gun):
                 player.hp += -self.damage
                 if player.hp <= 0:
                     player.kill()
-
-    def update(self):
-        self.movement()
-        self.hit_service()

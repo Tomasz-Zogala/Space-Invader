@@ -1,6 +1,6 @@
 import pygame
 
-from Consts_package.consts import players, SCREEN_HEIGHT, SCALE
+from Constants_package.constants import players, SCALE
 
 
 # Define the abstract Enemy class
@@ -9,6 +9,7 @@ class Enemy(pygame.sprite.Sprite):
         super().__init__()
 
         # Stats
+        self.damage = 0
         self.hp = 0
         self.speed_x = 0 * SCALE
         self.speed_y = 0 * SCALE
@@ -27,13 +28,10 @@ class Enemy(pygame.sprite.Sprite):
         self.rect.x = self.width
         self.rect.y = self.height
 
-    def movement(self):
+    def movement_service(self):
         pass
 
-    def attack_ranged(self):
-        pass
-
-    def attack_melee(self):
+    def melee_attack_service(self):
         collided_player = pygame.sprite.spritecollide(self, players, False)
 
         if collided_player:
@@ -42,5 +40,14 @@ class Enemy(pygame.sprite.Sprite):
                 if player.hp <= 0:
                     player.kill()
 
-    def update(self):
+    def range_attack_service(self):
         pass
+
+    def HP_service(self):
+        pass
+
+    def update(self):
+        self.movement_service()
+        self.melee_attack_service()
+        self.range_attack_service()
+        self.HP_service()

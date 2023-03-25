@@ -1,7 +1,8 @@
 import pygame
 
-from Consts_package.consts import SCREEN_HEIGHT, SCALE
 from Guns_package.bullet_type_gun_package.bullet_type_gun import Bullet_type_gun
+
+from Constants_package.constants import SCALE
 
 
 # Define the Minigun class
@@ -17,7 +18,7 @@ class Minigun(Bullet_type_gun):
         # Image data
         self.width = 7 * SCALE
         self.height = 7 * SCALE
-        self.color = '#938D8D'
+        self.color = '#BBBB00'
 
         # Image
         self.image = pygame.Surface([self.width, self.height])

@@ -1,9 +1,9 @@
+import pygame
 import random
 
-import pygame
-
 from Bonuses_package.bonus import Bonus
-from Consts_package.consts import players, SCREEN_HEIGHT, SCREEN_WIDTH, SCALE
+
+from Constants_package.constants import players, SCALE
 
 
 # Define the Stats_bonus class
@@ -39,7 +39,9 @@ class Stats_bonus(Bonus):
         # Position
         self.rect.center = center
 
-    def player_service(self):
+        # Audio
+
+    def collision_with_player_service(self):
         collided_player = pygame.sprite.spritecollide(self, players, False)
         if collided_player:
             for player in collided_player:

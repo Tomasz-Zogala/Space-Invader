@@ -3,7 +3,8 @@ import random
 
 from Enemies_package.enemy import Enemy
 from Enemies_package.Enemy_laser_gun.enemy_laser_gun import Enemy_laser_gun
-from Consts_package.consts import enemies_laser_guns, SCREEN_WIDTH, players, SCREEN_HEIGHT, SCALE
+
+from Constants_package.constants import players, enemies_laser_guns, SCREEN_WIDTH, SCALE
 
 
 # Define the Star_lord class
@@ -35,7 +36,7 @@ class Star_lord(Enemy):
         self.rect.x = random.randrange(100 * SCALE, SCREEN_WIDTH - 100 * SCALE)
         self.rect.y = 100 * SCALE
 
-    def movement(self):
+    def movement_service(self):
         self.rect.x += self.speed_x * self.acceleration
         self.rect.y += self.speed_y
         if self.rect.left >= SCREEN_WIDTH:
@@ -52,14 +53,7 @@ class Star_lord(Enemy):
         else:
             self.acceleration = 1
 
-    def attack_ranged(self):
-        if self.star_lord_timer <= 0:
-            enemy_laser_gun = Enemy_laser_gun(self.rect.center, 1.5, 2500, 10, 40, 65, "#FE1E1E")
-            enemies_laser_guns.add(enemy_laser_gun)
-            self.star_lord_timer = enemy_laser_gun.fire_rate
-        self.star_lord_timer += -100
-
-    def attack_melee(self):
+    def melee_attack_service(self):
         collided_player = pygame.sprite.spritecollide(self, players, False)
 
         if collided_player:
@@ -68,12 +62,13 @@ class Star_lord(Enemy):
                 if player.hp <= 0:
                     player.kill()
 
-    def hp_service(self):
+    def range_attack_service(self):
+        if self.star_lord_timer <= 0:
+            enemy_laser_gun = Enemy_laser_gun(self.rect.center, 1.5, 2500, 10, 40, 65, "#FE1E1E")
+            enemies_laser_guns.add(enemy_laser_gun)
+            self.star_lord_timer = enemy_laser_gun.fire_rate
+        self.star_lord_timer += -100
+
+    def HP_service(self):
         if self.hp <= 60:
             self.image.fill('#451212')
-
-    def update(self):
-        self.attack_ranged()
-        self.attack_melee()
-        self.movement()
-        self.hp_service()

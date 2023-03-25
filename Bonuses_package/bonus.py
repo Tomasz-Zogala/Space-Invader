@@ -1,6 +1,6 @@
 import pygame
 
-from Consts_package.consts import SCREEN_HEIGHT
+from Constants_package.constants import SCREEN_HEIGHT
 
 
 # Define the abstract Bonus class
@@ -25,14 +25,16 @@ class Bonus(pygame.sprite.Sprite):
         # Position
         self.rect.center = center
 
-    def movement(self):
+        # Audio
+
+    def movement_service(self):
         self.rect.y += self.speed
         if self.rect.y > SCREEN_HEIGHT+100:
             self.kill()
 
-    def player_service(self):
+    def collision_with_player_service(self):
         pass
 
     def update(self):
-        self.player_service()
-        self.movement()
+        self.movement_service()
+        self.collision_with_player_service()
