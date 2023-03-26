@@ -48,63 +48,84 @@ font_50 = pygame.font.Font('Additional_resources/Font/Pixel_font.ttf', 50)
 font_25 = pygame.font.Font('Additional_resources/Font/Pixel_font.ttf', 25)
 
 # Game messages
-welcome_m = font_125.render('Welcome to', False, '#E7CFCF')
-welcome_mR = welcome_m.get_rect(center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 4 + 80))
+welcome_m = font_125.render('Welcome to', False, '#F8F8E0')
+welcome_mR = welcome_m.get_rect(center=(SCREEN_WIDTH / 2, 200))
 
-nebula_m = font_125.render('Nebula Crusaders', False, '#E7CFCF')
-nebula_mR = nebula_m.get_rect(center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 4 + 200))
+nebula_m = font_125.render('Nebula Crusaders', False, '#F8F8E0')
+nebula_mR = nebula_m.get_rect(center=(SCREEN_WIDTH / 2, 300))
 
-to_play_m = font_125.render('Press SPACE to play!', False, '#E7CFCF')
+controls_m = font_125.render('CONTROLS:', False, '#F8F8E0')
+controls_mR = controls_m.get_rect(center=(SCREEN_WIDTH / 2, 650))
+
+controls_m1 = font_75.render('Movement:', False, '#F8F8E0')
+controls_mR1 = controls_m1.get_rect(center=(700, 750))
+
+controls_m1C = font_75.render('< ↑ > ↓', False, '#F8F8E0')
+controls_mR1C = controls_m1C.get_rect(center=(700, 850))
+
+controls_m2 = font_75.render('Switching guns:', False, '#F8F8E0')
+controls_mR2 = controls_m2.get_rect(center=(SCREEN_WIDTH / 2, 750))
+
+controls_m2C = font_75.render('1 2 3 4 5 6', False, '#F8F8E0')
+controls_mR2C = controls_m2C.get_rect(center=(SCREEN_WIDTH / 2, 850))
+
+controls_m3 = font_75.render('Shooting:', False, '#F8F8E0')
+controls_mR3 = controls_m3.get_rect(center=(1860, 750))
+
+controls_m3C = font_75.render('SPACE', False, '#F8F8E0')
+controls_mR3C = controls_m3C.get_rect(center=(1860, 850))
+
+to_play_m = font_125.render('Press SPACE to play!', False, '#F8F8E0')
 to_play_mR = to_play_m.get_rect(center=(SCREEN_WIDTH / 2, (SCREEN_HEIGHT * 3 / 4)))
 
-to_leave_m = font_50.render('Press ESC to leave game at any time', False, '#E7CFCF')
+to_leave_m = font_50.render('Press ESC to leave game at any time', False, '#F8F8E0')
 to_leave_mR = to_leave_m.get_rect(center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT-100))
 
-play_again_m = font_125.render('Press SPACE to play again!', False, '#E7CFCF')
+play_again_m = font_125.render('Press SPACE to play again!', False, '#F8F8E0')
 play_again_mR = play_again_m.get_rect(center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 3))
 
-to_play_leaderboard_m = font_125.render('Press SPACE to play!', False, '#E7CFCF')
+to_play_leaderboard_m = font_125.render('Press SPACE to play!', False, '#F8F8E0')
 to_play_leaderboard_mR = to_play_leaderboard_m.get_rect(center=(SCREEN_WIDTH / 2, (SCREEN_HEIGHT - 150)))
 
-enter_nickname_m = font_125.render('Enter your nickname:', False, '#E7CFCF')
+enter_nickname_m = font_125.render('Enter your nickname:', False, '#F8F8E0')
 enter_nickname_mR = enter_nickname_m.get_rect(center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 3))
 
-to_leaderboard_m = font_125.render('Press L to check leaderboard', False, '#E7CFCF')
+to_leaderboard_m = font_125.render('Press L to check leaderboard', False, '#F8F8E0')
 to_leaderboard_mR = to_leaderboard_m.get_rect(center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 + SCREEN_HEIGHT / 4))
 
-leaderboard_m = font_125.render('Leaderboard:', False, '#E7CFCF')
+leaderboard_m = font_125.render('Leaderboard:', False, '#F8F8E0')
 leaderboard_mR = leaderboard_m.get_rect(center=(SCREEN_WIDTH / 2, 100))
 
-to_leaderboard_m1 = font_125.render('LEADERBOARD', False, '#E7CFCF')
+to_leaderboard_m1 = font_125.render('LEADERBOARD', False, '#F8F8E0')
 to_leaderboard_mR1 = to_leaderboard_m1.get_rect(center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 + SCREEN_HEIGHT / 4))
 
 incorrect_nickname = font_125.render('INCORRECT NICKNAME', False, '#FF0000')
 incorrect_nicknameR = incorrect_nickname.get_rect(center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 + SCREEN_HEIGHT / 4))
 
 # Boss announcements
-warning_m = font_125.render('!!! WARNING WARNING WARNING !!!', False, '#E7CFCF')
+warning_m = font_125.render('!!! WARNING WARNING WARNING !!!', False, '#F8F8E0')
 warning_mR = warning_m.get_rect(center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 4))
 
-star_lord_announcement_m = font_75.render('Star lord has detected our presence in space', False, '#E7CFCF')
+star_lord_announcement_m = font_75.render('Star lord has detected our presence in space', False, '#F8F8E0')
 star_lord_announcement_mR = star_lord_announcement_m.get_rect(
     center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 3 + SCREEN_HEIGHT / 12))
 
-bounty_hunter_announcement_m = font_75.render('Bounty hunter?\'s engines make the air vibrate', False, '#E7CFCF')
+bounty_hunter_announcement_m = font_75.render('Bounty hunter?\'s engines make the air vibrate', False, '#F8F8E0')
 bounty_hunter_announcement_mR = bounty_hunter_announcement_m.get_rect(
     center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 3 + SCREEN_HEIGHT / 12))
 
-ghast_of_the_void_announcement_m = font_75.render('The swarm queen is seen on the radar', False, '#E7CFCF')
+ghast_of_the_void_announcement_m = font_75.render('The swarm queen is seen on the radar', False, '#F8F8E0')
 ghast_of_the_void_announcement_mR = ghast_of_the_void_announcement_m.get_rect(
     center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 3 + SCREEN_HEIGHT / 12))
 
-galactic_devourer_announcement_m = font_75.render('Unexplained anomaly ahead', False, '#E7CFCF')
+galactic_devourer_announcement_m = font_75.render('Unexplained anomaly ahead', False, '#F8F8E0')
 galactic_devourer_announcement_mR = galactic_devourer_announcement_m.get_rect(
     center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 3 + SCREEN_HEIGHT / 12))
-galactic_devourer_announcement_m2 = font_125.render('WHAT IS IT???', False, '#E7CFCF')
+galactic_devourer_announcement_m2 = font_125.render('WHAT IS IT???', False, '#F8F8E0')
 galactic_devourer_announcement_mR2 = galactic_devourer_announcement_m2.get_rect(
     center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 3 + SCREEN_HEIGHT / 6))
 
-boss_rush_announcement_m = font_125.render('THATS BOSS RUSH', False, '#E7CFCF')
+boss_rush_announcement_m = font_125.render('THATS BOSS RUSH', False, '#F8F8E0')
 boss_rush_announcement_mR = boss_rush_announcement_m.get_rect(
     center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 3 + SCREEN_HEIGHT / 12))
 
@@ -351,11 +372,11 @@ while not game_over_flag:
         enemies_laser_guns.update()
         bonuses.update()
 
-        display_score(player.score, SCREEN_WIDTH / 2, 75, '#E7CFCF')
-        display_timer(game_boss_timer, SCREEN_WIDTH / 2, 170, '#E7CFCF')
-        display_hp(player.hp, SCREEN_WIDTH - 180, SCREEN_HEIGHT - 60, '#E7CFCF')
-        display_stats(player.speed, player.gun_damage_multiplier, player.gun_fire_rate_multiplier, 275, SCREEN_HEIGHT - 180, '#E7CFCF')
-        display_gun(player.using_gun_type, SCREEN_WIDTH / 2, SCREEN_HEIGHT - 70, '#E7CFCF')
+        display_score(player.score, SCREEN_WIDTH / 2, 75, '#F8F8E0')
+        display_timer(game_boss_timer, SCREEN_WIDTH / 2, 170, '#F8F8E0')
+        display_hp(player.hp, SCREEN_WIDTH - 180, SCREEN_HEIGHT - 60, '#F8F8E0')
+        display_stats(player.speed, player.gun_damage_multiplier, player.gun_fire_rate_multiplier, 275, SCREEN_HEIGHT - 180, '#F8F8E0')
+        display_gun(player.using_gun_type, SCREEN_WIDTH / 2, SCREEN_HEIGHT - 70, '#F8F8E0')
         display_gun_availability(player.minigun, player.laser_rifle, player.rocket_launcher, player.laser_ring, player.sniper_rifle, player.laser_thrower)
 
         # Timers
@@ -456,20 +477,27 @@ while not game_over_flag:
             screen.blit(background_graphics, screen_background_position)
             screen.blit(welcome_m, welcome_mR)
             screen.blit(nebula_m, nebula_mR)
+            screen.blit(controls_m, controls_mR)
+            screen.blit(controls_m1, controls_mR1)
+            screen.blit(controls_m1C, controls_mR1C)
+            screen.blit(controls_m2, controls_mR2)
+            screen.blit(controls_m2C, controls_mR2C)
+            screen.blit(controls_m3, controls_mR3)
+            screen.blit(controls_m3C, controls_mR3C)
             screen.blit(to_play_m, to_play_mR)
             screen.blit(to_leave_m, to_leave_mR)
         else:
             if user_enters_nickname_flag:
                 screen.blit(background_graphics, screen_background_position)
                 screen.blit(enter_nickname_m, enter_nickname_mR)
-                display_score(player.score, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 + SCREEN_HEIGHT / 12, '#E7CFCF')
-                display_user_input_nickname(player_nickname, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 3 + SCREEN_HEIGHT / 10, '#E7CFCF')
+                display_score(player.score, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 + SCREEN_HEIGHT / 12, '#F8F8E0')
+                display_user_input_nickname(player_nickname, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 3 + SCREEN_HEIGHT / 10, '#F8F8E0')
                 if incorrect_nickname_flag:
                     screen.blit(incorrect_nickname, incorrect_nicknameR)
             else:
                 screen.blit(background_graphics, screen_background_position)
                 screen.blit(leaderboard_m, leaderboard_mR)
-                display_leader_board(SCREEN_WIDTH / 2 - SCREEN_WIDTH / 5 + SCREEN_WIDTH / 30, 300, '#E7CFCF')
+                display_leader_board(SCREEN_WIDTH / 2 - SCREEN_WIDTH / 5 + SCREEN_WIDTH / 30, 300, '#F8F8E0')
                 screen.blit(to_play_leaderboard_m, to_play_leaderboard_mR)
 
     pygame.display.flip()

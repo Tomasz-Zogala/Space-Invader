@@ -18,3 +18,9 @@ d:465
 pp:65
 ddd:30
 Tomkens:311025
+jjj:0
+ddd:0
+TOPMASZ:930
+d:0
+TOmasz:1010
+MMMMegakocur:830
