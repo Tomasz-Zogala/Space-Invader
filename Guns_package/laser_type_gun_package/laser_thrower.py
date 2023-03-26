@@ -21,7 +21,7 @@ class Laser_thrower(Laser_type_gun):
         # Image data
         self.width = 45 * SCALE
         self.height = 45 * SCALE
-        self.color = '#BB00FF'
+        self.color = '#83EAFF'
 
         # Image
         self.image = pygame.Surface([self.width, self.height])
@@ -33,7 +33,7 @@ class Laser_thrower(Laser_type_gun):
 
         # Audio
         self.audio = pygame.mixer.Sound("Additional_resources/Audio/laser_thrower.mp3")
-        self.audio.set_volume(0.5)
+        self.audio.set_volume(0.1)
         self.audio.play()
 
     def movement_service(self):

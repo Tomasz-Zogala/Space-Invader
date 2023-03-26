@@ -19,7 +19,7 @@ class Player(pygame.sprite.Sprite):
         self.gun_damage_multiplier = 5
         self.gun_fire_rate_multiplier = 1
         self.speed = 10 * SCALE
-        self.hp = 1
+        self.hp = 1000
 
         # Info
         self.score = 0
@@ -41,9 +41,9 @@ class Player(pygame.sprite.Sprite):
         self.player_timer = 0
 
         # Image
-        # self.image = pygame.image.load('Additional_resources/Graphics/Space_lord.png').convert_alpha()
-        self.image = pygame.Surface([150, 150])
-        self.image.fill('#000000')
+        self.image = pygame.image.load('Additional_resources/Graphics/Space_lord.png').convert_alpha()
+        # self.image = pygame.Surface([150, 150])
+        # self.image.fill('#C9C1BD')
         self.rect = self.image.get_rect()
 
         # Position

@@ -18,7 +18,7 @@ class Sniper_rifle(Bullet_type_gun):
         # Image data
         self.width = 15 * SCALE
         self.height = 15 * SCALE
-        self.color = '#BBBB00'
+        self.color = '#FBFBD1'
 
         # Image
         self.image = pygame.Surface([self.width, self.height])

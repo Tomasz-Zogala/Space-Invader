@@ -25,7 +25,7 @@ class Star_lord(Enemy):
         # Image data
         self.width = 100 * SCALE
         self.height = 40 * SCALE
-        self.color = '#145343'
+        self.color = '#2EA33B'
 
         # Image
         self.image = pygame.Surface([self.width, self.height])
@@ -76,4 +76,6 @@ class Star_lord(Enemy):
 
     def HP_service(self):
         if self.hp <= 60:
-            self.image.fill('#451212')
+            self.image.fill('#A3702E')
+        if self.hp <= 30:
+            self.image.fill('#A3402E')

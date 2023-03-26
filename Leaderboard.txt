@@ -24,3 +24,11 @@ TOPMASZ:930
 d:0
 TOmasz:1010
 MMMMegakocur:830
+TOM:605
+lll:745
+dd:0
+fff:80
+dd:615
+dd:0
+ff:0
+ff:0

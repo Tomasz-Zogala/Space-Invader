@@ -20,7 +20,7 @@ class Laser_ring(Laser_type_gun):
         # Image data
         self.width = 350 * SCALE
         self.height = 350 * SCALE
-        self.color = '#BB00FF'
+        self.color = '#83EAFF'
 
         # Image
         self.image = pygame.Surface([self.width, self.height])

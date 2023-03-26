@@ -18,7 +18,7 @@ class Rocket_launcher(Bullet_type_gun):
         # Image data
         self.width = 35 * SCALE
         self.height = 65 * SCALE
-        self.color = '#BBBB00'
+        self.color = '#FBFBD1'
 
         # Image
         self.image = pygame.Surface([self.width, self.height])

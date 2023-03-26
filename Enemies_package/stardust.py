@@ -14,12 +14,12 @@ class Stardust(Enemy):
         self.hp = 100
         self.speed_x = random.randrange(-1, 1) * SCALE
         self.speed_y = random.randrange(2, 5) * SCALE
-        self.damage = 0.5
+        self.damage = 0.3
 
         # Image data
         self.width = 15 * SCALE
         self.height = 15 * SCALE
-        self.color = '#938D8D'
+        self.color = '#9C9C92'
 
         # Image
         self.image = pygame.Surface([self.width, self.height])

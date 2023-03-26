@@ -25,7 +25,7 @@ class Ghast_of_the_void(Enemy):
         # Image data
         self.width = 45 * SCALE
         self.height = 70 * SCALE
-        self.color = '#145343'
+        self.color = '#652EA3'
 
         # Image
         self.image = pygame.Surface([self.width, self.height])
@@ -83,5 +83,7 @@ class Ghast_of_the_void(Enemy):
         self.ghast_of_the_void_timer += -100
 
     def HP_service(self):
+        if self.hp <= 60:
+            self.image.fill('#A3702E')
         if self.hp <= 30:
-            self.image.fill('#451212')
+            self.image.fill('#A3402E')

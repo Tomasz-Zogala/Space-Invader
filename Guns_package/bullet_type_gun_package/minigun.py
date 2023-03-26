@@ -18,7 +18,7 @@ class Minigun(Bullet_type_gun):
         # Image data
         self.width = 7 * SCALE
         self.height = 7 * SCALE
-        self.color = '#BBBB00'
+        self.color = '#FBFBD1'
 
         # Image
         self.image = pygame.Surface([self.width, self.height])

@@ -33,7 +33,7 @@ class Galactic_devourer(Enemy):
         # Image data
         self.width = 75 * SCALE
         self.height = 75 * SCALE
-        self.color = '#145343'
+        self.color = '#EE2659'
 
         # Image
         self.image = pygame.Surface([self.width, self.height])
@@ -70,7 +70,7 @@ class Galactic_devourer(Enemy):
         if self.galactic_devourer_overheating_timer <= self.galactic_devourer_overheating_timer_max:
 
             if self.galactic_devourer_timer <= 0:
-                galactic_devourer_laser_ring = Galactic_devourer_laser_ring(self.rect.center, 1, 200, 15, 250, 250, "#73FE1E")
+                galactic_devourer_laser_ring = Galactic_devourer_laser_ring(self.rect.center, 1, 200, 15, 250, 250, "#FF05D5")
                 enemies_laser_guns.add(galactic_devourer_laser_ring)
                 self.galactic_devourer_timer = galactic_devourer_laser_ring.fire_rate
                 self.acceleration = 6
@@ -88,4 +88,6 @@ class Galactic_devourer(Enemy):
 
     def HP_service(self):
         if self.hp <= 250:
-            self.image.fill('#451212')
+            self.image.fill('#A3702E')
+        if self.hp <= 100:
+            self.image.fill('#A3402E')

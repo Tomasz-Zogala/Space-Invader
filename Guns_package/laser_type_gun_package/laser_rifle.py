@@ -18,7 +18,7 @@ class Laser_rifle(Laser_type_gun):
         # Image data
         self.width = 5 * SCALE
         self.height = 20 * SCALE
-        self.color = '#BB00FF'
+        self.color = '#83EAFF'
 
         # Image
         self.image = pygame.Surface([self.width, self.height])

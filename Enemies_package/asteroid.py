@@ -20,7 +20,7 @@ class Asteroid(Enemy):
         # Image data
         self.width = 50 * SCALE
         self.height = 50 * SCALE
-        self.color = '#938D8D'
+        self.color = '#FCDDDC'
 
         # Image
         self.image = pygame.Surface([self.width, self.height])
@@ -41,7 +41,7 @@ class Asteroid(Enemy):
         # Image data
         self.width = 50 * SCALE
         self.height = 50 * SCALE
-        self.color = '#938D8D'
+        self.color = '#FCDDDC'
 
         # Image
         self.image = pygame.Surface([self.width, self.height])
@@ -80,7 +80,7 @@ class Asteroid(Enemy):
             self.image = pygame.transform.scale(self.image, (new_width, new_height))
             self.rect = self.image.get_rect()
             self.rect.center = old_center
-            self.image.fill('#DEA0A0')
+            self.image.fill('#C1B5B5')
 
         if self.hp <= 6:
             new_width = int(self.width * 0.7)
@@ -90,7 +90,7 @@ class Asteroid(Enemy):
             self.image = pygame.transform.scale(self.image, (new_width, new_height))
             self.rect = self.image.get_rect()
             self.rect.center = old_center
-            self.image.fill('#B25959')
+            self.image.fill('#696161')
 
     def update(self):
         self.movement_service()

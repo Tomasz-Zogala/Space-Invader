@@ -35,7 +35,7 @@ class Bounty_hunter(Enemy):
         # Image data
         self.width = 75 * SCALE
         self.height = 75 * SCALE
-        self.color = '#000000'
+        self.color = '#04220E'
 
         # Image
         self.image = pygame.Surface([self.width, self.height])
@@ -78,7 +78,7 @@ class Bounty_hunter(Enemy):
         if self.bounty_hunter_overheating_timer <= self.bounty_hunter_overheating_timer_max:
 
             if self.bounty_hunter_timer <= 0:
-                enemy_laser_gun = Enemy_laser_gun(self.rect.center, 1, 1750, 15, 20, 20, "#73FE1E")
+                enemy_laser_gun = Enemy_laser_gun(self.rect.center, 1, 1250, 15, 55, 55, "#7EF20B")
                 enemies_laser_guns.add(enemy_laser_gun)
                 self.bounty_hunter_timer = enemy_laser_gun.fire_rate
 
@@ -88,11 +88,13 @@ class Bounty_hunter(Enemy):
 
         else:
 
-            if self.bounty_hunter_overheating_timer_2 >= self.bounty_hunter_overheating_timer_max*2:
+            if self.bounty_hunter_overheating_timer_2 >= self.bounty_hunter_overheating_timer_max:
                 self.bounty_hunter_overheating_timer = 0
 
             self.bounty_hunter_overheating_timer_2 += 100
 
     def HP_service(self):
-        if self.hp <= 30:
-            self.image.fill('#451212')
+        if self.hp <= 90:
+            self.image.fill('#A3702E')
+        if self.hp <= 45:
+            self.image.fill('#A3402E')
