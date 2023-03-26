@@ -3,6 +3,9 @@ import pygame
 # Fullscreen flag
 fullscreen_flag = True
 
+# Time constant
+SECOND = 60
+
 # Screen
 if fullscreen_flag:
     SCREEN_WIDTH = 2560
@@ -26,7 +29,9 @@ star_lord_arrived_flag = False
 bounty_hunter_arrived_flag = False
 ghast_of_the_void_arrived_flag = False
 galactic_devourer_arrived_flag = False
-boss_rush_arrived_flag = False
+boss_rush_arrived_flag1 = False
+boss_rush_arrived_flag2 = False
+boss_rush_arrived_flag3 = False
 first_stardust_wave_flag = False
 second_stardust_wave_flag = False
 third_stardust_wave_flag = False
@@ -46,4 +51,3 @@ enemies_laser_guns = pygame.sprite.Group()
 
 # Bonuses sprite group
 bonuses = pygame.sprite.Group()
-

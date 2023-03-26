@@ -16,10 +16,10 @@ class Player(pygame.sprite.Sprite):
         super().__init__()
 
         # Stats
-        self.gun_damage_multiplier = 5
+        self.gun_damage_multiplier = 1
         self.gun_fire_rate_multiplier = 1
-        self.speed = 10 * SCALE
-        self.hp = 1000
+        self.speed = 5 * SCALE
+        self.hp = 100
 
         # Info
         self.score = 0

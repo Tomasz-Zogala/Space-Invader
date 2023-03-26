@@ -44,10 +44,13 @@ class Stats_bonus(Bonus):
         if collided_player:
             for player in collided_player:
                 if self.bonus_type == 1:
-                    player.gun_damage_multiplier += 0.3
+                    if player.gun_damage_multiplier <= 15:
+                        player.gun_damage_multiplier += 0.5
                 if self.bonus_type == 2:
-                    player.gun_fire_rate_multiplier += -0.03
+                    if player.gun_fire_rate_multiplier >= 0.1:
+                        player.gun_fire_rate_multiplier += -0.05
                 if self.bonus_type == 3:
-                    player.speed += 1.5 * SCALE
+                    if player.speed <= 50*SCALE:
+                        player.speed += 1.5 * SCALE
                 self.kill()
                 player.score += self.score_bonus

@@ -94,7 +94,7 @@ class Bounty_hunter(Enemy):
             self.bounty_hunter_overheating_timer_2 += 100
 
     def HP_service(self):
-        if self.hp <= 90:
+        if self.hp <= 120:
             self.image.fill('#A3702E')
-        if self.hp <= 45:
+        if self.hp <= 60:
             self.image.fill('#A3402E')
