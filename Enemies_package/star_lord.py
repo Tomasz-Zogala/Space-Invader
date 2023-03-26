@@ -48,10 +48,10 @@ class Star_lord(Enemy):
             self.rect.right = 0
 
         if self.rect.bottom >= 300 * SCALE:
-            self.speed_y = self.speed_y*-1
+            self.speed_y = self.speed_y * -1
 
         if self.rect.top <= 0:
-            self.speed_y = self.speed_y*-1
+            self.speed_y = self.speed_y * -1
 
         if self.rect.centery <= 150:
             self.acceleration = 5

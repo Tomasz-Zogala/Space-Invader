@@ -9,13 +9,13 @@ class Bonus(pygame.sprite.Sprite):
         super().__init__()
 
         # Stats
-        self.speed = 2 * SCREEN_HEIGHT/800
+        self.speed = 2 * SCREEN_HEIGHT / 800
         self.score_bonus = 0
 
         # Image data
         self.color = '#000000'
-        self.height = 0 * SCREEN_HEIGHT/800
-        self.width = 0 * SCREEN_HEIGHT/800
+        self.height = 0 * SCREEN_HEIGHT / 800
+        self.width = 0 * SCREEN_HEIGHT / 800
 
         # Image
         self.image = pygame.Surface([self.width, self.height])
@@ -27,7 +27,7 @@ class Bonus(pygame.sprite.Sprite):
 
     def movement_service(self):
         self.rect.y += self.speed
-        if self.rect.y > SCREEN_HEIGHT+100:
+        if self.rect.y > SCREEN_HEIGHT + 100:
             self.kill()
 
     def collision_with_player_service(self):

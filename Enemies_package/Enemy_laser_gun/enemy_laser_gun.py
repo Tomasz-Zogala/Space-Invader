@@ -1,6 +1,5 @@
 import pygame
 
-
 from Constants_package.constants import players, enemies_laser_guns, SCREEN_HEIGHT, SCALE
 
 
@@ -34,7 +33,7 @@ class Enemy_laser_gun(pygame.sprite.Sprite):
     def movement_service(self):
         self.rect.y += self.bullet_speed
 
-        if self.rect.y > SCREEN_HEIGHT+100:
+        if self.rect.y > SCREEN_HEIGHT + 100:
             self.kill()
 
     def collision_and_killing_player_service(self):

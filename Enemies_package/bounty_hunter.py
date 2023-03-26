@@ -1,7 +1,6 @@
 import pygame
 import math
 
-
 from Enemies_package.enemy import Enemy
 from Enemies_package.Enemy_laser_gun.enemy_laser_gun import Enemy_laser_gun
 
@@ -43,7 +42,7 @@ class Bounty_hunter(Enemy):
         self.rect = self.image.get_rect()
 
         # Position
-        self.rect.center = (SCREEN_WIDTH/2-self.radius/2, SCREEN_HEIGHT/10)
+        self.rect.center = (SCREEN_WIDTH / 2 - self.radius / 2, SCREEN_HEIGHT / 10)
 
         # Audio
         self.audio = pygame.mixer.Sound("Additional_resources/Audio/bounty_hunter.mp3")

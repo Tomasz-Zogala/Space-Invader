@@ -33,7 +33,7 @@ class Stardust(Enemy):
     def movement_service(self):
         self.rect.y += self.speed_y
         self.rect.x += self.speed_x
-        if self.rect.y > SCREEN_HEIGHT+50:
+        if self.rect.y > SCREEN_HEIGHT + 50:
             self.kill()
 
     def melee_attack_service(self):

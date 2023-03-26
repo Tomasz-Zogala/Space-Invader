@@ -16,10 +16,10 @@ class Player(pygame.sprite.Sprite):
         super().__init__()
 
         # Stats
-        self.gun_damage_multiplier = 1
-        self.gun_fire_rate_multiplier = 1
+        self.gun_damage_multiplier = 2
+        self.gun_fire_rate_multiplier = 0.9
         self.speed = 5 * SCALE
-        self.hp = 100
+        self.hp = 5
 
         # Info
         self.score = 0
@@ -47,7 +47,7 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
 
         # Position
-        self.rect.center = (SCREEN_WIDTH/2, SCREEN_HEIGHT-SCREEN_HEIGHT/10)
+        self.rect.center = (SCREEN_WIDTH / 2, SCREEN_HEIGHT - SCREEN_HEIGHT / 10)
 
         # Audio
         self.audio = pygame.mixer.Sound("Additional_resources/Audio/player.mp3")
@@ -86,7 +86,8 @@ class Player(pygame.sprite.Sprite):
             self.player_timer = laser_rifle.fire_rate
 
         if keys[pygame.K_SPACE] and self.using_gun_type == 'Rocket Launcher' and self.player_timer <= 0:
-            rocket_launcher = Rocket_launcher(self.rect.center, self.gun_damage_multiplier, self.gun_fire_rate_multiplier)
+            rocket_launcher = Rocket_launcher(self.rect.center, self.gun_damage_multiplier,
+                                              self.gun_fire_rate_multiplier)
             guns.add(rocket_launcher)
             self.player_timer = rocket_launcher.fire_rate
 

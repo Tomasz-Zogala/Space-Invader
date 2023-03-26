@@ -10,11 +10,11 @@ SECOND = 60
 if fullscreen_flag:
     SCREEN_WIDTH = 2560
     SCREEN_HEIGHT = 1600
-    SCALE = SCREEN_HEIGHT/800
+    SCALE = SCREEN_HEIGHT / 800
 else:
     SCREEN_WIDTH = 1280
     SCREEN_HEIGHT = 800
-    SCALE = SCREEN_HEIGHT/800
+    SCALE = SCREEN_HEIGHT / 800
 
 # Game flags
 game_over_flag = False

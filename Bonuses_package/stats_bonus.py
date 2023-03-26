@@ -50,7 +50,7 @@ class Stats_bonus(Bonus):
                     if player.gun_fire_rate_multiplier >= 0.1:
                         player.gun_fire_rate_multiplier += -0.05
                 if self.bonus_type == 3:
-                    if player.speed <= 50*SCALE:
+                    if player.speed <= 50 * SCALE:
                         player.speed += 1.5 * SCALE
                 self.kill()
                 player.score += self.score_bonus

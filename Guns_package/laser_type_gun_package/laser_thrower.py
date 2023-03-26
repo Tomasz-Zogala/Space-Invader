@@ -1,6 +1,5 @@
 import pygame
 
-
 from Guns_package.laser_type_gun_package.laser_type_gun import Laser_type_gun
 
 from Constants_package.constants import SCALE

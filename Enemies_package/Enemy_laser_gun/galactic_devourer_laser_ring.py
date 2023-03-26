@@ -1,6 +1,5 @@
 import pygame
 
-
 from Enemies_package.Enemy_laser_gun.enemy_laser_gun import Enemy_laser_gun
 from Constants_package.constants import players, SCALE
 

@@ -41,7 +41,7 @@ class Galactic_devourer(Enemy):
         self.rect = self.image.get_rect()
 
         # Position
-        self.rect.x = random.randrange(200 * SCALE, SCREEN_WIDTH-200 * SCALE)
+        self.rect.x = random.randrange(200 * SCALE, SCREEN_WIDTH - 200 * SCALE)
         self.rect.y = 200 * SCALE
 
         # Audio
@@ -70,7 +70,8 @@ class Galactic_devourer(Enemy):
         if self.galactic_devourer_overheating_timer <= self.galactic_devourer_overheating_timer_max:
 
             if self.galactic_devourer_timer <= 0:
-                galactic_devourer_laser_ring = Galactic_devourer_laser_ring(self.rect.center, 1, 200, 15, 250, 250, "#FF05D5")
+                galactic_devourer_laser_ring = Galactic_devourer_laser_ring(self.rect.center, 1, 200, 15, 250, 250,
+                                                                            "#FF05D5")
                 enemies_laser_guns.add(galactic_devourer_laser_ring)
                 self.galactic_devourer_timer = galactic_devourer_laser_ring.fire_rate
                 self.acceleration = 6
@@ -81,7 +82,7 @@ class Galactic_devourer(Enemy):
 
         else:
             self.acceleration = 1
-            if self.galactic_devourer_overheating_timer_2 >= self.galactic_devourer_overheating_timer_max*2:
+            if self.galactic_devourer_overheating_timer_2 >= self.galactic_devourer_overheating_timer_max * 2:
                 self.galactic_devourer_overheating_timer = 0
 
             self.galactic_devourer_overheating_timer_2 += 100
