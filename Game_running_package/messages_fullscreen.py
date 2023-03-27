@@ -1,3 +1,5 @@
+import itertools
+
 import pygame
 
 from Constants_package.constants import SCREEN_WIDTH, SCREEN_HEIGHT
@@ -125,10 +127,9 @@ def display_leader_board(pos_x, pos_y, color, player_score_map_output, font, scr
                 key, value = line.split(":")
                 player_score_map_output[key] = int(value)
 
-    sorted_player_score_map_output = {k: v for k, v in
-                                      sorted(player_score_map_output.items(), key=lambda item: item[1], reverse=True)}
+    sorted_player_score_map_output = dict(sorted(player_score_map_output.items(), key=lambda x: x[1], reverse=True))
 
-    for i, (key, value) in enumerate(sorted_player_score_map_output.items()):
+    for i, (key, value) in enumerate(itertools.islice(sorted_player_score_map_output.items(), 10)):
         if i < 9:
             text = f"{i + 1}.  {key} {value}"
             text_surface = font.render(text, True, color)

@@ -1,3 +1,5 @@
+import threading
+
 import pygame
 import re
 
@@ -51,6 +53,8 @@ game_score_timer = 0
 player_nickname = ''
 player_score_map_input = {}
 player_score_map_output = {}
+player_nickname_mutex = threading.Lock()
+player_semaphore = threading.Semaphore(1)
 
 # Screen
 if fullscreen_flag:
@@ -181,6 +185,8 @@ while not game_over_flag:
 
         if not game_running_flag:
             if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE and game_first_run_flag:
+                player_semaphore.acquire()
+
                 reset_game()
 
                 game_over_flag = False
@@ -209,12 +215,16 @@ while not game_over_flag:
 
                 game_running_flag = True
                 game_first_run_flag = False
+
+                player_semaphore.release()
             else:
                 if user_enters_nickname_flag:
                     if event.type == pygame.KEYDOWN and event.key != pygame.K_BACKSPACE and event.key != pygame.K_RETURN and event.key != pygame.K_SPACE:
-                        player_nickname += event.unicode
+                        with player_nickname_mutex:
+                            player_nickname += event.unicode
                     if event.type == pygame.KEYDOWN and event.key == pygame.K_BACKSPACE:
-                        player_nickname = player_nickname[:-1]
+                        with player_nickname_mutex:
+                            player_nickname = player_nickname[:-1]
                     if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
 
                         nickname_pattern = re.compile(r'^[a-zA-Z0-9]{1,12}$')
@@ -236,6 +246,8 @@ while not game_over_flag:
                             incorrect_nickname_flag = True
                 else:
                     if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+                        player_semaphore.acquire()
+
                         reset_game()
 
                         game_over_flag = False
@@ -264,6 +276,8 @@ while not game_over_flag:
 
                         user_enters_nickname_flag = True
                         game_running_flag = True
+
+                        player_semaphore.release()
     if game_running_flag:
         # Background
         screen.blit(background_graphics, screen_background_position)
@@ -298,7 +312,7 @@ while not game_over_flag:
             game_score_timer = 0
 
         # Game script
-        if game_timer >= 1 * SECOND and not asteroids_arrived_flag:
+        if game_timer >= 0.1 * SECOND and not asteroids_arrived_flag:
             asteroids_arrived_flag = True
             for i in range(7):
                 asteroid = Asteroid()

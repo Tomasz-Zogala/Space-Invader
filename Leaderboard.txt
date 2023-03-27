@@ -87,3 +87,9 @@ frf:40
 Zamvsodkxa:1965
 Zqmvbec:1195
 tomasz:1160
+dd:290
+TOMASZ:2540
+Tomciok:0
+Tomciok:370
+Tooomas:90
+GOLB:270
