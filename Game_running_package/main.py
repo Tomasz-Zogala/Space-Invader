@@ -52,8 +52,6 @@ game_score_timer = 0
 player_nickname = ''
 player_score_map_input = {}
 player_score_map_output = {}
-player_nickname_mutex = threading.Lock()
-player_semaphore = threading.Semaphore(1)
 
 # Screen
 if fullscreen_flag:
@@ -102,6 +100,7 @@ def welcome_screen(fullscreen):
         screen.blit(controls_m3CW, controls_mR3CW)
         screen.blit(to_play_mW, to_play_mRW)
         screen.blit(to_leave_mW, to_leave_mRW)
+
 
 # Gameplay HUD screen
 def gameplay_HUD(fullscreen):
@@ -175,6 +174,34 @@ def reset_game():
     bonuses.empty()
     players.empty()
 
+
+def draw_sprites():
+    guns.draw(screen)
+    players.draw(screen)
+    enemies.draw(screen)
+    enemies_laser_guns.draw(screen)
+    bonuses.draw(screen)
+
+
+def update_sprites():
+    guns.update()
+    players.update()
+    enemies.update()
+    enemies_laser_guns.update()
+    bonuses.update()
+
+
+reset_game_thread = threading.Thread(target=reset_game)
+draw_sprites_thread = threading.Thread(target=draw_sprites)
+update_sprites_thread = threading.Thread(target=update_sprites)
+
+reset_game_thread.start()
+draw_sprites_thread.start()
+update_sprites_thread.start()
+
+player_nickname_mutex = threading.Lock()
+adding_enemies_mutex = threading.Lock()
+
 while not game_over_flag:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -184,8 +211,6 @@ while not game_over_flag:
 
         if not game_running_flag:
             if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE and game_first_run_flag:
-                player_semaphore.acquire()
-
                 reset_game()
 
                 game_over_flag = False
@@ -214,16 +239,12 @@ while not game_over_flag:
 
                 game_running_flag = True
                 game_first_run_flag = False
-
-                player_semaphore.release()
             else:
                 if user_enters_nickname_flag:
                     if event.type == pygame.KEYDOWN and event.key != pygame.K_BACKSPACE and event.key != pygame.K_RETURN and event.key != pygame.K_SPACE:
-                        with player_nickname_mutex:
-                            player_nickname += event.unicode
+                        player_nickname += event.unicode
                     if event.type == pygame.KEYDOWN and event.key == pygame.K_BACKSPACE:
-                        with player_nickname_mutex:
-                            player_nickname = player_nickname[:-1]
+                        player_nickname = player_nickname[:-1]
                     if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
 
                         nickname_pattern = re.compile(r'^[a-zA-Z0-9]{1,12}$')
@@ -245,8 +266,6 @@ while not game_over_flag:
                             incorrect_nickname_flag = True
                 else:
                     if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
-                        player_semaphore.acquire()
-
                         reset_game()
 
                         game_over_flag = False
@@ -274,27 +293,12 @@ while not game_over_flag:
                         players.add(player)
 
                         user_enters_nickname_flag = True
+                        game_first_run_flag = False
                         game_running_flag = True
-
-                        player_semaphore.release()
     if game_running_flag:
-        # Background
         screen.blit(background_graphics, screen_background_position)
-
-        # Draw the sprites
-        guns.draw(screen)
-        players.draw(screen)
-        enemies.draw(screen)
-        enemies_laser_guns.draw(screen)
-        bonuses.draw(screen)
-
-        # Update the sprites
-        guns.update()
-        players.update()
-        enemies.update()
-        enemies_laser_guns.update()
-        bonuses.update()
-
+        draw_sprites()
+        update_sprites()
         gameplay_HUD(fullscreen_flag)
 
         # is Player alive
@@ -315,7 +319,9 @@ while not game_over_flag:
             asteroids_arrived_flag = True
             for i in range(7):
                 asteroid = Asteroid()
+                adding_enemies_mutex.acquire()
                 enemies.add(asteroid)
+                adding_enemies_mutex.release()
 
         if 40 * SECOND <= game_timer <= 45 * SECOND:
             if fullscreen_flag:
@@ -328,13 +334,17 @@ while not game_over_flag:
         if game_timer >= 45 * SECOND and not star_lord_arrived_flag:
             star_lord_arrived_flag = True
             star_lord = Star_lord()
+            adding_enemies_mutex.acquire()
             enemies.add(star_lord)
+            adding_enemies_mutex.release()
 
         if game_timer >= 80 * SECOND and not first_stardust_wave_flag:
             first_stardust_wave_flag = True
             for i in range(50):
                 stardust = Stardust()
+                adding_enemies_mutex.acquire()
                 enemies.add(stardust)
+                adding_enemies_mutex.release()
 
         if 85 * SECOND <= game_timer <= 90 * SECOND:
             if fullscreen_flag:
@@ -347,13 +357,17 @@ while not game_over_flag:
         if game_timer >= 90 * SECOND and not bounty_hunter_arrived_flag:
             bounty_hunter_arrived_flag = True
             bounty_hunter = Bounty_hunter()
+            adding_enemies_mutex.acquire()
             enemies.add(bounty_hunter)
+            adding_enemies_mutex.release()
 
         if game_timer >= 125 * SECOND and not second_stardust_wave_flag:
             second_stardust_wave_flag = True
             for i in range(100):
                 stardust = Stardust()
+                adding_enemies_mutex.acquire()
                 enemies.add(stardust)
+                adding_enemies_mutex.release()
 
         if 130 * SECOND <= game_timer <= 135 * SECOND:
             if fullscreen_flag:
@@ -366,13 +380,17 @@ while not game_over_flag:
         if game_timer >= 135 * SECOND and not ghast_of_the_void_arrived_flag:
             ghast_of_the_void_arrived_flag = True
             ghast_of_the_void = Ghast_of_the_void(SCREEN_HEIGHT / 16, SCREEN_HEIGHT / 16, 1, True)
+            adding_enemies_mutex.acquire()
             enemies.add(ghast_of_the_void)
+            adding_enemies_mutex.release()
 
         if game_timer >= 170 * SECOND and not third_stardust_wave_flag:
             third_stardust_wave_flag = True
             for i in range(150):
                 stardust = Stardust()
+                adding_enemies_mutex.acquire()
                 enemies.add(stardust)
+                adding_enemies_mutex.release()
 
         if 175 * SECOND <= game_timer <= 180 * SECOND:
             if fullscreen_flag:
@@ -387,13 +405,17 @@ while not game_over_flag:
         if game_timer >= 180 * SECOND and not galactic_devourer_arrived_flag:
             galactic_devourer_arrived_flag = True
             galactic_devourer = Galactic_devourer()
+            adding_enemies_mutex.acquire()
             enemies.add(galactic_devourer)
+            adding_enemies_mutex.release()
 
         if game_timer >= 215 * SECOND and not fourth_stardust_wave_flag:
             fourth_stardust_wave_flag = True
             for i in range(200):
                 stardust = Stardust()
+                adding_enemies_mutex.acquire()
                 enemies.add(stardust)
+                adding_enemies_mutex.release()
 
         if 220 * SECOND <= game_timer <= 225 * SECOND:
             if fullscreen_flag:
@@ -406,13 +428,21 @@ while not game_over_flag:
         if game_timer >= 225 * SECOND and not boss_rush_arrived_flag1:
             boss_rush_arrived_flag1 = True
             star_lord1 = Star_lord()
+            adding_enemies_mutex.acquire()
             enemies.add(star_lord1)
+            adding_enemies_mutex.release()
             bounty_hunter1 = Bounty_hunter()
+            adding_enemies_mutex.acquire()
             enemies.add(bounty_hunter1)
+            adding_enemies_mutex.release()
             ghast_of_the_void1 = Ghast_of_the_void()
+            adding_enemies_mutex.acquire()
             enemies.add(ghast_of_the_void1)
+            adding_enemies_mutex.release()
             galactic_devourer1 = Galactic_devourer()
+            adding_enemies_mutex.acquire()
             enemies.add(galactic_devourer1)
+            adding_enemies_mutex.release()
 
         if 165 * SECOND <= game_timer <= 270 * SECOND:
             if fullscreen_flag:
@@ -425,13 +455,21 @@ while not game_over_flag:
         if game_timer >= 270 * SECOND and not boss_rush_arrived_flag2:
             boss_rush_arrived_flag2 = True
             star_lord2 = Star_lord()
+            adding_enemies_mutex.acquire()
             enemies.add(star_lord2)
+            adding_enemies_mutex.release()
             bounty_hunter2 = Bounty_hunter()
+            adding_enemies_mutex.acquire()
             enemies.add(bounty_hunter2)
+            adding_enemies_mutex.release()
             ghast_of_the_void2 = Ghast_of_the_void()
+            adding_enemies_mutex.acquire()
             enemies.add(ghast_of_the_void2)
+            adding_enemies_mutex.release()
             galactic_devourer2 = Galactic_devourer()
+            adding_enemies_mutex.acquire()
             enemies.add(galactic_devourer2)
+            adding_enemies_mutex.release()
 
         if 310 * SECOND <= game_timer <= 315 * SECOND:
             if fullscreen_flag:
@@ -444,13 +482,21 @@ while not game_over_flag:
         if game_timer >= 315 * SECOND and not boss_rush_arrived_flag3:
             boss_rush_arrived_flag3 = True
             star_lord3 = Star_lord()
+            adding_enemies_mutex.acquire()
             enemies.add(star_lord3)
+            adding_enemies_mutex.release()
             bounty_hunter3 = Bounty_hunter()
+            adding_enemies_mutex.acquire()
             enemies.add(bounty_hunter3)
+            adding_enemies_mutex.release()
             ghast_of_the_void3 = Ghast_of_the_void()
+            adding_enemies_mutex.acquire()
             enemies.add(ghast_of_the_void3)
+            adding_enemies_mutex.release()
             galactic_devourer3 = Galactic_devourer()
+            adding_enemies_mutex.acquire()
             enemies.add(galactic_devourer3)
+            adding_enemies_mutex.release()
 
         if game_timer >= 360 * SECOND:
             game_running_flag = False

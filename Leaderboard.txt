@@ -95,3 +95,9 @@ Tooomas:90
 GOLB:270
 Tomcio:2260
 Tomasz:3035
+POP:1365
+d:240
+d:0
+d:0
+d:1205
+marek:1755
