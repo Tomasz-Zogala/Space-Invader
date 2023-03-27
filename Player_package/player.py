@@ -41,7 +41,7 @@ class Player(pygame.sprite.Sprite):
         self.player_timer = 0
 
         # Image
-        self.image = pygame.image.load('Additional_resources/Graphics/Space_lord.png').convert_alpha()
+        self.image = pygame.image.load('Additional_resources/Graphics/player.png').convert_alpha()
         # self.image = pygame.Surface([150, 150])
         # self.image.fill('#C9C1BD')
         self.rect = self.image.get_rect()
