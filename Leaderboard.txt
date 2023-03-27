@@ -93,3 +93,5 @@ Tomciok:0
 Tomciok:370
 Tooomas:90
 GOLB:270
+Tomcio:2260
+Tomasz:3035

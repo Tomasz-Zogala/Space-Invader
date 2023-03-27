@@ -1,3 +1,4 @@
+import threading
 import pygame
 import random
 
@@ -46,6 +47,10 @@ class Bullet_type_gun(Gun):
         self.boss_died_audio = pygame.mixer.Sound("Additional_resources/Audio/laser_rifle.mp3")
         self.boss_died_audio.set_volume(0.5)
 
+        # Mutex
+        self.lock_for_adding_enemies = threading.Lock()
+        self.lock_for_adding_bonuses = threading.Lock()
+
     def movement_service(self):
         self.rect.y += -self.bullet_speed
         if self.rect.y < -100:
@@ -55,90 +60,142 @@ class Bullet_type_gun(Gun):
         if type(enemy) == Asteroid:
             if self.bonus_probability <= 60:
                 bonus = Score_bonus(enemy.rect.center)
+                self.lock_for_adding_bonuses.acquire()
                 bonuses.add(bonus)
+                self.lock_for_adding_bonuses.release()
             elif 60 < self.bonus_probability <= 80:
                 bonus = Stats_bonus(enemy.rect.center)
+                self.lock_for_adding_bonuses.acquire()
                 bonuses.add(bonus)
+                self.lock_for_adding_bonuses.release()
             elif 80 < self.bonus_probability <= 95:
                 bonus = Hp_bonus(enemy.rect.center)
+                self.lock_for_adding_bonuses.acquire()
                 bonuses.add(bonus)
+                self.lock_for_adding_bonuses.release()
             else:
                 enemy = Asteroid()
+                self.lock_for_adding_enemies.acquire()
                 enemies.add(enemy)
+                self.lock_for_adding_enemies.release()
                 bonus = Gun_bonus(enemy.rect.center)
+                self.lock_for_adding_bonuses.acquire()
                 bonuses.add(bonus)
+                self.lock_for_adding_bonuses.release()
             enemy.kill()
             self.kill()
             enemy = Asteroid()
+            self.lock_for_adding_enemies.acquire()
             enemies.add(enemy)
+            self.lock_for_adding_enemies.release()
 
         elif type(enemy) == Star_lord:
             self.boss_died_audio.play()
             bonus = Gun_bonus(enemy.rect.center)
+            self.lock_for_adding_bonuses.acquire()
             bonuses.add(bonus)
+            self.lock_for_adding_bonuses.release()
             bonus = Hp_bonus(enemy.rect.center)
+            self.lock_for_adding_bonuses.acquire()
             bonuses.add(bonus)
+            self.lock_for_adding_bonuses.release()
             if self.bonus_probability <= 90:
                 bonus = Score_bonus(enemy.rect.center)
+                self.lock_for_adding_bonuses.acquire()
                 bonuses.add(bonus)
+                self.lock_for_adding_bonuses.release()
             else:
                 bonus = Stats_bonus(enemy.rect.center)
+                self.lock_for_adding_bonuses.acquire()
                 bonuses.add(bonus)
+                self.lock_for_adding_bonuses.release()
             enemy.kill()
             self.kill()
             enemy = Asteroid()
+            self.lock_for_adding_enemies.acquire()
             enemies.add(enemy)
+            self.lock_for_adding_enemies.release()
 
         elif type(enemy) == Bounty_hunter:
             self.boss_died_audio.play()
             bonus = Gun_bonus(enemy.rect.center)
+            self.lock_for_adding_bonuses.acquire()
             bonuses.add(bonus)
+            self.lock_for_adding_bonuses.release()
             bonus = Hp_bonus(enemy.rect.center)
+            self.lock_for_adding_bonuses.acquire()
             bonuses.add(bonus)
+            self.lock_for_adding_bonuses.release()
             if self.bonus_probability <= 90:
                 bonus = Score_bonus(enemy.rect.center)
+                self.lock_for_adding_bonuses.acquire()
                 bonuses.add(bonus)
+                self.lock_for_adding_bonuses.release()
             else:
                 bonus = Stats_bonus(enemy.rect.center)
+                self.lock_for_adding_bonuses.acquire()
                 bonuses.add(bonus)
+                self.lock_for_adding_bonuses.release()
             enemy.kill()
             self.kill()
             enemy = Asteroid()
+            self.lock_for_adding_enemies.acquire()
             enemies.add(enemy)
+            self.lock_for_adding_enemies.release()
 
         elif type(enemy) == Ghast_of_the_void:
             self.boss_died_audio.play()
             bonus = Gun_bonus(enemy.rect.center)
+            self.lock_for_adding_bonuses.acquire()
             bonuses.add(bonus)
+            self.lock_for_adding_bonuses.release()
             bonus = Hp_bonus(enemy.rect.center)
+            self.lock_for_adding_bonuses.acquire()
             bonuses.add(bonus)
+            self.lock_for_adding_bonuses.release()
             if self.bonus_probability <= 90:
                 bonus = Score_bonus(enemy.rect.center)
+                self.lock_for_adding_bonuses.acquire()
                 bonuses.add(bonus)
+                self.lock_for_adding_bonuses.release()
             else:
                 bonus = Stats_bonus(enemy.rect.center)
+                self.lock_for_adding_bonuses.acquire()
                 bonuses.add(bonus)
+                self.lock_for_adding_bonuses.release()
             enemy.kill()
             self.kill()
             enemy = Asteroid()
+            self.lock_for_adding_enemies.acquire()
             enemies.add(enemy)
+            self.lock_for_adding_enemies.release()
 
         elif type(enemy) == Galactic_devourer:
             self.boss_died_audio.play()
             bonus = Gun_bonus(enemy.rect.center)
+            self.lock_for_adding_bonuses.acquire()
             bonuses.add(bonus)
+            self.lock_for_adding_bonuses.release()
             bonus = Hp_bonus(enemy.rect.center)
+            self.lock_for_adding_bonuses.acquire()
             bonuses.add(bonus)
+            self.lock_for_adding_bonuses.release()
             if self.bonus_probability <= 90:
                 bonus = Score_bonus(enemy.rect.center)
+                self.lock_for_adding_bonuses.acquire()
                 bonuses.add(bonus)
+                self.lock_for_adding_bonuses.release()
             else:
                 bonus = Stats_bonus(enemy.rect.center)
+                self.lock_for_adding_bonuses.acquire()
                 bonuses.add(bonus)
+                self.lock_for_adding_bonuses.release()
             enemy.kill()
             self.kill()
             enemy = Asteroid()
+            self.lock_for_adding_enemies.acquire()
             enemies.add(enemy)
+            self.lock_for_adding_enemies.release()
 
         elif type(enemy) == Stardust:
             enemy.kill()

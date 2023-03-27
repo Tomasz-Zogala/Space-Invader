@@ -1,3 +1,5 @@
+import threading
+
 import pygame
 
 from Guns_package.bullet_type_gun_package.minigun import Minigun
@@ -55,6 +57,8 @@ class Player(pygame.sprite.Sprite):
         self.audio.set_volume(0.5)
         self.audio.play()
 
+        self.player_shooting_mutex = threading.Lock()
+
     def movement_service(self):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_LEFT]:
@@ -78,33 +82,57 @@ class Player(pygame.sprite.Sprite):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_SPACE] and self.using_gun_type == 'Minigun' and self.player_timer <= 0:
             minigun = Minigun(self.rect.center, self.gun_damage_multiplier, self.gun_fire_rate_multiplier)
+
+            self.player_shooting_mutex.acquire()
             guns.add(minigun)
+            self.player_shooting_mutex.release()
+
             self.player_timer = minigun.fire_rate
 
         if keys[pygame.K_SPACE] and self.using_gun_type == 'Laser Rifle' and self.player_timer <= 0:
             laser_rifle = Laser_rifle(self.rect.center, self.gun_damage_multiplier, self.gun_fire_rate_multiplier)
+
+            self.player_shooting_mutex.acquire()
             guns.add(laser_rifle)
+            self.player_shooting_mutex.release()
+
             self.player_timer = laser_rifle.fire_rate
 
         if keys[pygame.K_SPACE] and self.using_gun_type == 'Rocket Launcher' and self.player_timer <= 0:
             rocket_launcher = Rocket_launcher(self.rect.center, self.gun_damage_multiplier,
                                               self.gun_fire_rate_multiplier)
+
+            self.player_shooting_mutex.acquire()
             guns.add(rocket_launcher)
+            self.player_shooting_mutex.release()
+
             self.player_timer = rocket_launcher.fire_rate
 
         if keys[pygame.K_SPACE] and self.using_gun_type == 'Laser Ring' and self.player_timer <= 0:
             laser_ring = Laser_ring(self.rect.center, self.gun_damage_multiplier, self.gun_fire_rate_multiplier)
+
+            self.player_shooting_mutex.acquire()
             guns.add(laser_ring)
+            self.player_shooting_mutex.release()
+
             self.player_timer = laser_ring.fire_rate
 
         if keys[pygame.K_SPACE] and self.using_gun_type == 'Sniper Rifle' and self.player_timer <= 0:
             sniper_rifle = Sniper_rifle(self.rect.center, self.gun_damage_multiplier, self.gun_fire_rate_multiplier)
+
+            self.player_shooting_mutex.acquire()
             guns.add(sniper_rifle)
+            self.player_shooting_mutex.release()
+
             self.player_timer = sniper_rifle.fire_rate
 
         if keys[pygame.K_SPACE] and self.using_gun_type == 'Laser Thrower' and self.player_timer <= 0:
             laser_thrower = Laser_thrower(self.rect.center, self.gun_damage_multiplier, self.gun_fire_rate_multiplier)
+
+            self.player_shooting_mutex.acquire()
             guns.add(laser_thrower)
+            self.player_shooting_mutex.release()
+
             self.player_timer = laser_thrower.fire_rate
 
         self.player_timer += -100

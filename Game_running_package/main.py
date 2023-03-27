@@ -1,6 +1,5 @@
-import threading
-
 import pygame
+import threading
 import re
 
 from Game_running_package.fonts import font_75, font_50, font_60, font_100, font_35, font_25
@@ -333,7 +332,7 @@ while not game_over_flag:
 
         if game_timer >= 80 * SECOND and not first_stardust_wave_flag:
             first_stardust_wave_flag = True
-            for i in range(150):
+            for i in range(50):
                 stardust = Stardust()
                 enemies.add(stardust)
 
@@ -352,7 +351,7 @@ while not game_over_flag:
 
         if game_timer >= 125 * SECOND and not second_stardust_wave_flag:
             second_stardust_wave_flag = True
-            for i in range(200):
+            for i in range(100):
                 stardust = Stardust()
                 enemies.add(stardust)
 
@@ -371,7 +370,7 @@ while not game_over_flag:
 
         if game_timer >= 170 * SECOND and not third_stardust_wave_flag:
             third_stardust_wave_flag = True
-            for i in range(250):
+            for i in range(150):
                 stardust = Stardust()
                 enemies.add(stardust)
 
@@ -392,7 +391,7 @@ while not game_over_flag:
 
         if game_timer >= 215 * SECOND and not fourth_stardust_wave_flag:
             fourth_stardust_wave_flag = True
-            for i in range(300):
+            for i in range(200):
                 stardust = Stardust()
                 enemies.add(stardust)
 
