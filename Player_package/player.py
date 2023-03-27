@@ -7,7 +7,7 @@ from Guns_package.laser_type_gun_package.laser_ring import Laser_ring
 from Guns_package.bullet_type_gun_package.sniper_rifle import Sniper_rifle
 from Guns_package.laser_type_gun_package.laser_thrower import Laser_thrower
 
-from Constants_package.constants import guns, SCALE, SCREEN_WIDTH, SCREEN_HEIGHT
+from Constants_package.constants import guns, SCALE, SCREEN_WIDTH, SCREEN_HEIGHT, fullscreen_flag
 
 
 # Define the Player class
@@ -41,9 +41,10 @@ class Player(pygame.sprite.Sprite):
         self.player_timer = 0
 
         # Image
-        self.image = pygame.image.load('Additional_resources/Graphics/player.png').convert_alpha()
-        # self.image = pygame.Surface([150, 150])
-        # self.image.fill('#C9C1BD')
+        if fullscreen_flag:
+            self.image = pygame.image.load('Additional_resources/Graphics/player.png').convert_alpha()
+        else:
+            self.image = pygame.image.load('Additional_resources/Graphics/player_windowed.png').convert_alpha()
         self.rect = self.image.get_rect()
 
         # Position
