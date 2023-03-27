@@ -11,8 +11,8 @@ class Sniper_rifle(Bullet_type_gun):
         super().__init__(center, damage_multiplier, fire_rate_multiplier)
 
         # Stats
-        self.damage = 20 * damage_multiplier
-        self.fire_rate = 8000 * fire_rate_multiplier
+        self.damage = 30 * damage_multiplier
+        self.fire_rate = 7000 * fire_rate_multiplier
         self.bullet_speed = 50 * SCALE
 
         # Image data

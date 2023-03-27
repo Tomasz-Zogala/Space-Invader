@@ -12,8 +12,8 @@ class Rocket_launcher(Bullet_type_gun):
 
         # Stats
         self.damage = 50 * damage_multiplier
-        self.fire_rate = 15000 * fire_rate_multiplier
-        self.bullet_speed = 7 * SCALE
+        self.fire_rate = 10000 * fire_rate_multiplier
+        self.bullet_speed = 10 * SCALE
 
         # Image data
         self.width = 35 * SCALE

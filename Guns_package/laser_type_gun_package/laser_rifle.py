@@ -11,13 +11,13 @@ class Laser_rifle(Laser_type_gun):
         super().__init__(center, damage_multiplier, fire_rate_multiplier)
 
         # Stats
-        self.damage = 0.06 * damage_multiplier
-        self.fire_rate = 70 * fire_rate_multiplier
+        self.damage = 0.1 * damage_multiplier
+        self.fire_rate = 60 * fire_rate_multiplier
         self.bullet_speed = 15 * SCALE
 
         # Image data
-        self.width = 5 * SCALE
-        self.height = 20 * SCALE
+        self.width = 8 * SCALE
+        self.height = 17 * SCALE
         self.color = '#83EAFF'
 
         # Image

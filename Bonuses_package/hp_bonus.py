@@ -31,7 +31,7 @@ class Hp_bonus(Bonus):
         collided_player = pygame.sprite.spritecollide(self, players, False)
         if collided_player:
             for player in collided_player:
-                if player.hp >= 5:
+                if player.hp >= 15:
                     pass
                 else:
                     if player.hp + 1 >= 5:

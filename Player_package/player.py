@@ -16,10 +16,10 @@ class Player(pygame.sprite.Sprite):
         super().__init__()
 
         # Stats
-        self.gun_damage_multiplier = 2
-        self.gun_fire_rate_multiplier = 0.9
-        self.speed = 5 * SCALE
-        self.hp = 5
+        self.gun_damage_multiplier = 1
+        self.gun_fire_rate_multiplier = 1
+        self.speed = 7 * SCALE
+        self.hp = 3
 
         # Info
         self.score = 0
@@ -31,11 +31,11 @@ class Player(pygame.sprite.Sprite):
 
         # Obtained guns
         self.minigun = True
-        self.laser_rifle = True
-        self.rocket_launcher = True
-        self.laser_ring = True
-        self.sniper_rifle = True
-        self.laser_thrower = True
+        self.laser_rifle = False
+        self.rocket_launcher = False
+        self.laser_ring = False
+        self.sniper_rifle = False
+        self.laser_thrower = False
 
         # Timer
         self.player_timer = 0

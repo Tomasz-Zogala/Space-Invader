@@ -32,20 +32,20 @@ from Enemies_package.ghast_of_the_void import Ghast_of_the_void
 from Enemies_package.galactic_devourer import Galactic_devourer
 
 from Constants_package.constants import players, enemies, guns, bonuses, enemies_laser_guns, SCREEN_WIDTH, \
-    SCREEN_HEIGHT, \
-    game_over_flag, game_running_flag, game_first_run_flag, fullscreen_flag, user_enters_nickname_flag, \
+    SCREEN_HEIGHT, fullscreen_flag
+from game_flags import game_over_flag, game_running_flag, game_first_run_flag, user_enters_nickname_flag, \
     incorrect_nickname_flag, \
     star_lord_arrived_flag, bounty_hunter_arrived_flag, ghast_of_the_void_arrived_flag, galactic_devourer_arrived_flag, \
     first_stardust_wave_flag, second_stardust_wave_flag, third_stardust_wave_flag, fourth_stardust_wave_flag, \
-    boss_rush_arrived_flag3, boss_rush_arrived_flag2, boss_rush_arrived_flag1, all_game_flags_reset, reset_game
+    boss_rush_arrived_flag3, boss_rush_arrived_flag2, boss_rush_arrived_flag1, asteroids_arrived_flag
 
 pygame.init()
 
 # Game clock
 clock = pygame.time.Clock()
-game_score_timer = 0
-game_boss_timer = 0
 SECOND = 60
+game_timer = 0
+game_score_timer = 0
 
 # Player information
 player_nickname = ''
@@ -100,11 +100,11 @@ def welcome_screen(fullscreen):
         screen.blit(to_play_mW, to_play_mRW)
         screen.blit(to_leave_mW, to_leave_mRW)
 
-
+# Gameplay HUD screen
 def gameplay_HUD(fullscreen):
     if fullscreen:
         display_score(player.score, SCREEN_WIDTH / 2, 75, '#FCFCF4', font_100, screen)
-        display_timer(game_boss_timer, SCREEN_WIDTH / 2, 170, '#FCFCF4', font_75, screen)
+        display_timer(game_timer, SCREEN_WIDTH / 2, 170, '#FCFCF4', font_75, screen)
         display_hp(player.hp, SCREEN_WIDTH - 180, SCREEN_HEIGHT - 60, '#FCFCF4', font_100, screen)
         display_stats(player.speed, player.gun_damage_multiplier, player.gun_fire_rate_multiplier, 275,
                       SCREEN_HEIGHT - 180, '#FCFCF4', font_60, screen)
@@ -113,7 +113,7 @@ def gameplay_HUD(fullscreen):
                                  player.sniper_rifle, player.laser_thrower, screen)
     else:
         display_scoreW(player.score, 640, 30, '#FCFCF4', font_50, screen)
-        display_timerW(game_boss_timer, 640, 70, '#FCFCF4', font_35, screen)
+        display_timerW(game_timer, 640, 70, '#FCFCF4', font_35, screen)
         display_hpW(player.hp, 1155, 765, '#FCFCF4', font_50, screen)
         display_statsW(player.speed, player.gun_damage_multiplier, player.gun_fire_rate_multiplier, 110, 720,
                        '#FCFCF4', font_25, screen)
@@ -165,11 +165,12 @@ def leaderboard_screen(fullscreen):
         screen.blit(to_play_leaderboard_mW, to_play_leaderboard_mRW)
 
 
-def reset_asteroids():
-    for i in range(7):
-        asteroid = Asteroid()
-        enemies.add(asteroid)
-
+def reset_game():
+    guns.empty()
+    enemies.empty()
+    enemies_laser_guns.empty()
+    bonuses.empty()
+    players.empty()
 
 while not game_over_flag:
     for event in pygame.event.get():
@@ -180,15 +181,31 @@ while not game_over_flag:
 
         if not game_running_flag:
             if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE and game_first_run_flag:
-                all_game_flags_reset()
                 reset_game()
 
-                game_score_timer = 0
-                game_boss_timer = 0
+                game_over_flag = False
+                game_running_flag = False
+                game_first_run_flag = True
+                user_enters_nickname_flag = True
+                showing_leaderboard_flag = False
+                incorrect_nickname_flag = False
+                asteroids_arrived_flag = False
+                star_lord_arrived_flag = False
+                bounty_hunter_arrived_flag = False
+                ghast_of_the_void_arrived_flag = False
+                galactic_devourer_arrived_flag = False
+                boss_rush_arrived_flag1 = False
+                boss_rush_arrived_flag2 = False
+                boss_rush_arrived_flag3 = False
+                first_stardust_wave_flag = False
+                second_stardust_wave_flag = False
+                third_stardust_wave_flag = False
+                fourth_stardust_wave_flag = False
+
+                game_timer = 0
 
                 player = Player()
                 players.add(player)
-                reset_asteroids()
 
                 game_running_flag = True
                 game_first_run_flag = False
@@ -211,6 +228,7 @@ while not game_over_flag:
 
                             player_score_map_input.clear()
                             player_nickname = ''
+
                             user_enters_nickname_flag = False
                             incorrect_nickname_flag = False
                         else:
@@ -218,15 +236,31 @@ while not game_over_flag:
                             incorrect_nickname_flag = True
                 else:
                     if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
-                        all_game_flags_reset()
                         reset_game()
 
-                        game_score_timer = 0
-                        game_boss_timer = 0
+                        game_over_flag = False
+                        game_running_flag = False
+                        game_first_run_flag = True
+                        user_enters_nickname_flag = True
+                        showing_leaderboard_flag = False
+                        incorrect_nickname_flag = False
+                        asteroids_arrived_flag = False
+                        star_lord_arrived_flag = False
+                        bounty_hunter_arrived_flag = False
+                        ghast_of_the_void_arrived_flag = False
+                        galactic_devourer_arrived_flag = False
+                        boss_rush_arrived_flag1 = False
+                        boss_rush_arrived_flag2 = False
+                        boss_rush_arrived_flag3 = False
+                        first_stardust_wave_flag = False
+                        second_stardust_wave_flag = False
+                        third_stardust_wave_flag = False
+                        fourth_stardust_wave_flag = False
+
+                        game_timer = 0
 
                         player = Player()
                         players.add(player)
-                        reset_asteroids()
 
                         user_enters_nickname_flag = True
                         game_running_flag = True
@@ -254,17 +288,23 @@ while not game_over_flag:
         if not players:
             game_running_flag = False
 
-        # Timers
-        game_score_timer += 1
-        game_boss_timer += 1
+        # Timer
+        game_timer += 1
 
         # Score update
+        game_score_timer += 1
         if game_score_timer >= 100 and player.score > 0:
             player.score += -5
             game_score_timer = 0
 
         # Game script
-        if 40 * SECOND <= game_boss_timer <= 45 * SECOND:
+        if game_timer >= 1 * SECOND and not asteroids_arrived_flag:
+            asteroids_arrived_flag = True
+            for i in range(7):
+                asteroid = Asteroid()
+                enemies.add(asteroid)
+
+        if 40 * SECOND <= game_timer <= 45 * SECOND:
             if fullscreen_flag:
                 screen.blit(warning_m, warning_mR)
                 screen.blit(star_lord_announcement_m, star_lord_announcement_mR)
@@ -272,18 +312,18 @@ while not game_over_flag:
                 screen.blit(warning_mW, warning_mRW)
                 screen.blit(star_lord_announcement_mW, star_lord_announcement_mRW)
 
-        if game_boss_timer >= 45 * SECOND and not star_lord_arrived_flag:
+        if game_timer >= 45 * SECOND and not star_lord_arrived_flag:
             star_lord_arrived_flag = True
             star_lord = Star_lord()
             enemies.add(star_lord)
 
-        if game_boss_timer >= 80 * SECOND and not first_stardust_wave_flag:
+        if game_timer >= 80 * SECOND and not first_stardust_wave_flag:
+            first_stardust_wave_flag = True
             for i in range(150):
                 stardust = Stardust()
                 enemies.add(stardust)
-            first_stardust_wave_flag = True
 
-        if 85 * SECOND <= game_boss_timer <= 90 * SECOND:
+        if 85 * SECOND <= game_timer <= 90 * SECOND:
             if fullscreen_flag:
                 screen.blit(warning_m, warning_mR)
                 screen.blit(bounty_hunter_announcement_m, bounty_hunter_announcement_mR)
@@ -291,18 +331,18 @@ while not game_over_flag:
                 screen.blit(warning_mW, warning_mRW)
                 screen.blit(bounty_hunter_announcement_mW, bounty_hunter_announcement_mRW)
 
-        if game_boss_timer >= 90 * SECOND and not bounty_hunter_arrived_flag:
+        if game_timer >= 90 * SECOND and not bounty_hunter_arrived_flag:
             bounty_hunter_arrived_flag = True
             bounty_hunter = Bounty_hunter()
             enemies.add(bounty_hunter)
 
-        if game_boss_timer >= 125 * SECOND and not second_stardust_wave_flag:
+        if game_timer >= 125 * SECOND and not second_stardust_wave_flag:
+            second_stardust_wave_flag = True
             for i in range(200):
                 stardust = Stardust()
                 enemies.add(stardust)
-            second_stardust_wave_flag = True
 
-        if 130 * SECOND <= game_boss_timer <= 135 * SECOND:
+        if 130 * SECOND <= game_timer <= 135 * SECOND:
             if fullscreen_flag:
                 screen.blit(warning_m, warning_mR)
                 screen.blit(ghast_of_the_void_announcement_m, ghast_of_the_void_announcement_mR)
@@ -310,18 +350,18 @@ while not game_over_flag:
                 screen.blit(warning_mW, warning_mRW)
                 screen.blit(ghast_of_the_void_announcement_mW, ghast_of_the_void_announcement_mRW)
 
-        if game_boss_timer >= 135 * SECOND and not ghast_of_the_void_arrived_flag:
+        if game_timer >= 135 * SECOND and not ghast_of_the_void_arrived_flag:
             ghast_of_the_void_arrived_flag = True
             ghast_of_the_void = Ghast_of_the_void(SCREEN_HEIGHT / 16, SCREEN_HEIGHT / 16, 1, True)
             enemies.add(ghast_of_the_void)
 
-        if game_boss_timer >= 170 * SECOND and not third_stardust_wave_flag:
+        if game_timer >= 170 * SECOND and not third_stardust_wave_flag:
+            third_stardust_wave_flag = True
             for i in range(250):
                 stardust = Stardust()
                 enemies.add(stardust)
-            third_stardust_wave_flag = True
 
-        if 175 * SECOND <= game_boss_timer <= 180 * SECOND:
+        if 175 * SECOND <= game_timer <= 180 * SECOND:
             if fullscreen_flag:
                 screen.blit(warning_m, warning_mR)
                 screen.blit(galactic_devourer_announcement_m, galactic_devourer_announcement_mR)
@@ -331,18 +371,18 @@ while not game_over_flag:
                 screen.blit(galactic_devourer_announcement_mW, galactic_devourer_announcement_mRW)
                 screen.blit(galactic_devourer_announcement_m2W, galactic_devourer_announcement_mR2W)
 
-        if game_boss_timer >= 180 * SECOND and not galactic_devourer_arrived_flag:
+        if game_timer >= 180 * SECOND and not galactic_devourer_arrived_flag:
             galactic_devourer_arrived_flag = True
             galactic_devourer = Galactic_devourer()
             enemies.add(galactic_devourer)
 
-        if game_boss_timer >= 215 * SECOND and not fourth_stardust_wave_flag:
+        if game_timer >= 215 * SECOND and not fourth_stardust_wave_flag:
+            fourth_stardust_wave_flag = True
             for i in range(300):
                 stardust = Stardust()
                 enemies.add(stardust)
-            fourth_stardust_wave_flag = True
 
-        if 220 * SECOND <= game_boss_timer <= 225 * SECOND:
+        if 220 * SECOND <= game_timer <= 225 * SECOND:
             if fullscreen_flag:
                 screen.blit(warning_m, warning_mR)
                 screen.blit(boss_rush_announcement_m, boss_rush_announcement_mR)
@@ -350,8 +390,8 @@ while not game_over_flag:
                 screen.blit(warning_mW, warning_mRW)
                 screen.blit(boss_rush_announcement_mW, boss_rush_announcement_mRW)
 
-        if game_boss_timer >= 225 * SECOND and not boss_rush_arrived_flag1:
-            boss_rush_arrived_flag = True
+        if game_timer >= 225 * SECOND and not boss_rush_arrived_flag1:
+            boss_rush_arrived_flag1 = True
             star_lord1 = Star_lord()
             enemies.add(star_lord1)
             bounty_hunter1 = Bounty_hunter()
@@ -361,7 +401,7 @@ while not game_over_flag:
             galactic_devourer1 = Galactic_devourer()
             enemies.add(galactic_devourer1)
 
-        if 165 * SECOND <= game_boss_timer <= 270 * SECOND:
+        if 165 * SECOND <= game_timer <= 270 * SECOND:
             if fullscreen_flag:
                 screen.blit(warning_m, warning_mR)
                 screen.blit(boss_rush_announcement_m, boss_rush_announcement_mR)
@@ -369,8 +409,8 @@ while not game_over_flag:
                 screen.blit(warning_mW, warning_mRW)
                 screen.blit(boss_rush_announcement_mW, boss_rush_announcement_mRW)
 
-        if game_boss_timer >= 270 * SECOND and not boss_rush_arrived_flag2:
-            boss_rush_arrived_flag = True
+        if game_timer >= 270 * SECOND and not boss_rush_arrived_flag2:
+            boss_rush_arrived_flag2 = True
             star_lord2 = Star_lord()
             enemies.add(star_lord2)
             bounty_hunter2 = Bounty_hunter()
@@ -380,7 +420,7 @@ while not game_over_flag:
             galactic_devourer2 = Galactic_devourer()
             enemies.add(galactic_devourer2)
 
-        if 310 * SECOND <= game_boss_timer <= 315 * SECOND:
+        if 310 * SECOND <= game_timer <= 315 * SECOND:
             if fullscreen_flag:
                 screen.blit(warning_m, warning_mR)
                 screen.blit(boss_rush_announcement_m, boss_rush_announcement_mR)
@@ -388,8 +428,8 @@ while not game_over_flag:
                 screen.blit(warning_mW, warning_mRW)
                 screen.blit(boss_rush_announcement_mW, boss_rush_announcement_mRW)
 
-        if game_boss_timer >= 315 * SECOND and not boss_rush_arrived_flag3:
-            boss_rush_arrived_flag = True
+        if game_timer >= 315 * SECOND and not boss_rush_arrived_flag3:
+            boss_rush_arrived_flag3 = True
             star_lord3 = Star_lord()
             enemies.add(star_lord3)
             bounty_hunter3 = Bounty_hunter()
@@ -399,7 +439,7 @@ while not game_over_flag:
             galactic_devourer3 = Galactic_devourer()
             enemies.add(galactic_devourer3)
 
-        if game_boss_timer >= 360 * SECOND:
+        if game_timer >= 360 * SECOND:
             game_running_flag = False
 
     else:

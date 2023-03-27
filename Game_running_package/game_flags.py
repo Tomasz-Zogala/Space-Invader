@@ -1,0 +1,21 @@
+# Game flags
+game_over_flag = False
+game_running_flag = False
+game_first_run_flag = True
+user_enters_nickname_flag = True
+showing_leaderboard_flag = False
+incorrect_nickname_flag = False
+
+# Bosses flags
+asteroids_arrived_flag = False
+star_lord_arrived_flag = False
+bounty_hunter_arrived_flag = False
+ghast_of_the_void_arrived_flag = False
+galactic_devourer_arrived_flag = False
+boss_rush_arrived_flag1 = False
+boss_rush_arrived_flag2 = False
+boss_rush_arrived_flag3 = False
+first_stardust_wave_flag = False
+second_stardust_wave_flag = False
+third_stardust_wave_flag = False
+fourth_stardust_wave_flag = False

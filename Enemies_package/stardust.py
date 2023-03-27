@@ -14,7 +14,7 @@ class Stardust(Enemy):
         self.hp = 100
         self.speed_x = random.randrange(-1, 1) * SCALE
         self.speed_y = random.randrange(2, 5) * SCALE
-        self.damage = 0.3
+        self.damage = 0.1
 
         # Image data
         self.width = 15 * SCALE
@@ -28,7 +28,7 @@ class Stardust(Enemy):
 
         # Position
         self.rect.x = random.randrange(0, SCREEN_WIDTH)
-        self.rect.y = random.randrange(-250, -50)
+        self.rect.y = random.randrange(-500, -50)
 
     def movement_service(self):
         self.rect.y += self.speed_y
