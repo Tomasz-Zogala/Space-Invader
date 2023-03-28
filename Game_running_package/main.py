@@ -315,8 +315,8 @@ while not game_over_flag:
 
         # Score update
         game_score_timer += 1
-        if game_score_timer >= 100 and player.score > 0:
-            player.score += -5
+        if game_score_timer >= 180 and player.score > 0:
+            player.score += -10
             game_score_timer = 0
 
         # Game script
@@ -430,7 +430,7 @@ while not game_over_flag:
                 screen.blit(warning_mW, warning_mRW)
                 screen.blit(boss_rush_announcement_mW, boss_rush_announcement_mRW)
 
-        if game_timer >= 225 * SECOND and not boss_rush_arrived_flag1:
+        if game_timer >= 1 * SECOND and not boss_rush_arrived_flag1:
             boss_rush_arrived_flag1 = True
             star_lord1 = Star_lord()
             adding_enemies_mutex.acquire()

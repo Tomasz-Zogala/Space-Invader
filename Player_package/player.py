@@ -21,7 +21,7 @@ class Player(pygame.sprite.Sprite):
         self.gun_damage_multiplier = 1
         self.gun_fire_rate_multiplier = 1
         self.speed = 7 * SCALE
-        self.hp = 3
+        self.hp = 10000
 
         # Info
         self.score = 0
@@ -43,10 +43,12 @@ class Player(pygame.sprite.Sprite):
         self.player_timer = 0
 
         # Image
-        if fullscreen_flag:
-            self.image = pygame.image.load('Additional_resources/Graphics/player.png').convert_alpha()
-        else:
-            self.image = pygame.image.load('Additional_resources/Graphics/player_windowed.png').convert_alpha()
+        # if fullscreen_flag:
+        #     self.image = pygame.image.load('Additional_resources/Graphics/player.png').convert_alpha()
+        # else:
+        #     self.image = pygame.image.load('Additional_resources/Graphics/player_windowed.png').convert_alpha()
+        self.image = pygame.Surface([80, 80])
+        self.image.fill('#000000')
         self.rect = self.image.get_rect()
 
         # Position

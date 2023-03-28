@@ -51,18 +51,16 @@ class Laser_type_gun(Gun):
 
     def killing_enemy_service(self, enemy):
         if type(enemy) == Asteroid:
-            if self.bonus_probability <= 60:
+            if self.bonus_probability <= 70:
                 bonus = Score_bonus(enemy.rect.center)
                 bonuses.add(bonus)
-            elif 60 < self.bonus_probability <= 80:
+            elif 70 < self.bonus_probability <= 85:
                 bonus = Stats_bonus(enemy.rect.center)
                 bonuses.add(bonus)
-            elif 80 < self.bonus_probability <= 95:
+            elif 85 < self.bonus_probability <= 99:
                 bonus = Hp_bonus(enemy.rect.center)
                 bonuses.add(bonus)
             else:
-                enemy = Asteroid()
-                enemies.add(enemy)
                 bonus = Gun_bonus(enemy.rect.center)
                 bonuses.add(bonus)
             enemy.kill()

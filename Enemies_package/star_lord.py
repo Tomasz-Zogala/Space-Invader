@@ -24,8 +24,8 @@ class Star_lord(Enemy):
         self.star_lord_timer = 0
 
         # Image data
-        self.width = 100 * SCALE
-        self.height = 40 * SCALE
+        self.width = 120 * SCALE
+        self.height = 50 * SCALE
         self.color = '#2EA33B'
 
         # Image

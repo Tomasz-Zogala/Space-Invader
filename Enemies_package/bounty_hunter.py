@@ -14,7 +14,7 @@ class Bounty_hunter(Enemy):
         super().__init__()
 
         # Stats
-        self.hp = 180
+        self.hp = 240
         self.speed_x = 300 * SCALE
         self.speed_y = 3 * SCALE
         self.damage = 1
@@ -33,8 +33,8 @@ class Bounty_hunter(Enemy):
         self.overheating_passed = True
 
         # Image data
-        self.width = 75 * SCALE
-        self.height = 75 * SCALE
+        self.width = 120 * SCALE
+        self.height = 120 * SCALE
         self.color = '#04220E'
 
         # Image
@@ -53,15 +53,15 @@ class Bounty_hunter(Enemy):
     def movement_service(self):
 
         self.angle += 0.1
-        if self.hp >= 120:
+        if self.hp >= 160:
             self.rect.x = SCREEN_WIDTH / 2 - self.radius + self.radius * math.cos(self.angle)
             self.rect.y = SCREEN_HEIGHT / 7 + self.radius * math.sin(self.angle)
 
-        if 120 > self.hp >= 60:
+        if 160 > self.hp >= 80:
             self.rect.x = SCREEN_WIDTH / 4 + self.radius * math.cos(self.angle)
             self.rect.y = SCREEN_HEIGHT / 7 + self.radius * math.sin(self.angle)
 
-        if self.hp < 60:
+        if self.hp < 80:
             self.rect.x = SCREEN_WIDTH * 3 / 4 + self.radius * math.cos(self.angle)
             self.rect.y = SCREEN_HEIGHT / 7 + self.radius * math.sin(self.angle)
 
@@ -78,7 +78,7 @@ class Bounty_hunter(Enemy):
         if self.bounty_hunter_overheating_timer <= self.bounty_hunter_overheating_timer_max:
 
             if self.bounty_hunter_timer <= 0:
-                enemy_laser_gun = Enemy_laser_gun(self.rect.center, 1, 1250, 15, 55, 55, "#7EF20B")
+                enemy_laser_gun = Enemy_laser_gun(self.rect.center, 1, 1250, 15, 75, 75, "#7EF20B")
                 enemies_laser_guns.add(enemy_laser_gun)
                 self.bounty_hunter_timer = enemy_laser_gun.fire_rate
 
@@ -94,7 +94,7 @@ class Bounty_hunter(Enemy):
             self.bounty_hunter_overheating_timer_2 += 100
 
     def HP_service(self):
-        if self.hp <= 120:
+        if self.hp <= 160:
             self.image.fill('#A3702E')
-        if self.hp <= 60:
+        if self.hp <= 80:
             self.image.fill('#A3402E')

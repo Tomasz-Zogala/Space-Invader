@@ -17,8 +17,8 @@ class Gun_bonus(Bonus):
 
         # Image data
         self.color = '#5100FF'
-        self.height = 20 * SCALE
-        self.width = 40 * SCALE
+        self.height = 45 * SCALE
+        self.width = 65 * SCALE
 
         # Image
         self.image = pygame.Surface([self.width, self.height])
@@ -46,6 +46,9 @@ class Gun_bonus(Bonus):
 
                 if player.minigun:
                     player.laser_rifle = True
+
+                if player.minigun and player.laser_rifle and player.rocket_launcher and player.laser_ring and player.sniper_rifle and player.laser_thrower:
+                    player.score += self.score_bonus*2
 
                 self.kill()
                 player.score += self.score_bonus

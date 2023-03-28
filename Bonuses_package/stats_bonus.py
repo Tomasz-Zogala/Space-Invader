@@ -21,8 +21,8 @@ class Stats_bonus(Bonus):
         self.color_damage_up = '#F3A31F'
         self.color_fire_rate_up = '#F3DA1F'
         self.color_speed_up = '#1FF3D3'
-        self.height = 40 * SCALE
-        self.width = 40 * SCALE
+        self.height = 45 * SCALE
+        self.width = 45 * SCALE
 
         # Image
         self.image = pygame.Surface([self.width, self.height])
@@ -46,18 +46,18 @@ class Stats_bonus(Bonus):
             for player in collided_player:
                 if self.bonus_type == 1:
                     if player.gun_damage_multiplier <= 20:
-                        player.gun_damage_multiplier += 0.5
+                        player.gun_damage_multiplier += 0.25
                     elif player.gun_fire_rate_multiplier >= 0.1:
-                        player.gun_fire_rate_multiplier += -0.05
+                        player.gun_fire_rate_multiplier += -0.025
                     elif player.speed <= 25 * SCALE:
                         player.speed += 1 * SCALE
                     else:
                         player.score += self.score_bonus*2
                 if self.bonus_type == 2:
                     if player.gun_fire_rate_multiplier >= 0.1:
-                        player.gun_fire_rate_multiplier += -0.05
+                        player.gun_fire_rate_multiplier += -0.025
                     elif player.gun_damage_multiplier <= 20:
-                        player.gun_damage_multiplier += 0.5
+                        player.gun_damage_multiplier += 0.25
                     elif player.speed <= 25 * SCALE:
                         player.speed += 1 * SCALE
                     else:
@@ -66,9 +66,9 @@ class Stats_bonus(Bonus):
                     if player.speed <= 25 * SCALE:
                         player.speed += 1 * SCALE
                     elif player.gun_damage_multiplier <= 20:
-                        player.gun_damage_multiplier += 0.5
+                        player.gun_damage_multiplier += 0.25
                     elif player.gun_fire_rate_multiplier >= 0.1:
-                        player.gun_fire_rate_multiplier += -0.05
+                        player.gun_fire_rate_multiplier += -0.025
                     else:
                         player.score += self.score_bonus*2
                 self.kill()

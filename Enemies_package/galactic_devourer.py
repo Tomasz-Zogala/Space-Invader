@@ -15,7 +15,7 @@ class Galactic_devourer(Enemy):
 
         # Stats
         self.damage = 1
-        self.hp = 500
+        self.hp = 800
         self.acceleration = 1
 
         self.one_neg = [-1, 1]
@@ -32,8 +32,8 @@ class Galactic_devourer(Enemy):
         self.overheating_passed = True
 
         # Image data
-        self.width = 75 * SCALE
-        self.height = 75 * SCALE
+        self.width = 100 * SCALE
+        self.height = 100 * SCALE
         self.color = '#EE2659'
 
         # Image
@@ -89,7 +89,7 @@ class Galactic_devourer(Enemy):
             self.galactic_devourer_overheating_timer_2 += 100
 
     def HP_service(self):
-        if self.hp <= 250:
+        if self.hp <= 400:
             self.image.fill('#A3702E')
-        if self.hp <= 100:
+        if self.hp <= 200:
             self.image.fill('#A3402E')

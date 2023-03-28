@@ -14,7 +14,7 @@ class Ghast_of_the_void(Enemy):
 
         # Stats
         self.damage = 1
-        self.hp = 120
+        self.hp = 150
         self.speed_x = 4 * SCALE
         self.speed_y = 0 * SCALE
         self.move_direction = move_direction
@@ -84,7 +84,7 @@ class Ghast_of_the_void(Enemy):
         self.ghast_of_the_void_timer += -100
 
     def HP_service(self):
-        if self.hp <= 60:
+        if self.hp <= 100:
             self.image.fill('#A3702E')
-        if self.hp <= 30:
+        if self.hp <= 50:
             self.image.fill('#A3402E')
