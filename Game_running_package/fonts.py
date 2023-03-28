@@ -1,6 +1,7 @@
 import pygame
 
 pygame.init()
+
 # Fonts
 font_125 = pygame.font.Font('Additional_resources/Font/Pixel_font.ttf', 125)
 font_100 = pygame.font.Font('Additional_resources/Font/Pixel_font.ttf', 100)

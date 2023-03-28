@@ -1,6 +1,6 @@
+import pygame
 import threading
 
-import pygame
 
 from Guns_package.bullet_type_gun_package.minigun import Minigun
 from Guns_package.laser_type_gun_package.laser_rifle import Laser_rifle
@@ -59,12 +59,13 @@ class Player(pygame.sprite.Sprite):
 
         # Threads
         self.movement_thread = threading.Thread(target=self.movement_service)
-        self.movement_thread.start()
         self.shooting_thread = threading.Thread(target=self.shooting_service)
-        self.shooting_thread.start()
         self.switching_gun_thread = threading.Thread(target=self.gun_switching_service)
-        self.switching_gun_thread.start()
         self.update_thread = threading.Thread(target=self.update)
+
+        self.movement_thread.start()
+        self.shooting_thread.start()
+        self.switching_gun_thread.start()
         self.update_thread.start()
 
         # Mutex

@@ -1,6 +1,7 @@
 import pygame
 import random
 
+
 from Bonuses_package.bonus import Bonus
 
 from Constants_package.constants import players, SCALE

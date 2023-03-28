@@ -1,8 +1,9 @@
-import itertools
 import pygame
+import itertools
 
+
+from Game_running_package.fonts import font_60, font_50, font_40, font_30
 from Constants_package.constants import SCREEN_WIDTH, SCREEN_HEIGHT
-from Game_running_package.fonts import font_60, font_30, font_50, font_40
 
 
 # Display score (Windowed)
@@ -155,7 +156,7 @@ galactic_devourer_announcement_mW = font_30.render('Unexplained anomaly ahead', 
 galactic_devourer_announcement_mRW = galactic_devourer_announcement_mW.get_rect(center=(SCREEN_WIDTH / 2, 225))
 galactic_devourer_announcement_m2W = font_60.render('WHAT IS IT???', False, '#FCFCF4')
 galactic_devourer_announcement_mR2W = galactic_devourer_announcement_m2W.get_rect(center=(SCREEN_WIDTH / 2, 315))
-boss_rush_announcement_mW = font_60.render('THATS BOSS RUSH', False, '#FCFCF4')
+boss_rush_announcement_mW = font_60.render('THAT\'S BOSS RUSH', False, '#FCFCF4')
 boss_rush_announcement_mRW = boss_rush_announcement_mW.get_rect(center=(SCREEN_WIDTH / 2, 225))
 
 

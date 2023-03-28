@@ -2,7 +2,8 @@ import pygame
 import threading
 import re
 
-from Game_running_package.fonts import font_75, font_50, font_60, font_100, font_35, font_25
+from Game_running_package.fonts import font_100, font_75, font_60, font_50, font_35, font_25
+
 from Game_running_package.messages_fullscreen import display_score, display_timer, display_hp, display_stats, \
     display_gun, display_gun_availability, display_leader_board, display_user_input_nickname, warning_m, warning_mR, \
     star_lord_announcement_m, star_lord_announcement_mR, bounty_hunter_announcement_m, bounty_hunter_announcement_mR, \
@@ -13,32 +14,36 @@ from Game_running_package.messages_fullscreen import display_score, display_time
     controls_mR2C, controls_m3, controls_mR3, controls_m3C, controls_mR3C, to_play_m, to_play_mR, to_leave_m, \
     to_leave_mR, enter_nickname_m, enter_nickname_mR, incorrect_nickname, incorrect_nicknameR, leaderboard_m, \
     leaderboard_mR, to_play_leaderboard_m, to_play_leaderboard_mR
+
 from Game_running_package.messages_windowed import display_scoreW, display_timerW, display_hpW, display_statsW, \
     display_gunW, display_gun_availabilityW, display_user_input_nicknameW, display_leader_boardW, warning_mW, \
     warning_mRW, star_lord_announcement_mW, star_lord_announcement_mRW, bounty_hunter_announcement_mW, \
     bounty_hunter_announcement_mRW, ghast_of_the_void_announcement_mW, ghast_of_the_void_announcement_mRW, \
     galactic_devourer_announcement_mW, galactic_devourer_announcement_mRW, galactic_devourer_announcement_m2W, \
-    galactic_devourer_announcement_mR2W, boss_rush_announcement_mW, boss_rush_announcement_mRW, welcome_mW, welcome_mRW, \
-    nebula_mW, nebula_mRW, controls_mW, controls_mRW, controls_m1W, controls_mR1W, controls_m1CW, controls_mR1CW, \
-    controls_m2W, controls_mR2W, controls_m2CW, controls_mR2CW, controls_m3W, controls_mR3W, controls_m3CW, \
-    controls_mR3CW, to_play_mW, to_play_mRW, to_leave_mW, to_leave_mRW, enter_nickname_mW, enter_nickname_mRW, \
-    incorrect_nicknameW, incorrect_nicknameRW, leaderboard_mW, leaderboard_mRW, to_play_leaderboard_mW, \
-    to_play_leaderboard_mRW
+    galactic_devourer_announcement_mR2W, boss_rush_announcement_mW, boss_rush_announcement_mRW, welcome_mW,\
+    welcome_mRW, nebula_mW, nebula_mRW, controls_mW, controls_mRW, controls_m1W, controls_mR1W, controls_m1CW, \
+    controls_mR1CW, controls_m2W, controls_mR2W, controls_m2CW, controls_mR2CW, controls_m3W, controls_mR3W, \
+    controls_m3CW, controls_mR3CW, to_play_mW, to_play_mRW, to_leave_mW, to_leave_mRW, enter_nickname_mW, \
+    enter_nickname_mRW, incorrect_nicknameW, incorrect_nicknameRW, leaderboard_mW, leaderboard_mRW, \
+    to_play_leaderboard_mW, to_play_leaderboard_mRW
+
+from Constants_package.constants import players, enemies, guns, bonuses, enemies_laser_guns, \
+    SCREEN_WIDTH, SCREEN_HEIGHT, fullscreen_flag
+
+from game_flags import game_over_flag, game_running_flag, game_first_run_flag, user_enters_nickname_flag, \
+    incorrect_nickname_flag, asteroids_arrived_flag, star_lord_arrived_flag, bounty_hunter_arrived_flag, \
+    ghast_of_the_void_arrived_flag, galactic_devourer_arrived_flag, \
+    boss_rush_arrived_flag1, boss_rush_arrived_flag2, boss_rush_arrived_flag3, \
+    first_stardust_wave_flag, second_stardust_wave_flag, third_stardust_wave_flag, fourth_stardust_wave_flag
+
 from Player_package.player import Player
+
 from Enemies_package.asteroid import Asteroid
 from Enemies_package.stardust import Stardust
 from Enemies_package.star_lord import Star_lord
 from Enemies_package.bounty_hunter import Bounty_hunter
 from Enemies_package.ghast_of_the_void import Ghast_of_the_void
 from Enemies_package.galactic_devourer import Galactic_devourer
-
-from Constants_package.constants import players, enemies, guns, bonuses, enemies_laser_guns, SCREEN_WIDTH, \
-    SCREEN_HEIGHT, fullscreen_flag
-from game_flags import game_over_flag, game_running_flag, game_first_run_flag, user_enters_nickname_flag, \
-    incorrect_nickname_flag, \
-    star_lord_arrived_flag, bounty_hunter_arrived_flag, ghast_of_the_void_arrived_flag, galactic_devourer_arrived_flag, \
-    first_stardust_wave_flag, second_stardust_wave_flag, third_stardust_wave_flag, fourth_stardust_wave_flag, \
-    boss_rush_arrived_flag3, boss_rush_arrived_flag2, boss_rush_arrived_flag1, asteroids_arrived_flag
 
 pygame.init()
 

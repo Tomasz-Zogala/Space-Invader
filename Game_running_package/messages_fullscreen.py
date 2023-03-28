@@ -1,9 +1,8 @@
+import pygame
 import itertools
 
-import pygame
-
-from Constants_package.constants import SCREEN_WIDTH, SCREEN_HEIGHT
 from Game_running_package.fonts import font_125, font_75, font_50
+from Constants_package.constants import SCREEN_WIDTH, SCREEN_HEIGHT
 
 
 # Display score (Fullscreen)
@@ -141,6 +140,7 @@ def display_leader_board(pos_x, pos_y, color, player_score_map_output, font, scr
         if i == 9:
             break
 
+
 # Boss announcements (Fullscreen)
 warning_m = font_125.render('!!! WARNING WARNING WARNING !!!', False, '#FCFCF4')
 warning_mR = warning_m.get_rect(center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 4))
@@ -159,7 +159,7 @@ galactic_devourer_announcement_mR = galactic_devourer_announcement_m.get_rect(
 galactic_devourer_announcement_m2 = font_125.render('WHAT IS IT???', False, '#FCFCF4')
 galactic_devourer_announcement_mR2 = galactic_devourer_announcement_m2.get_rect(
     center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 3 + SCREEN_HEIGHT / 6))
-boss_rush_announcement_m = font_125.render('THATS BOSS RUSH', False, '#FCFCF4')
+boss_rush_announcement_m = font_125.render('THAT\'S BOSS RUSH', False, '#FCFCF4')
 boss_rush_announcement_mR = boss_rush_announcement_m.get_rect(
     center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 3 + SCREEN_HEIGHT / 12))
 
@@ -211,5 +211,3 @@ leaderboard_mR = leaderboard_m.get_rect(center=(SCREEN_WIDTH / 2, 100))
 
 incorrect_nickname = font_125.render('INCORRECT NICKNAME', False, '#FF0000')
 incorrect_nicknameR = incorrect_nickname.get_rect(center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 + SCREEN_HEIGHT / 4))
-
-

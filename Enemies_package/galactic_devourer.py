@@ -1,6 +1,7 @@
 import pygame
 import random
 
+
 from Enemies_package.enemy import Enemy
 from Enemies_package.Enemy_laser_gun.galactic_devourer_laser_ring import Galactic_devourer_laser_ring
 
