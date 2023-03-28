@@ -44,11 +44,11 @@ class Enemy(pygame.sprite.Sprite):
     def range_attack_service(self):
         pass
 
-    def HP_service(self):
+    def hp_service(self):
         pass
 
     def update(self):
         self.movement_service()
         self.melee_attack_service()
         self.range_attack_service()
-        self.HP_service()
+        self.hp_service()

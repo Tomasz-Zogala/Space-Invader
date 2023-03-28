@@ -3,7 +3,7 @@ import math
 
 
 from Enemies_package.enemy import Enemy
-from Enemies_package.Enemy_laser_gun.enemy_laser_gun import Enemy_laser_gun
+from Enemies_package.Enemy_gun_package.enemy_gun import Enemy_gun
 
 from Constants_package.constants import players, enemies_laser_guns, SCREEN_WIDTH, SCREEN_HEIGHT, SCALE
 
@@ -78,7 +78,7 @@ class Bounty_hunter(Enemy):
         if self.bounty_hunter_overheating_timer <= self.bounty_hunter_overheating_timer_max:
 
             if self.bounty_hunter_timer <= 0:
-                enemy_laser_gun = Enemy_laser_gun(self.rect.center, 1, 1250, 15, 75, 75, "#7EF20B")
+                enemy_laser_gun = Enemy_gun(self.rect.center, 1, 1250, 15, 75, 75, "#7EF20B")
                 enemies_laser_guns.add(enemy_laser_gun)
                 self.bounty_hunter_timer = enemy_laser_gun.fire_rate
 
@@ -93,7 +93,7 @@ class Bounty_hunter(Enemy):
 
             self.bounty_hunter_overheating_timer_2 += 100
 
-    def HP_service(self):
+    def hp_service(self):
         if self.hp <= 160:
             self.image.fill('#A3702E')
         if self.hp <= 80:

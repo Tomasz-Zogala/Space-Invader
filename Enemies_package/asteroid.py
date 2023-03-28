@@ -72,7 +72,7 @@ class Asteroid(Enemy):
                 if player.hp <= 0:
                     player.kill()
 
-    def HP_service(self):
+    def hp_service(self):
         if self.hp <= 12:
             new_width = int(self.width * 0.8)
             new_height = int(self.height * 0.8)
@@ -96,4 +96,4 @@ class Asteroid(Enemy):
     def update(self):
         self.movement_service()
         self.melee_attack_service()
-        self.HP_service()
+        self.hp_service()

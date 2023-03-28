@@ -4,7 +4,7 @@ import pygame
 from Constants_package.constants import players, enemies_laser_guns, SCREEN_HEIGHT, SCALE
 
 
-class Enemy_laser_gun(pygame.sprite.Sprite):
+class Enemy_gun(pygame.sprite.Sprite):
     def __init__(self, center, damage, fire_rate, bullet_speed, width, height, color):
         super().__init__()
 

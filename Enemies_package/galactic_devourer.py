@@ -3,7 +3,7 @@ import random
 
 
 from Enemies_package.enemy import Enemy
-from Enemies_package.Enemy_laser_gun.galactic_devourer_laser_ring import Galactic_devourer_laser_ring
+from Enemies_package.Enemy_gun_package.galactic_devourer_laser_ring import Galactic_devourer_laser_ring
 
 from Constants_package.constants import players, enemies_laser_guns, SCREEN_WIDTH, SCREEN_HEIGHT, SCALE
 
@@ -88,7 +88,7 @@ class Galactic_devourer(Enemy):
 
             self.galactic_devourer_overheating_timer_2 += 100
 
-    def HP_service(self):
+    def hp_service(self):
         if self.hp <= 400:
             self.image.fill('#A3702E')
         if self.hp <= 200:

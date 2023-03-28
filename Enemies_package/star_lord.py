@@ -3,7 +3,7 @@ import random
 
 
 from Enemies_package.enemy import Enemy
-from Enemies_package.Enemy_laser_gun.enemy_laser_gun import Enemy_laser_gun
+from Enemies_package.Enemy_gun_package.enemy_gun import Enemy_gun
 
 from Constants_package.constants import players, enemies_laser_guns, SCREEN_WIDTH, SCALE
 
@@ -70,12 +70,12 @@ class Star_lord(Enemy):
 
     def range_attack_service(self):
         if self.star_lord_timer <= 0:
-            enemy_laser_gun = Enemy_laser_gun(self.rect.center, 1.5, 2500, 10, 40, 65, "#FE1E1E")
+            enemy_laser_gun = Enemy_gun(self.rect.center, 1.5, 2500, 10, 40, 65, "#FE1E1E")
             enemies_laser_guns.add(enemy_laser_gun)
             self.star_lord_timer = enemy_laser_gun.fire_rate
         self.star_lord_timer += -100
 
-    def HP_service(self):
+    def hp_service(self):
         if self.hp <= 60:
             self.image.fill('#A3702E')
         if self.hp <= 30:

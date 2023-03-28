@@ -47,7 +47,7 @@ class Stardust(Enemy):
                 if player.hp <= 0:
                     player.kill()
 
-    def HP_service(self):
+    def hp_service(self):
         if self.hp <= 50:
             self.image.fill('#DEA0A0')
 
@@ -57,4 +57,4 @@ class Stardust(Enemy):
     def update(self):
         self.movement_service()
         self.melee_attack_service()
-        self.HP_service()
+        self.hp_service()

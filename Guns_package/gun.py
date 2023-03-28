@@ -1,4 +1,5 @@
 import pygame
+import random
 
 from Constants_package.constants import SCALE
 
@@ -12,6 +13,7 @@ class Gun(pygame.sprite.Sprite):
         self.damage = 0 * damage_multiplier
         self.fire_rate = 0 * fire_rate_multiplier
         self.bullet_speed = 0 * SCALE
+        self.bonus_probability = random.randrange(0, 100)
 
         # Image data
         self.width = 0 * SCALE

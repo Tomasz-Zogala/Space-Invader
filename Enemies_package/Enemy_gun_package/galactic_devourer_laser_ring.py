@@ -1,11 +1,11 @@
 import pygame
 
 
-from Enemies_package.Enemy_laser_gun.enemy_laser_gun import Enemy_laser_gun
+from Enemies_package.Enemy_gun_package.enemy_gun import Enemy_gun
 from Constants_package.constants import players, SCALE
 
 
-class Galactic_devourer_laser_ring(Enemy_laser_gun):
+class Galactic_devourer_laser_ring(Enemy_gun):
     def __init__(self, center, damage, fire_rate, bullet_speed, width, height, color):
         super().__init__(center, damage, fire_rate, bullet_speed, width, height, color)
 

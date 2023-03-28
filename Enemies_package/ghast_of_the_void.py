@@ -2,7 +2,7 @@ import pygame
 
 
 from Enemies_package.enemy import Enemy
-from Enemies_package.Enemy_laser_gun.enemy_laser_gun import Enemy_laser_gun
+from Enemies_package.Enemy_gun_package.enemy_gun import Enemy_gun
 
 from Constants_package.constants import players, enemies, enemies_laser_guns, SCREEN_WIDTH, SCREEN_HEIGHT, SCALE
 
@@ -78,12 +78,12 @@ class Ghast_of_the_void(Enemy):
 
     def range_attack_service(self):
         if self.ghast_of_the_void_timer <= 0:
-            enemy_laser_gun = Enemy_laser_gun(self.rect.center, 0.2, 2000, 15, 15, 45, "#FE1E1E")
+            enemy_laser_gun = Enemy_gun(self.rect.center, 0.2, 2000, 15, 15, 45, "#FE1E1E")
             enemies_laser_guns.add(enemy_laser_gun)
             self.ghast_of_the_void_timer = enemy_laser_gun.fire_rate
         self.ghast_of_the_void_timer += -100
 
-    def HP_service(self):
+    def hp_service(self):
         if self.hp <= 100:
             self.image.fill('#A3702E')
         if self.hp <= 50:
