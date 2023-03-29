@@ -134,11 +134,11 @@ def display_leader_boardW(pos_x, pos_y, color, player_score_map_output, font, sc
         if i < 9:
             text = f"{i + 1}.  {key} {value}"
             text_surface = font.render(text, True, color)
-            screen.blit(text_surface, (pos_x, i * 100 + pos_y))
+            screen.blit(text_surface, (pos_x, i * 50 + pos_y))
         else:
             text = f"{i + 1}. {key} {value}"
             text_surface = font.render(text, True, color)
-            screen.blit(text_surface, (pos_x, i * 100 + pos_y))
+            screen.blit(text_surface, (pos_x, i * 50 + pos_y))
         if i == 9:
             break
 

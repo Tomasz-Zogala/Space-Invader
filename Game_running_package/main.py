@@ -60,13 +60,13 @@ player_score_map_output = {}
 
 # Screen
 if fullscreen_flag:
-    screen_background_position = (-120, 0)
+    screen_background_position = (0, 0)
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.FULLSCREEN)
-    background_graphics = pygame.image.load('Additional_resources/Graphics/Background_wallpaper.png').convert()
+    background_graphics = pygame.image.load('Additional_resources/Graphics/background_f.png').convert()
 else:
     screen_background_position = (0, 0)
     screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
-    background_graphics = pygame.image.load('Additional_resources/Graphics/Background_wallpaper.png').convert()
+    background_graphics = pygame.image.load('Additional_resources/Graphics/background_w.png').convert()
 
 pygame.display.set_caption('Nebula Crusaders')
 pygame.mouse.set_visible(False)
@@ -121,7 +121,7 @@ def gameplay_HUD(fullscreen):
     else:
         display_scoreW(player.score, 640, 30, '#FCFCF4', font_50, screen)
         display_timerW(game_timer, 640, 70, '#FCFCF4', font_35, screen)
-        display_hpW(player.hp, 1155, 765, '#FCFCF4', font_50, screen)
+        display_hpW(player.hp, 1200, 765, '#FCFCF4', font_50, screen)
         display_statsW(player.speed, player.gun_damage_multiplier, player.gun_fire_rate_multiplier, 110, 720,
                        '#FCFCF4', font_25, screen)
         display_gunW(player.using_gun_type, 640, 765, '#FCFCF4', font_25, screen)
@@ -204,7 +204,6 @@ reset_game_thread.start()
 draw_sprites_thread.start()
 update_sprites_thread.start()
 
-player_nickname_mutex = threading.Lock()
 adding_enemies_mutex = threading.Lock()
 
 while not game_over_flag:
@@ -320,15 +319,15 @@ while not game_over_flag:
             game_score_timer = 0
 
         # Game script
-        if game_timer >= 0.1 * SECOND and not asteroids_arrived_flag:
+        if game_timer >= 1 * SECOND and not asteroids_arrived_flag:
             asteroids_arrived_flag = True
-            for i in range(7):
+            for i in range(5):
                 asteroid = Asteroid()
                 adding_enemies_mutex.acquire()
                 enemies.add(asteroid)
                 adding_enemies_mutex.release()
 
-        if 40 * SECOND <= game_timer <= 45 * SECOND:
+        if 1 * SECOND <= game_timer <= 45 * SECOND:
             if fullscreen_flag:
                 screen.blit(warning_m, warning_mR)
                 screen.blit(star_lord_announcement_m, star_lord_announcement_mR)
@@ -430,7 +429,7 @@ while not game_over_flag:
                 screen.blit(warning_mW, warning_mRW)
                 screen.blit(boss_rush_announcement_mW, boss_rush_announcement_mRW)
 
-        if game_timer >= 1 * SECOND and not boss_rush_arrived_flag1:
+        if game_timer >= 225 * SECOND and not boss_rush_arrived_flag1:
             boss_rush_arrived_flag1 = True
             star_lord1 = Star_lord()
             adding_enemies_mutex.acquire()
