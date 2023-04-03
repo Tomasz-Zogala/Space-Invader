@@ -112,7 +112,7 @@ def gameplay_HUD(fullscreen):
     if fullscreen:
         display_score(player.score, SCREEN_WIDTH / 2, 75, '#FCFCF4', font_100, screen)
         display_timer(game_timer, SCREEN_WIDTH / 2, 170, '#FCFCF4', font_75, screen)
-        display_hp(player.hp, SCREEN_WIDTH - 180, SCREEN_HEIGHT - 60, '#FCFCF4', font_100, screen)
+        display_hp(player.hp, SCREEN_WIDTH - 200, SCREEN_HEIGHT - 60, '#FCFCF4', font_100, screen)
         display_stats(player.speed, player.gun_damage_multiplier, player.gun_fire_rate_multiplier, 275,
                       SCREEN_HEIGHT - 180, '#FCFCF4', font_60, screen)
         display_gun(player.using_gun_type, SCREEN_WIDTH / 2, SCREEN_HEIGHT - 70, '#FCFCF4', font_50, screen)
@@ -121,7 +121,7 @@ def gameplay_HUD(fullscreen):
     else:
         display_scoreW(player.score, 640, 30, '#FCFCF4', font_50, screen)
         display_timerW(game_timer, 640, 70, '#FCFCF4', font_35, screen)
-        display_hpW(player.hp, 1200, 765, '#FCFCF4', font_50, screen)
+        display_hpW(player.hp, 1175, 765, '#FCFCF4', font_50, screen)
         display_statsW(player.speed, player.gun_damage_multiplier, player.gun_fire_rate_multiplier, 110, 720,
                        '#FCFCF4', font_25, screen)
         display_gunW(player.using_gun_type, 640, 765, '#FCFCF4', font_25, screen)
@@ -327,7 +327,7 @@ while not game_over_flag:
                 enemies.add(asteroid)
                 adding_enemies_mutex.release()
 
-        if 1 * SECOND <= game_timer <= 45 * SECOND:
+        if 40 * SECOND <= game_timer <= 45 * SECOND:
             if fullscreen_flag:
                 screen.blit(warning_m, warning_mR)
                 screen.blit(star_lord_announcement_m, star_lord_announcement_mR)
@@ -448,7 +448,7 @@ while not game_over_flag:
             enemies.add(galactic_devourer1)
             adding_enemies_mutex.release()
 
-        if 165 * SECOND <= game_timer <= 270 * SECOND:
+        if 265 * SECOND <= game_timer <= 270 * SECOND:
             if fullscreen_flag:
                 screen.blit(warning_m, warning_mR)
                 screen.blit(boss_rush_announcement_m, boss_rush_announcement_mR)

@@ -11,3 +11,16 @@ Player10:58392
 d:90
 tom:0
 dds:120
+Tom:1450
+Tom:9750
+ok:3010
+lol:1360
+Tomasz:2030
+Tom:0
+d:40
+d:660
+d:30
+d:590
+d:250
+Tom:0
+d:440

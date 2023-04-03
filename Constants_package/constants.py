@@ -1,7 +1,7 @@
 import pygame
 
 # Fullscreen flag
-fullscreen_flag = False
+fullscreen_flag = True
 
 # Screen
 if fullscreen_flag:

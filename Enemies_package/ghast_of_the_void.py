@@ -4,7 +4,8 @@ import pygame
 from Enemies_package.enemy import Enemy
 from Enemies_package.Enemy_gun_package.enemy_gun import Enemy_gun
 
-from Constants_package.constants import players, enemies, enemies_laser_guns, SCREEN_WIDTH, SCREEN_HEIGHT, SCALE
+from Constants_package.constants import players, enemies, enemies_laser_guns, SCREEN_WIDTH, SCREEN_HEIGHT, SCALE, \
+    fullscreen_flag
 
 
 # Define the Ghast_of_the_void class
@@ -15,7 +16,7 @@ class Ghast_of_the_void(Enemy):
         # Stats
         self.damage = 1
         self.hp = 150
-        self.speed_x = 4 * SCALE
+        self.speed_x = 2 * SCALE
         self.speed_y = 0 * SCALE
         self.move_direction = move_direction
         self.first_in_colony = first_in_colony
@@ -23,14 +24,12 @@ class Ghast_of_the_void(Enemy):
         # Timer
         self.ghast_of_the_void_timer = 0
 
-        # Image data
-        self.width = 45 * SCALE
-        self.height = 70 * SCALE
-        self.color = '#652EA3'
-
         # Image
-        self.image = pygame.Surface([self.width, self.height])
-        self.image.fill(self.color)
+        self.image = pygame.image.load('Additional_resources/Graphics/Boss3.png').convert_alpha()
+        if fullscreen_flag:
+            self.image = pygame.transform.scale(self.image, (200, 160))
+        else:
+            self.image = pygame.transform.scale(self.image, (100, 80))
         self.rect = self.image.get_rect()
 
         # Position
@@ -82,9 +81,3 @@ class Ghast_of_the_void(Enemy):
             enemies_laser_guns.add(enemy_laser_gun)
             self.ghast_of_the_void_timer = enemy_laser_gun.fire_rate
         self.ghast_of_the_void_timer += -100
-
-    def hp_service(self):
-        if self.hp <= 100:
-            self.image.fill('#A3702E')
-        if self.hp <= 50:
-            self.image.fill('#A3402E')

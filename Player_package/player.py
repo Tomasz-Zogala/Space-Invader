@@ -21,7 +21,7 @@ class Player(pygame.sprite.Sprite):
         self.gun_damage_multiplier = 1
         self.gun_fire_rate_multiplier = 1
         self.speed = 10 * SCALE
-        self.hp = 3
+        self.hp = 5
 
         # Info
         self.score = 0

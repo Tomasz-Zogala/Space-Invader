@@ -5,7 +5,7 @@ import math
 from Enemies_package.enemy import Enemy
 from Enemies_package.Enemy_gun_package.enemy_gun import Enemy_gun
 
-from Constants_package.constants import players, enemies_laser_guns, SCREEN_WIDTH, SCREEN_HEIGHT, SCALE
+from Constants_package.constants import players, enemies_laser_guns, SCREEN_WIDTH, SCREEN_HEIGHT, SCALE, fullscreen_flag
 
 
 # Define the Bounty_hunter class
@@ -32,14 +32,12 @@ class Bounty_hunter(Enemy):
         self.bounty_hunter_overheating_timer_2 = 0
         self.overheating_passed = True
 
-        # Image data
-        self.width = 120 * SCALE
-        self.height = 120 * SCALE
-        self.color = '#04220E'
-
         # Image
-        self.image = pygame.Surface([self.width, self.height])
-        self.image.fill(self.color)
+        self.image = pygame.image.load('Additional_resources/Graphics/Boss2.png').convert_alpha()
+        if fullscreen_flag:
+            self.image = pygame.transform.scale(self.image, (200, 200))
+        else:
+            self.image = pygame.transform.scale(self.image, (100, 100))
         self.rect = self.image.get_rect()
 
         # Position
@@ -92,9 +90,3 @@ class Bounty_hunter(Enemy):
                 self.bounty_hunter_overheating_timer = 0
 
             self.bounty_hunter_overheating_timer_2 += 100
-
-    def hp_service(self):
-        if self.hp <= 160:
-            self.image.fill('#A3702E')
-        if self.hp <= 80:
-            self.image.fill('#A3402E')
